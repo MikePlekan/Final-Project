@@ -1,33 +1,30 @@
-
+import java.util.ArrayList;
 /**
  * Write a description of class Pawn here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Pawn
+public class Pawn extends Piece
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class Pawn
-     */
+    boolean moved;
+    TwoVal position;
+    
     public Pawn()
     {
-        // initialise instance variables
-        x = 0;
+        moved = false;
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
+    @Override
+    public ArrayList<TwoVal> validMoves()
     {
-        // put your code here
-        return x + y;
+        ArrayList<TwoVal> moves = new ArrayList();
+        if (!moved)
+        {
+            moves.add(new TwoVal(position.x, position.y + 2));
+        }
+        
+        moves.add(new TwoVal(position.x, position.y + 2));
+        
+        return moves;
     }
 }

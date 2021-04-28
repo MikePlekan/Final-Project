@@ -9,4 +9,13 @@ public class Square
 {
     private int color;
     public Piece piece;
+    
+    public int x;
+    public int y;
+    
+    public Square(int row, int col)
+    {
+        x = col;
+        y = row;
+    }
 }
