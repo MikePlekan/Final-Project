@@ -7,27 +7,26 @@
  */
 public class Board
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class Board
-     */
+    public Square[][] squares;
+    public Piece[][] pieces;
     public Board()
     {
-        // initialise instance variables
-        x = 0;
+        squares = new Square[8][8];
+        pieces = new Piece[8][8];
+        
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                squares[i][j] = new Square(i + 1, j + 1);
+            }
+        }
+        
+        setBoard();
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
+    
+    public void setBoard()
     {
-        // put your code here
-        return x + y;
+        pieces[1][2] = new Pawn(1, 2);
     }
 }
