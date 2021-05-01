@@ -14,7 +14,8 @@ public abstract class Piece
     protected int currentSquare;
 
     
-    /* I don't know if this is necessary right now, but these arrays are to calculate the offsets of each direction a piece can move. 
+    /* 
+     * I don't know if this is necessary right now, but these arrays are to calculate the offsets of each direction a piece can move. 
      * For example, a bishop if on the a8 square (0), wants to move to b7, it must check if square (9) is a valid square.
      */
     //public static int[] diagonal = {-9,9,-7,7};
