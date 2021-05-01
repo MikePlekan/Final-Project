@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 /**
  * This class is used to represent the logical representation of a board, rather than
@@ -31,5 +32,27 @@ public class Board
         "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
         "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
         "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"};
-           
+        
+    //these integers represent squares that are along the edge of the board.
+    
+    // public static Integer[] topEdge = {0,1,2,3,4,5,6,7};
+    // public static Integer[] leftEdge = {0,8,16,24,32,40,48,56};
+    // public static Integer[] rightEdge = {7,15,23,31,39,47,55,63};
+    // public static Integer[] bottomEdge = {56,57,58,59,60,61,62,63};
+    
+    /*
+     * 1 represents left and right, 7 represents diagonaly on the left to right diagonal, 8 represents up and down,
+     * 9 represents digonally right to left diagonal
+     * -1 = left
+     * 1 = right
+     * -8 = up
+     * 8 = down
+     * -7 = diagonal up right
+     * 7 = diagonal down left
+     * -9 = diagonal up left
+     * 9 = diagonal down right    
+     */
+    public static Integer[] directions = {-1,1,-8,8,-7,7,-9,9};
+   
+    
 }

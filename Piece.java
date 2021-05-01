@@ -12,17 +12,8 @@ public abstract class Piece
     
     //Used to track what square a piece in on
     protected int currentSquare;
-
     
-    /* 
-     * I don't know if this is necessary right now, but these arrays are to calculate the offsets of each direction a piece can move. 
-     * For example, a bishop if on the a8 square (0), wants to move to b7, it must check if square (9) is a valid square.
-     */
-    //public static int[] diagonal = {-9,9,-7,7};
-    
-    //public static int[] horizontal = {-8, 8, -1,1};
-    
-    abstract public ArrayList<Integer> validMoves();
+    abstract public ArrayList<Integer> validMoves(Board b);
     
     /**
      * Returns the color of a piece object as a boolean. If returns false, then it is a black piece, if white it returns true.
@@ -57,8 +48,38 @@ public abstract class Piece
         return currentSquare;
     }
         
+    /**
+     * Gives the algebraic notation of the current square a piece is resting upon
+     * 
+     * @return a string of the algebraic notation of the current square
+     */
     public String getSquareStr(){
         return Board.notation[currentSquare];
     }
+    
+    /**
+     * Gives the number of squares from the edge of the board from a given square in all directions.
+     * This is used to help calculate valid moves so pieces dont go off the board.
+     * Diagonals can be calculated by taking the minumum between the left-right, top-bottom pair combinations
+     * 
+     * @return an Integer[] that contains the number of square from the edge of the board in this sequence 
+     * [left,right, top, bottom,topright,bottomleft,topleft,bottomright]
+     */
+    public static Integer[] squaresToEdge(int currentSquare){
+        Integer[] squaresToEdge = new Integer[8];
+        
+        squaresToEdge[0] = currentSquare % 8;
+        squaresToEdge[1] = 7 - currentSquare % 8;
+        squaresToEdge[2] = currentSquare / 8;
+        squaresToEdge[3] = 7 - currentSquare / 8;
+        
+        squaresToEdge[4] = Math.min(squaresToEdge[1],squaresToEdge[2]);
+        squaresToEdge[5] = Math.min(squaresToEdge[0],squaresToEdge[3]);
+        squaresToEdge[6] = Math.min(squaresToEdge[0],squaresToEdge[2]);
+        squaresToEdge[7] = Math.min(squaresToEdge[1],squaresToEdge[1]);
+        
+        return squaresToEdge;
+    }
+    
     
 }

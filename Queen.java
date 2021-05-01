@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Queen extends Piece
 {
-    static int[] direction = {-9,-8,-7,-1,1,7,8,9};
+    public int[] direction = Board.directions;
     
     /**
      * Standard constructor for the Queen object.
@@ -47,10 +47,7 @@ public class Queen extends Piece
      * implementation. Maybe a potential fix is to generate a new board which checks if a move places yourself into check, but that can be
      * figured out later.
      */
-    public ArrayList<Integer> validMoves(){
-        for(int i = 0; i < direction.length; i++){
-            
-        }
+    public ArrayList<Integer> validMoves(Board b){
         
         return null;
     }
