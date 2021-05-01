@@ -1,13 +1,13 @@
-
+import java.util.ArrayList;
 /**
  * Abstract class used to represent a chess man
  *
- * @author Luke Jennings
+ * @author Luke Jennings, Spencer Moon, Michael Plekan, and Nathan Poirier
  * @version Spring 2021
  */
 public abstract class Piece
 {
-    //If a piece's boolean color = false, then it is a white piece, if color = true, it is black.
+    //If a piece's boolean color = true, then it is a white piece, if color = false, it is black.
     protected Boolean color;
     
     //Used to track what square a piece in on
@@ -22,8 +22,10 @@ public abstract class Piece
     
     //public static int[] horizontal = {-8, 8, -1,1};
     
+    abstract public ArrayList<Integer> validMoves();
+    
     /**
-     * Returns the color of a piece object as a boolean. If returns false, then it is a white piece, if black it returns true.
+     * Returns the color of a piece object as a boolean. If returns false, then it is a black piece, if white it returns true.
      * 
      * @return false if piece is white, true if piece is black.
      */

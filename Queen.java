@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Class used to represent a Queen piece in a game of chess
  *
@@ -7,6 +7,7 @@
  */
 public class Queen extends Piece
 {
+    static int[] direction = {-9,-8,-7,-1,1,7,8,9};
     
     /**
      * Standard constructor for the Queen object.
@@ -40,4 +41,18 @@ public class Queen extends Piece
     public String toString(){
         return getPieceStr() + getSquareStr();
     }
+    
+    /**
+     * Note: This will likely have to be heavily modified to make sure you are not moving into check, however right now this is a prelim
+     * implementation. Maybe a potential fix is to generate a new board which checks if a move places yourself into check, but that can be
+     * figured out later.
+     */
+    public ArrayList<Integer> validMoves(){
+        for(int i = 0; i < direction.length; i++){
+            
+        }
+        
+        return null;
+    }
+    
 }
