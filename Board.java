@@ -20,7 +20,7 @@ public class Board
      */
     
     
-    //Other potential board implementation
+    
     protected Piece[] board = new Piece[64];
     
     public static String[] notation = {"a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
@@ -31,5 +31,30 @@ public class Board
         "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
         "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
         "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"};
-           
+    
+        
+    //Other potential board implementation
+   /* public Square[][] squares;
+    public Piece[][] pieces;
+    public Board()
+    {
+        squares = new Square[8][8];
+        pieces = new Piece[8][8];
+        
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                squares[i][j] = new Square(i + 1, j + 1);
+            }
+        }
+        
+        setBoard();
+    }
+    
+    public void setBoard()
+    {
+        pieces[1][2] = new Pawn(1, 2);
+    }
+           */
 }
