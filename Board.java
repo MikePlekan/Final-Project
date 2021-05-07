@@ -54,7 +54,40 @@ public class Board
      * 9 = diagonal down right    
      */
     public static Integer[] directions = {-1,1,-8,8,-7,7,-9,9};
+    
+    public static Integer[][] numSquaresToEdge = generateNumSquaresToEdge();
    
+    public static Integer[][] generateNumSquaresToEdge(){
+        Integer[][] output = new Integer[64][8];
+        for(int i = 0; i < 64; i++){
+            numSquaresToEdge[i]= squaresToEdge(i);
+        }
+        return output;
+    }
+    
+    /**
+     * Gives the number of squares from the edge of the board from a given square in all directions.
+     * This is used to help calculate valid moves so pieces dont go off the board.
+     * Diagonals can be calculated by taking the minumum between the left-right, top-bottom pair combinations
+     * 
+     * @return an Integer[] that contains the number of square from the edge of the board in this sequence 
+     * [left,right, top, bottom,topright,bottomleft,topleft,bottomright]
+     */
+    public static Integer[] squaresToEdge(int currentSquare){
+        Integer[] squaresToEdge = new Integer[8];
+        
+        squaresToEdge[0] = currentSquare % 8;
+        squaresToEdge[1] = 7 - currentSquare % 8;
+        squaresToEdge[2] = currentSquare / 8;
+        squaresToEdge[3] = 7 - currentSquare / 8;
+        
+        squaresToEdge[4] = Math.min(squaresToEdge[1],squaresToEdge[2]);
+        squaresToEdge[5] = Math.min(squaresToEdge[0],squaresToEdge[3]);
+        squaresToEdge[6] = Math.min(squaresToEdge[0],squaresToEdge[2]);
+        squaresToEdge[7] = Math.min(squaresToEdge[1],squaresToEdge[1]);
+        
+        return squaresToEdge;
+    }
     
 //=======
     
