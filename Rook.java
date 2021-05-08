@@ -1,41 +1,44 @@
 import java.util.ArrayList;
 /**
- * Class used to represent a Queen piece in a game of chess
+ * Class used to represent a Rook piece in a game of chess
  *
  * @author Luke Jennings
  * @version Spring 2021
  */
-public class Queen extends Piece
+public class Rook extends MovedPiece
 {
-    public Integer[] direction = {-1,1,-8,8,-7,7,-9,9};
+    public Integer[] direction = {-1,1,-8,8};
 
     /**
-     * Standard constructor for the Queen object.
+     * Standard constructor for the Rook object.
      * 
-     * @param color boolean value that represents what color the queen is, if false then queen is white, if true then queen is black
+     * @param color boolean value that represents what color the rook is, if false then queen is white, if true then queen is black
      * @param initialSquare the integer representation the square the piece is currently resting
      */
-    public Queen(boolean color, int initialSquare){
+    public Rook(boolean color, int initialSquare){
         this.currentSquare = initialSquare;
         this.color = color;
+        this.moved = false;
     }
-
+    
     /**
-     * This constructor, although likely unnessary, assumes that the queen is starting in its standard board position.
-     * Where if black, the Queen's currentSquare is d8, or 3, and if White, the Queen's current square is d1, or 59
+     * Constructor for the Rook object, intended to be specifically for rooks that have been
+     * promoted or are otherwise unable to castle. Important for FEN codes
+     * 
+     * @param color boolean value that represents what color the rook is, if false then queen is white, if true then queen is black
+     * @param initialSquare the integer representation the square the piece is currently resting
+     * @param moved If false, rook is capable of castling, if true, rook is not able to castle.
      */
-    public Queen(boolean color){
+    public Rook(boolean color, int initialSquare, boolean moved){
+        this.currentSquare = initialSquare;
         this.color = color;
-        if(color){
-            this.currentSquare = 3;
-        } else {
-            this.currentSquare = 59;
-        }
-
+        this.moved = moved;
     }
+
+    
 
     public String getPieceStr(){
-        return "Q";
+        return "R";
     }
 
     @Override 

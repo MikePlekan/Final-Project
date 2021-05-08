@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * This class is used to represent the logical representation of a board, rather than
@@ -18,29 +18,18 @@ public class Board
      * Also this would make a method that could be used to load board states easier to program, as the
      * current standard FEN takes a similar approach when loading in pieces.
      * As such 0 will represent the square a8, and 63 will represent h1.
-     */
-    
-    
-    
+     */ 
     protected Piece[] board = new Piece[64];
-    
+
     public static String[] notation = {"a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
-        "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
-        "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
-        "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
-        "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
-        "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
-        "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
-        "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"};
-//<<<<<<< HEAD
-        
-    //these integers represent squares that are along the edge of the board.
-    
-    // public static Integer[] topEdge = {0,1,2,3,4,5,6,7};
-    // public static Integer[] leftEdge = {0,8,16,24,32,40,48,56};
-    // public static Integer[] rightEdge = {7,15,23,31,39,47,55,63};
-    // public static Integer[] bottomEdge = {56,57,58,59,60,61,62,63};
-    
+            "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
+            "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
+            "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
+            "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
+            "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
+            "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
+            "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"};
+
     /*
      * 1 represents left and right, 7 represents diagonaly on the left to right diagonal, 8 represents up and down,
      * 9 represents digonally right to left diagonal
@@ -54,17 +43,34 @@ public class Board
      * 9 = diagonal down right    
      */
     public static Integer[] directions = {-1,1,-8,8,-7,7,-9,9};
-    
-    public static Integer[][] numSquaresToEdge = generateNumSquaresToEdge();
-   
-    public static Integer[][] generateNumSquaresToEdge(){
-        Integer[][] output = new Integer[64][8];
-        for(int i = 0; i < 64; i++){
-            numSquaresToEdge[i]= squaresToEdge(i);
-        }
-        return output;
+
+    public static ArrayList<Integer[]> numSquaresToEdge = new ArrayList<Integer[]>();
+
+    protected boolean playerToMove = false;
+
+    /**
+     * Default constructor for the board class, results in the chess starting position
+     */
+    public Board(){
+
+        generateNumSquaresToEdge();
     }
-    
+
+    /**
+     * Overloaded constructor for the board class. If boolean is true, then it returns a completely empty board.
+     * Otherwise, results in board being the default constructor.
+     */
+    public Board(boolean empty){
+        generateNumSquaresToEdge();
+    }
+
+    public static void generateNumSquaresToEdge(){
+
+        for(int i = 0; i < 64; i++){
+            numSquaresToEdge.add(squaresToEdge(i));
+        }
+    }
+
     /**
      * Gives the number of squares from the edge of the board from a given square in all directions.
      * This is used to help calculate valid moves so pieces dont go off the board.
@@ -75,46 +81,45 @@ public class Board
      */
     public static Integer[] squaresToEdge(int currentSquare){
         Integer[] squaresToEdge = new Integer[8];
-        
+
         squaresToEdge[0] = currentSquare % 8;
         squaresToEdge[1] = 7 - currentSquare % 8;
         squaresToEdge[2] = currentSquare / 8;
         squaresToEdge[3] = 7 - currentSquare / 8;
-        
+
         squaresToEdge[4] = Math.min(squaresToEdge[1],squaresToEdge[2]);
         squaresToEdge[5] = Math.min(squaresToEdge[0],squaresToEdge[3]);
         squaresToEdge[6] = Math.min(squaresToEdge[0],squaresToEdge[2]);
-        squaresToEdge[7] = Math.min(squaresToEdge[1],squaresToEdge[1]);
-        
+        squaresToEdge[7] = Math.min(squaresToEdge[1],squaresToEdge[3]);
+
         return squaresToEdge;
     }
-    
-//=======
-    
-        
-    //Other potential board implementation
-   /* public Square[][] squares;
-    public Piece[][] pieces;
-    public Board()
-    {
-        squares = new Square[8][8];
-        pieces = new Piece[8][8];
-        
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                squares[i][j] = new Square(i + 1, j + 1);
+
+    /**
+     * Returns the player whose turn it is to move.
+     * 
+     * @return false if White's turn to move, true if Black's turn to move.
+     */
+    public boolean playerToMove(){
+        return playerToMove;
+    }
+
+    /**
+     * Moves the piece on a selectedSquare to 
+     */
+    public void move(int selectedSquare, int targetSquare){
+        if(board[selectedSquare] != null){
+            ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
+            if(validMoves.contains(targetSquare)){
+
             }
         }
-        
-        setBoard();
+
     }
-    
-    public void setBoard()
-    {
-        pieces[1][2] = new Pawn(1, 2);
+
+    public boolean setPiece(int selectedSquare, Piece p){
+        if(){
+        }
     }
-           */
-//>>>>>>> 5249193d1da9094a7732cec0a0105684a88f2415
+
 }

@@ -47,6 +47,17 @@ public abstract class Piece
     public int getSquare(){
         return currentSquare;
     }
+    
+    /**
+     * This method allows us to change the position/square of a piece, should really only be
+     * used by the board class
+     *
+     */
+    public void setCurrentSquare(int targetSquare){
+        currentSquare = targetSquare;
+        
+    }
+
         
     /**
      * Gives the algebraic notation of the current square a piece is resting upon
@@ -56,6 +67,7 @@ public abstract class Piece
     public String getSquareStr(){
         return Board.notation[currentSquare];
     }
+    
     
     
     

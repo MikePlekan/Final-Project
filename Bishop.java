@@ -1,41 +1,29 @@
 import java.util.ArrayList;
 /**
- * Class used to represent a Queen piece in a game of chess
+ * Class used to represent a Bishop piece in a game of chess
  *
  * @author Luke Jennings
  * @version Spring 2021
  */
-public class Queen extends Piece
+public class Bishop extends Piece
 {
-    public Integer[] direction = {-1,1,-8,8,-7,7,-9,9};
+    public Integer[] direction = {-7,7,-9,9};
 
     /**
-     * Standard constructor for the Queen object.
+     * Standard constructor for the Bishop object.
      * 
-     * @param color boolean value that represents what color the queen is, if false then queen is white, if true then queen is black
+     * @param color boolean value that represents what color the bishop is, if false then queen is white, if true then queen is black
      * @param initialSquare the integer representation the square the piece is currently resting
      */
-    public Queen(boolean color, int initialSquare){
+    public Bishop(boolean color, int initialSquare){
         this.currentSquare = initialSquare;
         this.color = color;
     }
 
-    /**
-     * This constructor, although likely unnessary, assumes that the queen is starting in its standard board position.
-     * Where if black, the Queen's currentSquare is d8, or 3, and if White, the Queen's current square is d1, or 59
-     */
-    public Queen(boolean color){
-        this.color = color;
-        if(color){
-            this.currentSquare = 3;
-        } else {
-            this.currentSquare = 59;
-        }
-
-    }
+    
 
     public String getPieceStr(){
-        return "Q";
+        return "B";
     }
 
     @Override 
@@ -64,7 +52,7 @@ public class Queen extends Piece
             breakout = false;
             j = 0;
 
-            while(j < n[i]){
+            while(j < n[i + 4]){
                 // okay I know this looks crazy, however this is how this loop baiscally works
                 // basically, we start with a piece's position, then for each direction that piece can move in, it will loop as many times
                 // as there are squares to the edge of the board until it intercepts a piece, from which it will check if there
