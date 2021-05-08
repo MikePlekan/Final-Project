@@ -77,6 +77,7 @@ public abstract class Piece
     public void move(Board b, int targetSquare){
         b.board[targetSquare] = this;
         b.board[currentSquare] = null;
+        currentSquare = targetSquare;
         
 
     }

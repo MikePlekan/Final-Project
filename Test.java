@@ -51,8 +51,26 @@ public class Test
         }
         
         System.out.println(a);
-        System.out.println(b);
         
+        System.out.println("Move queen from e4 to f5");
+        a.movePiece(36,29);
+         System.out.println(a);
+         
+        System.out.println("Invalid move queen from f5 to a8");
+        validMoves = a.board[29].validMoves(a);
+         for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        a.movePiece(29,0);
+        System.out.println(a);
+        
+        System.out.println("Invalid rook move to c4");
+        a.movePiece(2,34);
+        System.out.println(a);
+        
+        System.out.println("Valid rook move to h8");
+        a.movePiece(2,7);
+        System.out.println(a);
         
     }
 }

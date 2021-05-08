@@ -11,10 +11,6 @@ public abstract class MovedPiece extends Piece
 {
     protected boolean moved = false;
     
-    public void moved(){
-        moved = true;
-    }
-    
     public boolean hasMoved(){
         return moved;
     }
@@ -25,9 +21,11 @@ public abstract class MovedPiece extends Piece
      * @param Board object that the piece is currently on
      * @param targetSquare integer representation of the square where the piece is moving
      */
+    @Override
     public void move(Board b, int targetSquare){
         b.board[targetSquare] = this;
         b.board[currentSquare] = null;
+        currentSquare = targetSquare;
         moved = true;
         
 

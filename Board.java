@@ -111,7 +111,10 @@ public class Board
     }
 
     /**
-     * Moves the piece on a selectedSquare to 
+     * Moves the piece on a selectedSquare to targetSquare if it is a valid move
+     * 
+     * @param selectedSquare integer representation of the square of a piece you wish to move
+     * @param targetSquare integer representation of the square where the piece is being moved too
      */
     public void movePiece(int selectedSquare, int targetSquare){
         if(board[selectedSquare] != null){
@@ -124,13 +127,47 @@ public class Board
         }
 
     }
+    
+    public void setPiece(String s, int targetSquare){
+        switch(s){
+            case "K":
+            board[targetSquare] = new King(false,targetSquare);
+            break;
+            case "Q":
+            board[targetSquare] = new Queen(false,targetSquare);
+            break;
+            case "R":
+            board[targetSquare] = new Rook(false,targetSquare);
+            break;
+            case "B":
+            board[targetSquare] = new Bishop(false,targetSquare);
+            break;
+           
+            case "k":
+            board[targetSquare] = new King(true,targetSquare);
+            break;
+            case "q":
+            board[targetSquare] = new Queen(true,targetSquare);
+            break;
+            case "r":
+            board[targetSquare] = new Rook(true,targetSquare);
+            break;
+            case "b":
+            board[targetSquare] = new Bishop(true,targetSquare);
+            break;
+            
+        }
+            
+        
+        
+    }
 
     public boolean check(){
         return false;
     }
 
     public Boolean getWinner(){
-        return  winner;
+        return winner;
     }
 
     @Override
