@@ -48,6 +48,12 @@ public class Board
 
     protected boolean playerToMove = false;
 
+    protected int positionWhiteKing;
+
+    protected int positionBlackKing;
+
+    protected Boolean winner = null;
+
     /**
      * Default constructor for the board class, results in the chess starting position
      */
@@ -107,14 +113,50 @@ public class Board
     /**
      * Moves the piece on a selectedSquare to 
      */
-    public void move(int selectedSquare, int targetSquare){
+    public void movePiece(int selectedSquare, int targetSquare){
         if(board[selectedSquare] != null){
             ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
             if(validMoves.contains(targetSquare)){
+                board[selectedSquare].move(this,targetSquare);
+
 
             }
         }
 
+    }
+
+    public boolean check(){
+        return false;
+    }
+
+    public Boolean getWinner(){
+        return  winner;
+    }
+
+    @Override
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        int n;
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                n = 8 * i + j;
+                if(board[n] != null){
+                    if(board[n].color){
+                        sb.append(board[n].getPieceStr().toLowerCase() + " ");
+                        
+                    } else {
+                        sb.append(board[n].getPieceStr() + " ");
+                    }
+                    
+                } else {
+                    sb.append("_ ");
+                }
+                
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 
 }

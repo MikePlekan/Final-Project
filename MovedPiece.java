@@ -18,4 +18,18 @@ public abstract class MovedPiece extends Piece
     public boolean hasMoved(){
         return moved;
     }
+    
+    /**
+     * Moves a piece from its currentSquare to targetSquare
+     * 
+     * @param Board object that the piece is currently on
+     * @param targetSquare integer representation of the square where the piece is moving
+     */
+    public void move(Board b, int targetSquare){
+        b.board[targetSquare] = this;
+        b.board[currentSquare] = null;
+        moved = true;
+        
+
+    }
 }

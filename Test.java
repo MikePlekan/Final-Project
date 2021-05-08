@@ -50,6 +50,8 @@ public class Test
             System.out.println(Board.notation[i]);
         }
         
+        System.out.println(a);
+        System.out.println(b);
         
         
     }
