@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public abstract class Piece
 {
-    //If a piece's boolean color = true, then it is a white piece, if color = false, it is black.
+    //If a piece's boolean color = false, then it is a white piece, if color = true, it is black.
     protected Boolean color;
     
     //Used to track what square a piece in on
@@ -32,9 +32,9 @@ public abstract class Piece
      */
     public String getColorStr(){
         if(color){
-            return "white";
-        } else {
             return "black";
+        } else {
+            return "white";
         }
     }
     
