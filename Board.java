@@ -117,9 +117,4 @@ public class Board
 
     }
 
-    public boolean setPiece(int selectedSquare, Piece p){
-        if(){
-        }
-    }
-
 }
