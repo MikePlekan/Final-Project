@@ -32,9 +32,9 @@ public abstract class Piece
      */
     public String getColorStr(){
         if(color){
-            return "black";
-        } else {
             return "white";
+        } else {
+            return "black";
         }
     }
     
