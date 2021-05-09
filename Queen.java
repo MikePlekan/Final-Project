@@ -69,6 +69,7 @@ public class Queen extends Piece
                 // basically, we start with a piece's position, then for each direction that piece can move in, it will loop as many times
                 // as there are squares to the edge of the board until it intercepts a piece, from which it will check if there
                 checkingSquare += direction[i]; 
+
                 if(b.board[checkingSquare] == null){
                     //empty square
                     validMoves.add(checkingSquare);
@@ -79,6 +80,7 @@ public class Queen extends Piece
 
                     breakout = true;
                 }
+                
                 if(!breakout){
                     // this is to make us leave the inner for loop
                     j++;

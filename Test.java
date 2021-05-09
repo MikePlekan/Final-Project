@@ -10,7 +10,7 @@ public class Test
     public static void main(String[] args){
         Board b = new Board();
         b.board[0] = new Queen(true,0);
-        
+
         System.out.println("Possible squares on an empty board with a black queen on a8, white's move");
         ArrayList<Integer> validMoves = b.board[0].validMoves(b);
         for(Integer i: validMoves){
@@ -32,45 +32,82 @@ public class Test
         a.board[36] = new Queen(false, 36);
         System.out.println("Possible squares with a white queen on e4 on an empty board");
         validMoves = a.board[36].validMoves(a);
-         for(Integer i: validMoves){
+        for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
         a.board[34] = new Bishop(false, 34);
         validMoves = a.board[34].validMoves(a);
         System.out.println("Possible squares with a white bishop on c4");
 
-         for(Integer i: validMoves){
+        for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
-        
+
         a.board[2] = new Rook(false, 2);
         validMoves = a.board[2].validMoves(a);
         System.out.println("White rook on c8, on  same board as Bc4 and Qe4");
-         for(Integer i: validMoves){
+        for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
-        
+
         System.out.println(a);
-        
+
         System.out.println("Move queen from e4 to f5");
         a.movePiece(36,29);
-         System.out.println(a);
-         
+        System.out.println(a);
+
         System.out.println("Invalid move queen from f5 to a8");
         validMoves = a.board[29].validMoves(a);
-         for(Integer i: validMoves){
+        for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
         a.movePiece(29,0);
         System.out.println(a);
-        
+
         System.out.println("Invalid rook move to c4");
         a.movePiece(2,34);
         System.out.println(a);
-        
+
         System.out.println("Valid rook move to h8");
         a.movePiece(2,7);
         System.out.println(a);
+
+        System.out.println("place white king on e1");
+        a.placePiece("K",60);
+        System.out.println(a);
+
+        System.out.println("valid move Ke2");
+        a.movePiece(60,52);
+        System.out.println(a);
+
         
+        System.out.println("empty board, place knight on f3");
+        Board c = new Board(true);
+        c.placePiece("N", 45);
+        System.out.println(c);
+        System.out.println("validMoves for Knight on f3 on an empty board");
+        validMoves = c.board[45].validMoves(c);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+
+        System.out.println("place knight on b1, check valid moves");
+        c.placePiece("N", 57);
+        System.out.println(c);
+        validMoves = c.board[57].validMoves(c);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        
+        System.out.println("place knight on g1, check valid moves");
+        c.placePiece("n", 6);
+        System.out.println(c);
+        validMoves = c.board[6].validMoves(c);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        
+        
+
     }
 }

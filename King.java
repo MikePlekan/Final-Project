@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class King extends MovedPiece
 {
     public Integer[] direction = {-1,1,-8,8,-7,7,-9,9};
-    
+
     private boolean checked = false;
 
     /**
@@ -59,40 +59,27 @@ public class King extends MovedPiece
         int checkingSquare;
 
         // this is just to make things more efficient by escaping the inner loop once a piece has collided with another.
-        boolean breakout = false;
         Integer[] n = b.numSquaresToEdge.get(currentSquare);
-        int j;
         for(int i = 0; i < direction.length; i++){
             checkingSquare = currentSquare;
-            breakout = false;
-            j = 0;
-
             // as kings only move one square in each direction, the while loop is removed.
-            checkingSquare += direction[i]; 
-            if(b.board[checkingSquare] == null){
-                //empty square
-                validMoves.add(checkingSquare);
-            } else if (b.board[checkingSquare].color != color){
-                validMoves.add(checkingSquare);
-                breakout = true;
-            } else if (b.board[checkingSquare].color == color){
+            if(n[i] > 0){
+                checkingSquare += direction[i]; 
 
-                breakout = true;
-            }
-            if(!breakout){
-                // this is to make us leave the inner for loop
-                j++;
-            } else {
-                j = Integer.MAX_VALUE;
+                if(b.board[checkingSquare] == null){
+                    //empty square
+                    validMoves.add(checkingSquare);
+                } else if (b.board[checkingSquare].color != color){
+                    validMoves.add(checkingSquare);
+                }
             }
 
         }
-
         // later we need to create a method that removes methods that result in putting yourself in check
         //removeIllegalMoves();
         return validMoves;
     }
-    
+
     public void check(){
         checked = true;
     }

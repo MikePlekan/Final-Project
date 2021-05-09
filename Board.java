@@ -117,51 +117,61 @@ public class Board
      * @param targetSquare integer representation of the square where the piece is being moved too
      */
     public void movePiece(int selectedSquare, int targetSquare){
-        if(board[selectedSquare] != null){
-            ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
-            if(validMoves.contains(targetSquare)){
-                board[selectedSquare].move(this,targetSquare);
+        if(targetSquare < 64 && targetSquare > -1){
+            if(board[selectedSquare] != null){
+                ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
+                if(validMoves.contains(targetSquare)){
+                    board[selectedSquare].move(this,targetSquare);
 
+                }
+            }
+        } else {
+              throw new IndexOutOfBoundsException("targetSquare is out of bounds");
+        }
+
+    }
+
+    public void placePiece(String s, int targetSquare){
+        if(targetSquare < 64 && targetSquare > -1){
+            switch(s){
+                case "K":
+                board[targetSquare] = new King(false,targetSquare);
+                break;
+                case "Q":
+                board[targetSquare] = new Queen(false,targetSquare);
+                break;
+                case "R":
+                board[targetSquare] = new Rook(false,targetSquare);
+                break;
+                case "B":
+                board[targetSquare] = new Bishop(false,targetSquare);
+                break;
+                case "N":
+                board[targetSquare] = new Knight(false,targetSquare);
+                break;
+
+                case "k":
+                board[targetSquare] = new King(true,targetSquare);
+                break;
+                case "q":
+                board[targetSquare] = new Queen(true,targetSquare);
+                break;
+                case "r":
+                board[targetSquare] = new Rook(true,targetSquare);
+                break;
+                case "b":
+                board[targetSquare] = new Bishop(true,targetSquare);
+                break;
+                case "n":
+                board[targetSquare] = new Knight(true,targetSquare);
+                break;
 
             }
+        } else {
+            throw new IndexOutOfBoundsException("targetSquare is out of bounds");
         }
 
     }
-    
-    public void setPiece(String s, int targetSquare){
-        switch(s){
-            case "K":
-            board[targetSquare] = new King(false,targetSquare);
-            break;
-            case "Q":
-            board[targetSquare] = new Queen(false,targetSquare);
-            break;
-            case "R":
-            board[targetSquare] = new Rook(false,targetSquare);
-            break;
-            case "B":
-            board[targetSquare] = new Bishop(false,targetSquare);
-            break;
-           
-            case "k":
-            board[targetSquare] = new King(true,targetSquare);
-            break;
-            case "q":
-            board[targetSquare] = new Queen(true,targetSquare);
-            break;
-            case "r":
-            board[targetSquare] = new Rook(true,targetSquare);
-            break;
-            case "b":
-            board[targetSquare] = new Bishop(true,targetSquare);
-            break;
-            
-        }
-            
-        
-        
-    }
-
     public boolean check(){
         return false;
     }
@@ -180,15 +190,15 @@ public class Board
                 if(board[n] != null){
                     if(board[n].color){
                         sb.append(board[n].getPieceStr().toLowerCase() + " ");
-                        
+
                     } else {
                         sb.append(board[n].getPieceStr() + " ");
                     }
-                    
+
                 } else {
                     sb.append("_ ");
                 }
-                
+
             }
             sb.append("\n");
         }
