@@ -117,6 +117,7 @@ public class Board
      * @param targetSquare integer representation of the square where the piece is being moved too
      */
     public void movePiece(int selectedSquare, int targetSquare){
+        
         if(targetSquare < 64 && targetSquare > -1){
             if(board[selectedSquare] != null){
                 ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
@@ -127,6 +128,12 @@ public class Board
             }
         } else {
               throw new IndexOutOfBoundsException("targetSquare is out of bounds");
+        }
+        for(Piece p: board){
+            if(p instanceof Pawn){
+                Pawn other = (Pawn) p;
+                other.setEnPassantable(false);
+            }
         }
 
     }
@@ -149,6 +156,9 @@ public class Board
                 case "N":
                 board[targetSquare] = new Knight(false,targetSquare);
                 break;
+                case "P":
+                board[targetSquare] = new Pawn(false,targetSquare);
+                break;
 
                 case "k":
                 board[targetSquare] = new King(true,targetSquare);
@@ -165,6 +175,10 @@ public class Board
                 case "n":
                 board[targetSquare] = new Knight(true,targetSquare);
                 break;
+                case "p":
+                board[targetSquare] = new Pawn(true,targetSquare);
+                break;
+        
 
             }
         } else {

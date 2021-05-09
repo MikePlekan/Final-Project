@@ -107,7 +107,41 @@ public class Test
             System.out.println(Board.notation[i]);
         }
         
-        
+        System.out.println("testing pawns on new board, white pawn on a5, c4, d4, e4, and h2, black pawn on a7,d5,h7");
+        Board d = new Board(true);
+        d.placePiece("P",24);
+        d.placePiece("P",34);
+        d.placePiece("P",35);
+        d.placePiece("P",36);
+        d.placePiece("P",55);
+        d.placePiece("p",27);
+        d.placePiece("p",8);
+        d.placePiece("p",15);
+        System.out.println(d);
+        System.out.println("validMoves for e4 pawn");
+        validMoves = d.board[36].validMoves(d);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        System.out.println("validMoves for d5 pawn");
+        validMoves = d.board[27].validMoves(d);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        System.out.println("validMoves for h2 and h7 pawns");
+        validMoves = d.board[55].validMoves(d);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        validMoves = d.board[15].validMoves(d);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        System.out.println("valid moves for a7 pawn");
+        validMoves = d.board[8].validMoves(d);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
 
     }
 }
