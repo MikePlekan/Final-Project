@@ -9,3 +9,5 @@ Work Log
 5/1 -> Luke 11:30pm-12:30pm //started piece hierarchy
 
 https://www.youtube.com/watch?v=U4ogK0MIzqk
+
+5/9 -> lost track of work log, proof of work can be checked by commits of work so far
