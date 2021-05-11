@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 /**
@@ -21,9 +22,9 @@ public class Board
      */ 
     protected Piece[] board = new Piece[64];
 
-    protected ArrayList<Integer> whitePieces = new ArrayList<Integer>();
+    // protected ArrayList<Integer> whitePieces = new ArrayList<Integer>();
 
-    protected ArrayList<Integer> blackPieces = new ArrayList<Integer>();
+    // protected ArrayList<Integer> blackPieces = new ArrayList<Integer>();
 
     protected King whiteKing;
 
@@ -67,28 +68,28 @@ public class Board
 
         generateNumSquaresToEdge();
 
-        placePiece("r",0);
-        placePiece("n",1);
-        placePiece("b",2);
-        placePiece("q",3);
-        placePiece("k",4);
-        placePiece("b",5);
-        placePiece("n",6);
-        placePiece("r",7);
+        placePiece('r',0);
+        placePiece('n',1);
+        placePiece('b',2);
+        placePiece('q',3);
+        placePiece('k',4);
+        placePiece('b',5);
+        placePiece('n',6);
+        placePiece('r',7);
         for(int i = 8; i < 16; i++){
-            placePiece("p",i);
+            placePiece('p',i);
         }
         for(int i = 48; i < 56; i++){
-            placePiece("P",i);
+            placePiece('P',i);
         }
-        placePiece("R",56);
-        placePiece("N",57);
-        placePiece("B",58);
-        placePiece("Q",59);
-        placePiece("K",60);
-        placePiece("B",61);
-        placePiece("N",62);
-        placePiece("R",63);
+        placePiece('R',56);
+        placePiece('N',57);
+        placePiece('B',58);
+        placePiece('Q',59);
+        placePiece('K',60);
+        placePiece('B',61);
+        placePiece('N',62);
+        placePiece('R',63);
 
     }
 
@@ -162,19 +163,71 @@ public class Board
                     board[selectedSquare].move(this,targetSquare);
 
                 }
+
             }
         } else {
             throw new IndexOutOfBoundsException("targetSquare is out of bounds");
         }
-        for(Piece p: board){
-            if(p instanceof Pawn){
-                Pawn other = (Pawn) p;
-                other.setEnPassantable(false);
+
+    }
+    public void placePiece(char c, int targetSquare){
+        if(targetSquare < 64 && targetSquare > -1){
+            switch(c){
+                case 'K':
+                if(whiteKing == null){
+                    whiteKing = new King(false,targetSquare);
+                    board[targetSquare] = whiteKing;
+
+                }
+                break;
+                case 'Q':
+                board[targetSquare] = new Queen(false,targetSquare);
+                break;
+                case 'R':
+                board[targetSquare] = new Rook(false,targetSquare);
+                break;
+                case 'B':
+                board[targetSquare] = new Bishop(false,targetSquare);
+                break;
+                case 'N':
+                board[targetSquare] = new Knight(false,targetSquare);
+                break;
+                case 'P':
+                board[targetSquare] = new Pawn(false,targetSquare);
+                break;
+
+                case 'k':
+                if(blackKing == null){
+                    blackKing = new King(true,targetSquare);
+                    board[targetSquare] = blackKing;
+                }
+                break;
+                case 'q':
+                board[targetSquare] = new Queen(true,targetSquare);
+                break;
+                case 'r':
+                board[targetSquare] = new Rook(true,targetSquare);
+                break;
+                case 'b':
+                board[targetSquare] = new Bishop(true,targetSquare);
+                break;
+                case 'n':
+                board[targetSquare] = new Knight(true,targetSquare);
+                break;
+                case 'p':
+                board[targetSquare] = new Pawn(true,targetSquare);
+                break;
+
             }
+        } else {
+            throw new IndexOutOfBoundsException("targetSquare is out of bounds");
         }
 
     }
 
+    /**
+     * This method is outdated, use char version instead
+     */
     public void placePiece(String s, int targetSquare){
         if(targetSquare < 64 && targetSquare > -1){
             switch(s){
@@ -227,6 +280,31 @@ public class Board
         } else {
             throw new IndexOutOfBoundsException("targetSquare is out of bounds");
         }
+
+    }
+    /**
+     * This method, although possibly unnecessary, but this method checks turn order and special move types
+     * 
+     * @param selectedSquare integer representation of the square of a piece you wish to move
+     * @param targetSquare integer representation of the square where the piece is being moved too
+     * @param promote in case of 
+     */
+    public boolean turn(int selectedSquare, int targetSquare, String promote){
+        return false;
+    }
+    
+    public ArrayList<Integer> generateMoves(boolean color){
+        ArrayList<Integer> allValidMoves = new ArrayList<Integer>();
+        for(int i = 0; i < 64; i++){
+            if(board[i] != null && board[i].color == color){
+                allValidMoves.addAll(board[i].validMoves(this));
+            }
+        }
+        return allValidMoves;
+    }
+
+    public ArrayList<Integer> generateLegalMoves(boolean color){
+        return null;
 
     }
 

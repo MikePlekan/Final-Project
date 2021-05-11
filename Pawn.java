@@ -150,7 +150,7 @@ public class Pawn extends MovedPiece
     @Override
     public void move(Board b, int targetSquare){
         if(Math.abs(currentSquare - targetSquare) == 16){
-            enPassantable = true;
+            b.enPassantSquare = targetSquare;
         }
         b.board[targetSquare] = this;
         b.board[currentSquare] = null;

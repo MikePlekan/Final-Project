@@ -147,5 +147,6 @@ public class Test
         Board e = new Board();
         System.out.println(e);
 
+        System.out.println("print all validMoves");
     }
 }
