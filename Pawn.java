@@ -11,6 +11,8 @@ public class Pawn extends MovedPiece
 
     public boolean enPassantable;
 
+    public boolean promotable;
+
     /**
      * Standard constructor for the Pawn object.
      * 
@@ -114,6 +116,25 @@ public class Pawn extends MovedPiece
             }
 
         }
+        
+        // //this ungodly codeblock checks for en passant moves
+        // checkingSquare = currentSquare;
+        // if(!color){
+            // if(n[4 + x] > 0){
+                // checkingSquare += direction[2+x];
+                // if(b.board[currentSquare + 1] != null && b.board[currentSquare] instanceof Pawn){
+                    // Pawn p = (Pawn) b.board[currentSquare];
+                    // if(p.enPassantable){
+                        // validMoves.add(checkingSquare);
+                    // }
+                    
+                // }
+            // }
+            // checkingSquare = currentSquare;
+            // if(n[6 + x] > 0){
+                
+            // }
+        // }
 
         // later we need to create a method that removes methods that result in putting yourself in check
         //removeIllegalMoves();

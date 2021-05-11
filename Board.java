@@ -21,6 +21,16 @@ public class Board
      */ 
     protected Piece[] board = new Piece[64];
 
+    protected ArrayList<Integer> whitePieces = new ArrayList<Integer>();
+
+    protected ArrayList<Integer> blackPieces = new ArrayList<Integer>();
+
+    protected King whiteKing;
+
+    protected King blackKing;
+
+    protected int enPassantSquare = -1;
+
     public static String[] notation = {"a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
             "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
             "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
@@ -48,10 +58,6 @@ public class Board
 
     protected boolean playerToMove = false;
 
-    protected int positionWhiteKing;
-
-    protected int positionBlackKing;
-
     protected Boolean winner = null;
 
     /**
@@ -60,6 +66,37 @@ public class Board
     public Board(){
 
         generateNumSquaresToEdge();
+
+        placePiece("r",0);
+        placePiece("n",1);
+        placePiece("b",2);
+        placePiece("q",3);
+        placePiece("k",4);
+        placePiece("b",5);
+        placePiece("n",6);
+        placePiece("r",7);
+        for(int i = 8; i < 16; i++){
+            placePiece("p",i);
+        }
+        for(int i = 48; i < 56; i++){
+            placePiece("P",i);
+        }
+        placePiece("R",56);
+        placePiece("N",57);
+        placePiece("B",58);
+        placePiece("Q",59);
+        placePiece("K",60);
+        placePiece("B",61);
+        placePiece("N",62);
+        placePiece("R",63);
+
+    }
+
+    /**
+     * Constructor that takes a string FEN input
+     */
+    public Board(String fen){
+
     }
 
     /**
@@ -117,7 +154,7 @@ public class Board
      * @param targetSquare integer representation of the square where the piece is being moved too
      */
     public void movePiece(int selectedSquare, int targetSquare){
-        
+
         if(targetSquare < 64 && targetSquare > -1){
             if(board[selectedSquare] != null){
                 ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
@@ -127,7 +164,7 @@ public class Board
                 }
             }
         } else {
-              throw new IndexOutOfBoundsException("targetSquare is out of bounds");
+            throw new IndexOutOfBoundsException("targetSquare is out of bounds");
         }
         for(Piece p: board){
             if(p instanceof Pawn){
@@ -142,7 +179,11 @@ public class Board
         if(targetSquare < 64 && targetSquare > -1){
             switch(s){
                 case "K":
-                board[targetSquare] = new King(false,targetSquare);
+                if(whiteKing == null){
+                    whiteKing = new King(false,targetSquare);
+                    board[targetSquare] = whiteKing;
+
+                }
                 break;
                 case "Q":
                 board[targetSquare] = new Queen(false,targetSquare);
@@ -161,7 +202,10 @@ public class Board
                 break;
 
                 case "k":
-                board[targetSquare] = new King(true,targetSquare);
+                if(blackKing == null){
+                    blackKing = new King(true,targetSquare);
+                    board[targetSquare] = blackKing;
+                }
                 break;
                 case "q":
                 board[targetSquare] = new Queen(true,targetSquare);
@@ -178,7 +222,6 @@ public class Board
                 case "p":
                 board[targetSquare] = new Pawn(true,targetSquare);
                 break;
-        
 
             }
         } else {
@@ -186,6 +229,7 @@ public class Board
         }
 
     }
+
     public boolean check(){
         return false;
     }

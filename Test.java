@@ -8,7 +8,7 @@ import java.util.*;
 public class Test
 {
     public static void main(String[] args){
-        Board b = new Board();
+        Board b = new Board(true);
         b.board[0] = new Queen(true,0);
 
         System.out.println("Possible squares on an empty board with a black queen on a8, white's move");
@@ -28,7 +28,7 @@ public class Test
         for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
-        Board a = new Board();
+        Board a = new Board(true);
         a.board[36] = new Queen(false, 36);
         System.out.println("Possible squares with a white queen on e4 on an empty board");
         validMoves = a.board[36].validMoves(a);
@@ -142,6 +142,10 @@ public class Test
         for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
+        
+        System.out.println("created new board e that has default starting position");
+        Board e = new Board();
+        System.out.println(e);
 
     }
 }
