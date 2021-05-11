@@ -39,6 +39,14 @@ public abstract class Piece
     }
 
     abstract public String getPieceStr();
+    
+    public String getPieceStrColor(){
+        if(color){return getPieceStr().toLowerCase();
+        } else {
+            return getPieceStr().toUpperCase();
+        }
+    }
+    
 
     /**
      * Note: This method may be uncessary.

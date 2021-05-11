@@ -1,5 +1,6 @@
-
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.ArrayDeque;
 
 /**
  * This class is used to represent the logical representation of a board, rather than
@@ -31,6 +32,8 @@ public class Board
     protected King blackKing;
 
     protected int enPassantSquare = -1;
+
+    protected ArrayDeque<Move> moves = new ArrayDeque<Move>();
 
     public static String[] notation = {"a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
             "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
@@ -160,16 +163,41 @@ public class Board
             if(board[selectedSquare] != null){
                 ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
                 if(validMoves.contains(targetSquare)){
+                    if(board[targetSquare] != null){
+                        moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
+                    }
                     board[selectedSquare].move(this,targetSquare);
 
                 }
-
             }
         } else {
             throw new IndexOutOfBoundsException("targetSquare is out of bounds");
         }
 
     }
+
+    public void undoMove(){
+        //gets the last move made by the moves deque
+        Move undoneMove = moves.pop();
+        //moves the moved piece back to its original square
+        movePiece(undoneMove.targetSquare,undoneMove.initialSquare);
+        // if a piece was captured, it puts it back to the square it was on
+        placePiece(undoneMove.pieceCaptured,undoneMove.targetSquare);
+        
+        Piece undonePiece = board[undoneMove.initialSquare];
+        // If a piece was previously moved or not moved then when we move the piece back we make sure it is in its proper state
+        if(undonePiece instanceof MovedPiece){
+            MovedPiece p = (MovedPiece) undonePiece;
+            p.moved = undoneMove.previouslyMoved;
+        }
+        
+
+    }
+    
+    public void placePiece(Piece p, int targetSquare){
+        board[targetSquare] = p;
+    }
+
     public void placePiece(char c, int targetSquare){
         if(targetSquare < 64 && targetSquare > -1){
             switch(c){
@@ -226,7 +254,7 @@ public class Board
     }
 
     /**
-     * This method is outdated, use char version instead
+     * 
      */
     public void placePiece(String s, int targetSquare){
         if(targetSquare < 64 && targetSquare > -1){
@@ -282,6 +310,7 @@ public class Board
         }
 
     }
+
     /**
      * This method, although possibly unnecessary, but this method checks turn order and special move types
      * 
@@ -292,20 +321,24 @@ public class Board
     public boolean turn(int selectedSquare, int targetSquare, String promote){
         return false;
     }
-    
-    public ArrayList<Integer> generateMoves(boolean color){
-        ArrayList<Integer> allValidMoves = new ArrayList<Integer>();
+
+    public ArrayList<Move> generateMoves(boolean color){
+        ArrayList<Move> allValidMoves = new ArrayList<Move>();
+        ArrayList<Integer> validMoves;
         for(int i = 0; i < 64; i++){
             if(board[i] != null && board[i].color == color){
-                allValidMoves.addAll(board[i].validMoves(this));
+                validMoves = board[i].validMoves(this);
+                for(Integer j: validMoves){
+                    allValidMoves.add(new Move(this,board[i].getPieceStr(),i,j,board[j]));
+                }
             }
         }
         return allValidMoves;
     }
 
-    public ArrayList<Integer> generateLegalMoves(boolean color){
-        return null;
+    public ArrayList<Move> generateLegalMoves(boolean color){
 
+        return null;
     }
 
     public boolean check(){

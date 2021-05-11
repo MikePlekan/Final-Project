@@ -80,7 +80,6 @@ public class Test
         a.movePiece(60,52);
         System.out.println(a);
 
-        
         System.out.println("empty board, place knight on f3");
         Board c = new Board(true);
         c.placePiece("N", 45);
@@ -98,15 +97,12 @@ public class Test
         for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
-        
+
         System.out.println("place knight on g1, check valid moves");
         c.placePiece("n", 6);
         System.out.println(c);
         validMoves = c.board[6].validMoves(c);
-        for(Integer i: validMoves){
-            System.out.println(Board.notation[i]);
-        }
-        
+
         System.out.println("testing pawns on new board, white pawn on a5, c4, d4, e4, and h2, black pawn on a7,d5,h7");
         Board d = new Board(true);
         d.placePiece("P",24);
@@ -142,11 +138,23 @@ public class Test
         for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
-        
+
         System.out.println("created new board e that has default starting position");
         Board e = new Board();
         System.out.println(e);
 
-        System.out.println("print all validMoves");
+        System.out.println("print all validMoves for white on this board");
+        ArrayList<Move> allValidMoves = e.generateMoves(false);
+        for(Move m: allValidMoves){
+            System.out.println(m);
+        }
+
+        System.out.println("print all validMoves for black on this board");
+        allValidMoves = e.generateMoves(true);
+        for(Move m: allValidMoves){
+            System.out.println(m);
+        }
+        
+        System.out.println("make a move, pawn to e4, and then undo it");
     }
 }
