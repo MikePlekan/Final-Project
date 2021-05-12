@@ -188,5 +188,25 @@ public class Test
         System.out.println(e);
         e.undoMove();
         System.out.println(e);
+        
+        System.out.println("creating a new board to check generateLegalMoves()");
+        Board f = new Board();
+        f.movePiece("f2","f3");
+        f.movePiece("e7","e5");
+        f.movePiece("g2","g4");
+        f.movePiece("d8","h4");
+        System.out.println(f);
+        System.out.println("checking generateMoves() and generateLegalMoves() for white, the second list should be empty");
+        allValidMoves = f.generateMoves(false);
+        for(Move m: allValidMoves){
+            System.out.println(m);
+        }
+        System.out.println();
+        ArrayList<Move> allLegalMoves = f.generateLegalMoves(false);
+        for(Move m: allLegalMoves){
+            System.out.println(m);
+        }
+        
+        
     }
 }

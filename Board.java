@@ -151,8 +151,8 @@ public class Board
     public boolean playerToMove(){
         return playerToMove;
     }
-    
-     /**
+
+    /**
      * Moves the piece on a selectedSquare to targetSquare if it is a valid move
      * 
      * @param selectedSquare string presentation of the square of a piece you wish to move
@@ -162,7 +162,7 @@ public class Board
         int select = Arrays.asList(notation).indexOf(selectedSquare);
         int target = Arrays.asList(notation).indexOf(targetSquare);
         movePiece(select,target);
-        
+
     }
 
     /**
@@ -175,13 +175,18 @@ public class Board
 
         if(targetSquare < 64 && targetSquare > -1){
             if(board[selectedSquare] != null){
-                ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
-                if(validMoves.contains(targetSquare)){
+                //ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
+                
+                ArrayList<Move> legalMoves = generateLegalMoves(board[selectedSquare].color);
+                Move desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
 
-                    moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
-
+                // if(validMoves.contains(targetSquare)){
+                    // moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
+                    // board[selectedSquare].move(this,targetSquare);
+                // }
+                if(legalMoves.contains(desiredMove)){
+                    moves.push(desiredMove);
                     board[selectedSquare].move(this,targetSquare);
-
                 }
             }
         } else {
@@ -197,19 +202,19 @@ public class Board
         placePiece(board[undoneMove.targetSquare],undoneMove.initialSquare);
         board[undoneMove.targetSquare] = null;
         board[undoneMove.initialSquare].currentSquare = undoneMove.initialSquare;
-        
+
         // if a piece was captured, it puts it back to the square it was on
         if(undoneMove.pieceCaptured != null){
             placePiece(undoneMove.pieceCaptured,undoneMove.pieceCaptured.currentSquare);
-            
+
         }
-        
+
         // If a piece was previously moved or not moved then when we move the piece back we make sure it is in its proper state
-        
+
         if(board[undoneMove.initialSquare] instanceof MovedPiece){
-                    MovedPiece p = (MovedPiece) board[undoneMove.initialSquare];
-                    p.moved = undoneMove.previouslyMoved;
-                }
+            MovedPiece p = (MovedPiece) board[undoneMove.initialSquare];
+            p.moved = undoneMove.previouslyMoved;
+        }
 
     }
 
@@ -355,9 +360,41 @@ public class Board
         return allValidMoves;
     }
 
+    /**
+     * This currently does not work at all. Not even close.
+     */
     public ArrayList<Move> generateLegalMoves(boolean color){
+        ArrayList<Move> psuedoLegalMoves = generateMoves(color);
+        ArrayList<Move> illegalMoves = new ArrayList<Move>();
+        ArrayList<Move> opponentsResponses;
+        for(Move m: psuedoLegalMoves){
+            // generate all possible moves our opponent can play against us
+            opponentsResponses = generateMoves(!color);
 
-        return null;
+            if(!color){ // if the input color is white
+                for(Move om : opponentsResponses){
+
+                    //If our opponent has a move that targets our king after we make a move, that means we moved into check which is not allowed
+                    //As such we much remove it from our list of moves
+                    if(om.targetSquare == whiteKing.currentSquare){
+                        illegalMoves.add(m);
+                    }
+                }
+            } else { // if the input color is black
+                for(Move om : opponentsResponses){
+
+                    //If our opponent has a move that targets our king after we make a move, that means we moved into check which is not allowed
+                    //As such we much remove it from our list of moves
+                    if(om.targetSquare == blackKing.currentSquare){
+                        illegalMoves.remove(m);
+                    }
+                }
+            }
+        }
+        //psuedoLegalMoves should now just be legal moves
+        //System.out.println(psuedoLegalMoves.removeAll(illegalMoves));
+        psuedoLegalMoves.removeAll(illegalMoves);
+        return psuedoLegalMoves;
     }
 
     public boolean check(){
