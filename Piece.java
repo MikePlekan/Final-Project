@@ -15,6 +15,48 @@ public abstract class Piece
 
     abstract public ArrayList<Integer> validMoves(Board b);
 
+    public ArrayList<Integer> legalMoves(Board b){
+        ArrayList<Integer> validMoves = b.board[currentSquare].validMoves(b);
+        ArrayList<Move> illegalMoves = new ArrayList<Move>();
+        ArrayList<Move> psuedoLegalMoves = new ArrayList<Move>();
+        for(Integer j: validMoves){
+            psuedoLegalMoves.add(new Move(b,b.board[currentSquare].getPieceStr(),currentSquare,j,b.board[j]));
+        }
+         ArrayList<Move> opponentsResponses;
+        for(Move m: psuedoLegalMoves){
+            // generate all possible moves our opponent can play against us
+            opponentsResponses = b.generateMoves(!color);
+
+            if(!color){ // if the input color is white
+                for(Move om : opponentsResponses){
+
+                    //If our opponent has a move that targets our king after we make a move, that means we moved into check which is not allowed
+                    //As such we much remove it from our list of moves
+                    if(om.targetSquare == b.whiteKing.currentSquare){
+                        illegalMoves.add(m);
+                    }
+                }
+            } else { // if the input color is black
+                for(Move om : opponentsResponses){
+
+                    //If our opponent has a move that targets our king after we make a move, that means we moved into check which is not allowed
+                    //As such we much remove it from our list of moves
+                    if(om.targetSquare == b.blackKing.currentSquare){
+                        illegalMoves.remove(m);
+                    }
+                }
+            }
+        }
+       
+        for(Move m : illegalMoves){
+            if(validMoves.contains(m.targetSquare)){
+                validMoves.remove(m.targetSquare);
+            }
+        }
+
+        return validMoves;
+    }
+
     /**
      * Returns the color of a piece object as a boolean. If returns false, then it is a black piece, if white it returns true.
      * 
@@ -39,14 +81,13 @@ public abstract class Piece
     }
 
     abstract public String getPieceStr();
-    
+
     public String getPieceStrColor(){
         if(color){return getPieceStr().toLowerCase();
         } else {
             return getPieceStr().toUpperCase();
         }
     }
-    
 
     /**
      * Note: This method may be uncessary.
@@ -86,9 +127,7 @@ public abstract class Piece
         b.board[targetSquare] = this;
         b.board[currentSquare] = null;
         currentSquare = targetSquare;
-        
 
     }
-
     
 }

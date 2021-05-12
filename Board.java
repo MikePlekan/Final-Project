@@ -64,6 +64,8 @@ public class Board
     protected boolean playerToMove = false;
 
     protected Boolean winner = null;
+    
+    protected String pieceToPromoteTo = "Q";
 
     /**
      * Default constructor for the board class, results in the chess starting position
@@ -194,6 +196,26 @@ public class Board
         }
 
     }
+    
+    public void checkMovePiece(int selectedSquare, int targetSquare){
+        if(targetSquare < 64 && targetSquare > -1){
+            if(board[selectedSquare] != null){
+                ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
+                
+             
+                Move desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
+
+                if(validMoves.contains(targetSquare)){
+                    moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
+                    board[selectedSquare].move(this,targetSquare);
+                }
+                
+            }
+        } else {
+            throw new IndexOutOfBoundsException("targetSquare is out of bounds");
+        }
+
+    }
 
     public void undoMove(){
         //gets the last move made by the moves deque
@@ -218,10 +240,23 @@ public class Board
 
     }
 
+    /**
+     * Places piece on board. 
+     * 
+     * @param p Piece to be placed on the board
+     * @param targetSquare integer representation of the square the piece is being placed on
+     */
     public void placePiece(Piece p, int targetSquare){
         board[targetSquare] = p;
     }
 
+    /**
+     * Places piece on board
+     * 
+     * @param c char representation of a piece, valid inputs are K,Q,R,N,B,P
+     * if pawn is black, the char should be lowercase.
+     * @param targetSquare integer representation of the square the piece is being placed on
+     */
     public void placePiece(char c, int targetSquare){
         if(targetSquare < 64 && targetSquare > -1){
             switch(c){
@@ -278,7 +313,11 @@ public class Board
     }
 
     /**
+     * Places piece on board.This method should only be used in the Board constructors.
      * 
+     * @param s String representation of a piece, valid inputs are K,Q,R,N,B,P
+     * if pawn is black, the string should be lowercase.
+     * @param targetSquare integer representation of the square the piece is being placed on
      */
     public void placePiece(String s, int targetSquare){
         if(targetSquare < 64 && targetSquare > -1){
@@ -369,6 +408,7 @@ public class Board
         ArrayList<Move> opponentsResponses;
         for(Move m: psuedoLegalMoves){
             // generate all possible moves our opponent can play against us
+            checkMovePiece(m.initialSquare,m.targetSquare);
             opponentsResponses = generateMoves(!color);
 
             if(!color){ // if the input color is white
@@ -376,7 +416,7 @@ public class Board
 
                     //If our opponent has a move that targets our king after we make a move, that means we moved into check which is not allowed
                     //As such we much remove it from our list of moves
-                    if(om.targetSquare == whiteKing.currentSquare){
+                    if(whiteKing != null && om.targetSquare == whiteKing.currentSquare){
                         illegalMoves.add(m);
                     }
                 }
@@ -385,11 +425,12 @@ public class Board
 
                     //If our opponent has a move that targets our king after we make a move, that means we moved into check which is not allowed
                     //As such we much remove it from our list of moves
-                    if(om.targetSquare == blackKing.currentSquare){
-                        illegalMoves.remove(m);
+                    if(blackKing != null && om.targetSquare == blackKing.currentSquare){
+                        illegalMoves.add(m);
                     }
                 }
             }
+            undoMove();
         }
         //psuedoLegalMoves should now just be legal moves
         //System.out.println(psuedoLegalMoves.removeAll(illegalMoves));

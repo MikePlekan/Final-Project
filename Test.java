@@ -207,6 +207,21 @@ public class Test
             System.out.println(m);
         }
         
-        
+        System.out.println("creating a new board to check if generateLegalMoves find the only moves that avoids checkmate");
+        Board g = new Board(true);
+        g.placePiece("k",7);
+        g.placePiece("p",14);
+        g.placePiece("p",15);
+        g.placePiece("R",1);
+        g.placePiece("r",13);
+        System.out.println(g);
+        validMoves = g.board[1].validMoves(g);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        allLegalMoves = g.generateLegalMoves(true);
+        for(Move m: allLegalMoves){
+            System.out.println(m);
+        }
     }
 }
