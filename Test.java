@@ -155,6 +155,38 @@ public class Test
             System.out.println(m);
         }
         
-        System.out.println("make a move, pawn to e4, and then undo it");
+        System.out.println("make a move, pawn to a4, and then undo it, then do it again");
+        validMoves = e.board[48].validMoves(e);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        e.movePiece(48,32);
+        System.out.println(e);
+        
+        e.undoMove();
+        System.out.println(e);
+        
+        validMoves = e.board[48].validMoves(e);
+        for(Integer i: validMoves){
+            System.out.println(Board.notation[i]);
+        }
+        
+        e.movePiece(48,32);
+        System.out.println(e);
+        
+        System.out.println("make the move knight to c3, then undo it");
+        e.movePiece("b1","c3");
+        System.out.println(e);
+        e.undoMove();
+        System.out.println(e);
+        
+        System.out.println("Lets try undoing a capture");
+        e.movePiece("e2","e4");
+        e.movePiece("d7","d5");
+        System.out.println(e);
+        e.movePiece("e4","d5");
+        System.out.println(e);
+        e.undoMove();
+        System.out.println(e);
     }
 }

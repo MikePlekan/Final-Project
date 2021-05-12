@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.ArrayDeque;
 
@@ -150,6 +151,19 @@ public class Board
     public boolean playerToMove(){
         return playerToMove;
     }
+    
+     /**
+     * Moves the piece on a selectedSquare to targetSquare if it is a valid move
+     * 
+     * @param selectedSquare string presentation of the square of a piece you wish to move
+     * @param targetSquare string representation of the square where the piece is being moved too
+     */
+    public void movePiece(String selectedSquare, String targetSquare){
+        int select = Arrays.asList(notation).indexOf(selectedSquare);
+        int target = Arrays.asList(notation).indexOf(targetSquare);
+        movePiece(select,target);
+        
+    }
 
     /**
      * Moves the piece on a selectedSquare to targetSquare if it is a valid move
@@ -163,9 +177,9 @@ public class Board
             if(board[selectedSquare] != null){
                 ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
                 if(validMoves.contains(targetSquare)){
-                    if(board[targetSquare] != null){
-                        moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
-                    }
+
+                    moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
+
                     board[selectedSquare].move(this,targetSquare);
 
                 }
@@ -180,20 +194,25 @@ public class Board
         //gets the last move made by the moves deque
         Move undoneMove = moves.pop();
         //moves the moved piece back to its original square
-        movePiece(undoneMove.targetSquare,undoneMove.initialSquare);
-        // if a piece was captured, it puts it back to the square it was on
-        placePiece(undoneMove.pieceCaptured,undoneMove.targetSquare);
+        placePiece(board[undoneMove.targetSquare],undoneMove.initialSquare);
+        board[undoneMove.targetSquare] = null;
+        board[undoneMove.initialSquare].currentSquare = undoneMove.initialSquare;
         
-        Piece undonePiece = board[undoneMove.initialSquare];
-        // If a piece was previously moved or not moved then when we move the piece back we make sure it is in its proper state
-        if(undonePiece instanceof MovedPiece){
-            MovedPiece p = (MovedPiece) undonePiece;
-            p.moved = undoneMove.previouslyMoved;
+        // if a piece was captured, it puts it back to the square it was on
+        if(undoneMove.pieceCaptured != null){
+            placePiece(undoneMove.pieceCaptured,undoneMove.pieceCaptured.currentSquare);
+            
         }
         
+        // If a piece was previously moved or not moved then when we move the piece back we make sure it is in its proper state
+        
+        if(board[undoneMove.initialSquare] instanceof MovedPiece){
+                    MovedPiece p = (MovedPiece) board[undoneMove.initialSquare];
+                    p.moved = undoneMove.previouslyMoved;
+                }
 
     }
-    
+
     public void placePiece(Piece p, int targetSquare){
         board[targetSquare] = p;
     }

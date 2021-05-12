@@ -64,15 +64,9 @@ public class Pawn extends MovedPiece
         int x = color ? 1 : 0;
 
         Integer[] n = b.numSquaresToEdge.get(currentSquare);
-        int j;
+        int j = 0;
         if(moved){
             j = 1; 
-        } else if (color && currentSquare / 8 == 1){
-            j = 0;
-        } else if (!color && currentSquare / 8 == 6){
-            j = 0;
-        } else {
-            j = 1;
         }
 
         int i = direction[x];
@@ -87,7 +81,7 @@ public class Pawn extends MovedPiece
             if(b.board[checkingSquare] == null){
                 //empty square
                 validMoves.add(checkingSquare);
-                moved = true;
+                
             }
             j++;
         }
