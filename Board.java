@@ -65,6 +65,8 @@ public class Board
 
     protected Boolean winner = null;
     
+    protected boolean gameEnded = false;
+
     protected String pieceToPromoteTo = "Q";
 
     /**
@@ -178,13 +180,13 @@ public class Board
         if(targetSquare < 64 && targetSquare > -1){
             if(board[selectedSquare] != null){
                 //ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
-                
+
                 ArrayList<Move> legalMoves = generateLegalMoves(board[selectedSquare].color);
                 Move desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
 
                 // if(validMoves.contains(targetSquare)){
-                    // moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
-                    // board[selectedSquare].move(this,targetSquare);
+                // moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
+                // board[selectedSquare].move(this,targetSquare);
                 // }
                 if(legalMoves.contains(desiredMove)){
                     moves.push(desiredMove);
@@ -196,20 +198,18 @@ public class Board
         }
 
     }
-    
+
     public void checkMovePiece(int selectedSquare, int targetSquare){
         if(targetSquare < 64 && targetSquare > -1){
             if(board[selectedSquare] != null){
                 ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
-                
-             
-                Move desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
 
+                Move desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
                 if(validMoves.contains(targetSquare)){
                     moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
                     board[selectedSquare].move(this,targetSquare);
                 }
-                
+
             }
         } else {
             throw new IndexOutOfBoundsException("targetSquare is out of bounds");
@@ -435,11 +435,25 @@ public class Board
         //psuedoLegalMoves should now just be legal moves
         //System.out.println(psuedoLegalMoves.removeAll(illegalMoves));
         psuedoLegalMoves.removeAll(illegalMoves);
+        if(psuedoLegalMoves.size() == 0){
+            endGame();
+        }
         return psuedoLegalMoves;
     }
 
     public boolean check(){
         return false;
+    }
+
+    public void endGame(){
+        if(!playerToMove && whiteKing.checked){
+            winner = false;
+        } else if (playerToMove && blackKing.checked){
+            winner = true;
+        } else {
+            winner = null;
+        }
+        gameEnded = true;
     }
 
     public Boolean getWinner(){

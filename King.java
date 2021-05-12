@@ -9,7 +9,7 @@ public class King extends MovedPiece
 {
     public Integer[] direction = {-1,1,-8,8,-7,7,-9,9};
 
-    private boolean checked = false;
+    protected boolean checked = false;
 
     /**
      * Standard constructor for the King object.
