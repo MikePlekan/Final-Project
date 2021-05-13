@@ -446,9 +446,9 @@ public class Board
     }
 
     public void endGame(){
-        if(!playerToMove && whiteKing.checked){
+        if(whiteKing.checked){
             winner = false;
-        } else if (playerToMove && blackKing.checked){
+        } else if (blackKing.checked){
             winner = true;
         } else {
             winner = null;
