@@ -223,5 +223,14 @@ public class Test
         for(Move m: allLegalMoves){
             System.out.println(m);
         }
+        System.out.println("testing pawn promotion, currently promote to queen");
+        Board h = new Board(true);
+        h.placePiece("P",15);
+        h.placePiece("P",9);
+        h.placePiece("q",0);
+        System.out.println(h);
+        h.movePiece(9,0);
+        System.out.println(h);
+       
     }
 }

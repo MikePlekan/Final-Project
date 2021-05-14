@@ -64,10 +64,11 @@ public class Board
     protected boolean playerToMove = false;
 
     protected Boolean winner = null;
-    
+
     protected boolean gameEnded = false;
 
-    protected String pieceToPromoteTo = "Q";
+    // if Q, queen, if N, then knight, if R, then rook, if B, then bishop
+    protected String promoteTo = "Q";
 
     /**
      * Default constructor for the board class, results in the chess starting position
@@ -175,31 +176,79 @@ public class Board
      * @param selectedSquare integer representation of the square of a piece you wish to move
      * @param targetSquare integer representation of the square where the piece is being moved too
      */
-    public void movePiece(int selectedSquare, int targetSquare){
+    public boolean movePiece(int selectedSquare, int targetSquare){
+        boolean legal = false;
+        //we must check that the game has not ended first, as if there is a checkmate or stalemate the game has come to an end
+        if(!gameEnded){
 
-        if(targetSquare < 64 && targetSquare > -1){
-            if(board[selectedSquare] != null){
-                //ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
+            if(targetSquare < 64 && targetSquare > -1){
+                if(board[selectedSquare] != null){
+                    //first we generate all our possible legal moves, then we check if the move we want to make is allowed.
 
-                ArrayList<Move> legalMoves = generateLegalMoves(board[selectedSquare].color);
-                Move desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
+                    ArrayList<Move> legalMoves = generateLegalMoves(board[selectedSquare].color);
+                    Move desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
 
-                // if(validMoves.contains(targetSquare)){
-                // moves.push(new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]));
-                // board[selectedSquare].move(this,targetSquare);
-                // }
-                if(legalMoves.contains(desiredMove)){
-                    moves.push(desiredMove);
-                    board[selectedSquare].move(this,targetSquare);
+                    if(legalMoves.contains(desiredMove)){
+                        moves.push(desiredMove);
+                        board[selectedSquare].move(this,targetSquare);
+                        legal = true;
+
+                        //code for promotion here, only checks if the piece is a pawn and if it has reached the end of the board
+                        // check the promote method for more info
+                        if(board[targetSquare] instanceof Pawn){
+                            promote(targetSquare);
+                        }
+                        //code for checking if a king is in check, this impacts whether a player is in checkmate or stalemate
+                        ArrayList<Integer> checkForCheck = allAttackedSquares(board[targetSquare].color);
+                        if(board[targetSquare].color) { // if the piece is black
+                            if(whiteKing != null && checkForCheck.contains(whiteKing.currentSquare)){
+                                whiteKing.checked = true;
+
+                            } else if (whiteKing != null){
+                                whiteKing.checked = false;
+                            }
+
+                        } else {
+                            if(blackKing != null && checkForCheck.contains(whiteKing.currentSquare)){
+                                whiteKing.checked = true;
+                            } else if (blackKing != null) {
+                                whiteKing.checked = false;
+                            }
+
+                        }
+
+                    }
+
                 }
+
             }
         } else {
             throw new IndexOutOfBoundsException("targetSquare is out of bounds");
         }
-
+        return legal;
     }
 
-    public void checkMovePiece(int selectedSquare, int targetSquare){
+    /**
+     * Helper method that promotes a pawn that has reached the end of the board.
+     */
+    private void promote(int targetSquare){
+        if(targetSquare / 8 == 0){
+            if(!promoteTo.equals("R")){
+                placePiece(promoteTo.toUpperCase(),targetSquare);
+            } else if (promoteTo.equals("R")){
+                board[targetSquare] = new Rook(false,targetSquare,true);
+            }
+
+        } else if (targetSquare / 8 == 7){
+            if(!promoteTo.equals("R")){
+                placePiece(promoteTo.toLowerCase(),targetSquare);
+            } else if (promoteTo.equals("R")){
+                board[targetSquare] = new Rook(true,targetSquare,true);
+            }
+        }
+    }
+
+    private void checkMovePiece(int selectedSquare, int targetSquare){
         if(targetSquare < 64 && targetSquare > -1){
             if(board[selectedSquare] != null){
                 ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);
@@ -383,6 +432,20 @@ public class Board
      */
     public boolean turn(int selectedSquare, int targetSquare, String promote){
         return false;
+    }
+
+    /**
+     * This is simply a helper method to make sure to calculate if a king is in check or not
+     */
+    private ArrayList<Integer> allAttackedSquares(boolean color){
+        ArrayList<Integer> validMoves = new ArrayList<Integer>();
+        for(int i = 0; i < 64; i++){
+            if(board[i] != null && board[i].color == color){
+                validMoves.addAll(board[i].validMoves(this));
+
+            }
+        }
+        return validMoves;
     }
 
     public ArrayList<Move> generateMoves(boolean color){

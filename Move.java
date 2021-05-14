@@ -13,6 +13,7 @@ public class Move
     protected int targetSquare;
     protected Piece pieceCaptured;
     protected boolean previouslyMoved = false;
+    protected String promotion = "";
 
     public Move(Board b,String s, int initialSquare,int targetSquare, Piece pieceCaptured){
         if(!s.equals("P")){
@@ -35,9 +36,9 @@ public class Move
     @Override
     public String toString(){
         if(pieceCaptured != null){
-            return s + Board.notation[initialSquare] + "x" + Board.notation[targetSquare];
+            return s + Board.notation[initialSquare] + "x" + Board.notation[targetSquare] + promotion;
         } else {
-            return s + Board.notation[initialSquare] + "-" + Board.notation[targetSquare];
+            return s + Board.notation[initialSquare] + "-" + Board.notation[targetSquare] + promotion;
         }
     }
     
