@@ -227,9 +227,11 @@ public class Test
         Board h = new Board(true);
         h.placePiece("P",15);
         h.placePiece("P",9);
+        h.placePiece("p",11);
         h.placePiece("q",0);
         System.out.println(h);
         h.movePiece(9,0);
+        h.movePiece(11,3);
         System.out.println(h);
        
     }

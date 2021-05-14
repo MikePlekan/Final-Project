@@ -197,6 +197,7 @@ public class Board
                         // check the promote method for more info
                         if(board[targetSquare] instanceof Pawn){
                             promote(targetSquare);
+                            desiredMove.promotion = "=" + promoteTo;
                         }
                         //code for checking if a king is in check, this impacts whether a player is in checkmate or stalemate
                         ArrayList<Integer> checkForCheck = allAttackedSquares(board[targetSquare].color);
