@@ -97,6 +97,9 @@ public class Pawn extends MovedPiece
                     validMoves.add(checkingSquare);
                 }
             }
+            // if(color && b.enPassantSquare + 8 == checkingSquare){
+                //attempted to add in enpassant implementation
+            // }
         }
 
         checkingSquare = currentSquare;

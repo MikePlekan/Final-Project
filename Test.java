@@ -61,11 +61,11 @@ public class Test
         for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
-        a.movePiece(29,0);
-        System.out.println(a);
+       // a.movePiece(29,0);
+        //System.out.println(a);
 
         System.out.println("Invalid rook move to c4");
-        a.movePiece(2,34);
+       // a.movePiece(2,34);
         System.out.println(a);
 
         System.out.println("Valid rook move to h8");
@@ -154,7 +154,7 @@ public class Test
         for(Move m: allValidMoves){
             System.out.println(m);
         }
-        
+
         System.out.println("make a move, pawn to a4, and then undo it, then do it again");
         validMoves = e.board[48].validMoves(e);
         for(Integer i: validMoves){
@@ -162,24 +162,24 @@ public class Test
         }
         e.movePiece(48,32);
         System.out.println(e);
-        
+
         e.undoMove();
         System.out.println(e);
-        
+
         validMoves = e.board[48].validMoves(e);
         for(Integer i: validMoves){
             System.out.println(Board.notation[i]);
         }
-        
+
         e.movePiece(48,32);
         System.out.println(e);
-        
+
         System.out.println("make the move knight to c3, then undo it");
         e.movePiece("b1","c3");
         System.out.println(e);
         e.undoMove();
         System.out.println(e);
-        
+
         System.out.println("Lets try undoing a capture");
         e.movePiece("e2","e4");
         e.movePiece("d7","d5");
@@ -188,7 +188,7 @@ public class Test
         System.out.println(e);
         e.undoMove();
         System.out.println(e);
-        
+
         System.out.println("creating a new board to check generateLegalMoves()");
         Board f = new Board();
         f.movePiece("f2","f3");
@@ -206,7 +206,10 @@ public class Test
         for(Move m: allLegalMoves){
             System.out.println(m);
         }
-        
+        if(f.gameEnded){
+            System.out.println(f.winner);
+        }
+
         System.out.println("creating a new board to check if generateLegalMoves find the only moves that avoids checkmate");
         Board g = new Board(true);
         g.placePiece("k",7);
@@ -223,6 +226,27 @@ public class Test
         for(Move m: allLegalMoves){
             System.out.println(m);
         }
+        if(g.gameEnded){
+            System.out.println(g.winner);
+        } else {
+            System.out.println("game has not finished");
+        }
+        System.out.println("then play Rf8, and Rxf8#");
+        g.movePiece("f7","f8");
+        System.out.println(g);
+        g.movePiece("b8","f8");
+        System.out.println(g);
+        if(g.gameEnded){
+            System.out.println(g.winner);
+        } else {
+            System.out.println("game has not finished");
+        }
+        
+        allLegalMoves = g.generateLegalMoves(true);
+        for(Move m: allLegalMoves){
+            System.out.println(m);
+        }
+        
         System.out.println("testing pawn promotion, currently promote to queen");
         Board h = new Board(true);
         h.placePiece("P",15);
@@ -233,6 +257,6 @@ public class Test
         h.movePiece(9,0);
         h.movePiece(11,3);
         System.out.println(h);
-       
+
     }
 }

@@ -209,23 +209,29 @@ public class Board
                                 whiteKing.checked = false;
                             }
 
-                        } else {
-                            if(blackKing != null && checkForCheck.contains(whiteKing.currentSquare)){
-                                whiteKing.checked = true;
+                        } else { // if the piece that was moved was white
+                            if(blackKing != null && checkForCheck.contains(blackKing.currentSquare)){
+                                blackKing.checked = true;
                             } else if (blackKing != null) {
                                 whiteKing.checked = false;
                             }
 
+                        }
+                        //this is to check for any possible checkmate or stalemate after a move is played. Yes I know this is inefficient,
+                        ArrayList<Move> opponentMoves = generateLegalMoves(!board[targetSquare].color);
+                        if(opponentMoves != null && opponentMoves.size() == 0){
+                        endGame();
                         }
 
                     }
 
                 }
 
-            }
-        } else {
-            throw new IndexOutOfBoundsException("targetSquare is out of bounds");
+            }else {
+                throw new IndexOutOfBoundsException("targetSquare is out of bounds");
+            } 
         }
+
         return legal;
     }
 
@@ -510,9 +516,9 @@ public class Board
     }
 
     public void endGame(){
-        if(whiteKing.checked){
+        if(whiteKing != null && whiteKing.checked){
             winner = false;
-        } else if (blackKing.checked){
+        } else if (blackKing != null && blackKing.checked){
             winner = true;
         } else {
             winner = null;
