@@ -104,11 +104,7 @@ public class ChessGame implements Runnable, ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource().equals(reset)){
-            won=false;
-            return;
-        }
-        if (won)
-        {
+            board=new Board();
             return;
         }
         for (r = 0; r < SIZE; r++)
@@ -120,10 +116,10 @@ public class ChessGame implements Runnable, ActionListener
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
                         lastvalid=(ArrayList<Integer>)valid.clone();
                         valid.clear();
-                            for (int i:lastvalid)
-                            {
-                                setcolor(i/8,i%8);
-                            }
+                        for (int i:lastvalid)
+                        {
+                            setcolor(i/8,i%8);
+                        }
                     }
                     else{
                         lastvalid=(ArrayList<Integer>)valid.clone();
@@ -137,7 +133,7 @@ public class ChessGame implements Runnable, ActionListener
                             {
                                 setcolor(i/8,i%8);
                             }
-                            
+
                         }
                         else{
 
@@ -146,7 +142,7 @@ public class ChessGame implements Runnable, ActionListener
                             {
                                 setcolor(i/8,i%8);
                             }
-                            
+
                         }
                     }
                     lastClick.x=r;
