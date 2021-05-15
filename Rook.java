@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.*;
 /**
  * Class used to represent a Rook piece in a game of chess
  *
@@ -19,6 +20,10 @@ public class Rook extends MovedPiece
         this.currentSquare = initialSquare;
         this.color = color;
         this.moved = false;
+        if(color)file="BlackRook.png";
+        else file="WhiteRook.png";
+        Toolkit toolkit=Toolkit.getDefaultToolkit();
+        pic=toolkit.getImage(file);
     }
     
     /**

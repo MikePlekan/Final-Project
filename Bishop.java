@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.*;
 /**
  * Class used to represent a Bishop piece in a game of chess
  *
@@ -18,6 +19,10 @@ public class Bishop extends Piece
     public Bishop(boolean color, int initialSquare){
         this.currentSquare = initialSquare;
         this.color = color;
+        if(color)file="BlackBishop.png";
+        else file="WhiteBishop.png";
+        Toolkit toolkit=Toolkit.getDefaultToolkit();
+        pic=toolkit.getImage(file);
     }
 
     

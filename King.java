@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.*;
 /**
  * Class used to represent a King piece in a game of chess
  *
@@ -21,6 +22,10 @@ public class King extends MovedPiece
         this.currentSquare = initialSquare;
         this.color = color;
         this.moved = false;
+        if(color)file="BlackKing.png";
+        else file="WhiteKing.png";
+        Toolkit toolkit=Toolkit.getDefaultToolkit();
+        pic=toolkit.getImage(file);
     }
 
     /**

@@ -1,21 +1,23 @@
-
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.util.*;
+import java.awt.event.*;
 /**
  * Write a description of class Square here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Square
+public class Square extends JButton
 {
-    private int color;
-    public Piece piece;
-    
-    public int x;
-    public int y;
+    public int row;
+    public int col;
     
     public Square(int row, int col)
     {
-        x = col;
-        y = row;
+        super("");
+        this.col = col;
+        this.row = row;
     }
 }

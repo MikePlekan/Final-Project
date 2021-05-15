@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.*;
 /**
  * Class used to represent a Pawn piece in a game of chess
  *
@@ -23,6 +24,10 @@ public class Pawn extends MovedPiece
         this.currentSquare = initialSquare;
         this.color = color;
         this.moved = false;
+        if(color)file="BlackPawn.png";
+        else file="WhitePawn.png";
+        Toolkit toolkit=Toolkit.getDefaultToolkit();
+        pic=toolkit.getImage(file);
     }
 
     /**

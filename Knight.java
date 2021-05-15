@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.*;
 /**
  * Class used to represent a Knight piece in a game of chess
  *
@@ -18,6 +19,10 @@ public class Knight extends Piece
     public Knight(boolean color, int initialSquare){
         this.currentSquare = initialSquare;
         this.color = color;
+        if(color)file="BlackKnight.png";
+        else file="WhiteKnight.png";
+        Toolkit toolkit=Toolkit.getDefaultToolkit();
+        pic=toolkit.getImage(file);
     }
 
     public String getPieceStr(){

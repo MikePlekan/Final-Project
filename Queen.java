@@ -24,22 +24,6 @@ public class Queen extends Piece
         pic=toolkit.getImage(file);
     }
 
-    /**
-     * This constructor, although likely unnessary, assumes that the queen is starting in its standard board position.
-     * Where if black, the Queen's currentSquare is d8, or 3, and if White, the Queen's current square is d1, or 59
-     */
-    public Queen(boolean color){
-        this.color = color;
-        if(color){
-            this.currentSquare = 3;
-            file="BlackQueen.png";
-        } else {
-            this.currentSquare = 59;
-            file="WhiteQueen.png";
-        }
-        Toolkit toolkit=Toolkit.getDefaultToolkit();
-        pic=toolkit.getImage(file);
-    }
     public String getPieceStr(){
         return "Q";
     }
