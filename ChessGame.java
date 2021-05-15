@@ -52,6 +52,7 @@ public class ChessGame implements Runnable, ActionListener
         info.add(reset,BorderLayout.EAST);
 
         color = new JComboBox(colorOptions);
+        color.addActionListener(this);
         info.add(color, BorderLayout.CENTER);
 
         GridLayout grid = new GridLayout(SIZE, SIZE);
@@ -112,6 +113,17 @@ public class ChessGame implements Runnable, ActionListener
             board=new Board();
             return;
         }
+        if (e.getSource().equals(color))
+        {
+            for (int i = 0; i < SIZE; i++)
+            {
+                for (int j = 0; j < SIZE; j++)
+                {
+                    setcolor(i, j);
+                }
+            }
+            return;
+        }
         for (r = 0; r < SIZE; r++)
         {
             for (c = 0; c < SIZE; c++)
@@ -156,6 +168,8 @@ public class ChessGame implements Runnable, ActionListener
                 }
             }
         }
+        
+        
 
     }
 
@@ -166,14 +180,60 @@ public class ChessGame implements Runnable, ActionListener
      * @param c this is the colum of the button
      */
     private void setcolor(int r,int c){
-        if(valid.contains((r*8)+c))squares[r][c].setBackground(Color.RED);
+        
+        Color color1;
+        Color color2;
+        Color validColor = Color.RED;
+        if (color.getSelectedIndex() == 0)
+        {
+            color1 = new Color(255, 228, 179);
+            color2 = new Color(158, 107, 71);
+        }
+        else if (color.getSelectedIndex() == 1)
+        {
+            color1 = new Color(255, 228, 179);
+            color2 = new Color(158, 107, 71);
+        }
+        else if (color.getSelectedIndex() == 2)
+        {
+            color1 = Color.YELLOW;
+            color2 = Color.ORANGE;
+        }
+        else if (color.getSelectedIndex() == 3)
+        {
+            color1 = new Color(255, 249, 209);
+            color2 = new Color(52, 173, 82);
+            //validColor = new Color(52, 86, 41);
+        }
+        else if (color.getSelectedIndex() == 4)
+        {
+            color1 = new Color(247, 204, 255);
+            color2 = new Color(141, 56, 201);
+        }
+        else if (color.getSelectedIndex() == 5)
+        {
+            color1 = Color.YELLOW;
+            color2 = Color.ORANGE;
+        }
+        else if (color.getSelectedIndex() == 6)
+        {
+            color1 = Color.YELLOW;
+            color2 = Color.ORANGE;
+        }
+        else
+        {
+            color1 = Color.YELLOW;
+            color2 = Color.ORANGE;
+        }
+        
+        if(valid.contains((r*8)+c))squares[r][c].setBackground(validColor);
         else{
             if (r%2!=0)
-                if(c%2==0)squares[r][c].setBackground(Color.ORANGE);
-                else squares[r][c].setBackground(Color.YELLOW);
+                if(c%2==0)squares[r][c].setBackground(color2);
+                else squares[r][c].setBackground(color1);
             else
-            if(c%2!=0)squares[r][c].setBackground(Color.ORANGE);
-            else squares[r][c].setBackground(Color.YELLOW);
+            if(c%2!=0)squares[r][c].setBackground(color2);
+            else squares[r][c].setBackground(color1);
         }
     }
 
