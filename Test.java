@@ -257,6 +257,37 @@ public class Test
         h.movePiece(9,0);
         h.movePiece(11,3);
         System.out.println(h);
+        
+        System.out.println("All starting legal moves on turn 1");
+        Board j = new Board();
+        allLegalMoves = j.generateLegalMoves(false);
+        for(Move m : allLegalMoves){
+            System.out.println(m);
+        }
+        j.movePiece("e2","e4");
+        j.movePiece("e7","e5");
+        j.movePiece("d1","h5");
+        j.movePiece("b8","c6");
+        j.movePiece("f1","c4");
+        System.out.println("Compare validMoves to legal Moves for black in this position");
+        System.out.println(j);
+        allValidMoves = j.generateMoves(true);
+        for(Move m: allValidMoves){
+            System.out.println(m);
+        }
+        System.out.println();
+        allLegalMoves = j.generateLegalMoves(true);
+        for(Move m : allLegalMoves){
+            System.out.println(m);
+        }
+        
+        j.movePiece("h5","e5");
+        System.out.println(j);
+        allLegalMoves = j.generateLegalMoves(true);
+        System.out.println("now all of blacks legal Moves");
+        for(Move m : allLegalMoves){
+            System.out.println(m);
+        }
 
     }
 }
