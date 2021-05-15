@@ -22,7 +22,7 @@ public class Board
      * current standard FEN takes a similar approach when loading in pieces.
      * As such 0 will represent the square a8, and 63 will represent h1.
      */ 
-    protected Piece[] board = new Piece[64];
+    public Piece[] board = new Piece[64];
 
     // protected ArrayList<Integer> whitePieces = new ArrayList<Integer>();
 
@@ -163,11 +163,11 @@ public class Board
      * @param selectedSquare string presentation of the square of a piece you wish to move
      * @param targetSquare string representation of the square where the piece is being moved too
      */
-    public void movePiece(String selectedSquare, String targetSquare){
+    public boolean movePiece(String selectedSquare, String targetSquare){
         int select = Arrays.asList(notation).indexOf(selectedSquare);
         int target = Arrays.asList(notation).indexOf(targetSquare);
-        movePiece(select,target);
-
+        return movePiece(select,target);
+        
     }
 
     /**
