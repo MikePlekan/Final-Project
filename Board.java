@@ -255,7 +255,7 @@ public class Board
         }
     }
 
-    private void checkMovePiece(int selectedSquare, int targetSquare){
+    protected void checkMovePiece(int selectedSquare, int targetSquare){
         if(targetSquare < 64 && targetSquare > -1){
             if(board[selectedSquare] != null){
                 ArrayList<Integer> validMoves = board[selectedSquare].validMoves(this);

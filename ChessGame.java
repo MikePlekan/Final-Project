@@ -147,7 +147,7 @@ public class ChessGame implements Runnable, ActionListener
                     }
                     lastClick.x=r;
                     lastClick.y=c;
-                    System.out.print(board);
+                    
                 }
             }
         }
