@@ -14,14 +14,12 @@ import java.util.Random;
  */
 public class ChessGame implements Runnable, ActionListener
 {
-    int size;
+    int size,r,c;
     boolean won=false;
     JButton[][] squares;
     JPanel info;
     JButton reset;
     Board board = new Board();
-    private static String[] file={"BlackQueen.png","WhiteQueen.png"};
-    private Image pic;
     JFrame win;
     /**
      * This contructs a lights out method
@@ -54,14 +52,33 @@ public class ChessGame implements Runnable, ActionListener
         JPanel framePanel = new JPanel(new BorderLayout());
         frame.add(framePanel);
         JPanel pan = new JPanel(grid);
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        sleep(20);
+                    }
+                    catch (InterruptedException e) {
+                    }
+                    pan.repaint();
+                }
+            }
+        }.start();
         pan.setPreferredSize(new Dimension(800,800));
-        frame.setResizable(false);
+        //frame.setResizable(false);
         squares = new JButton[size][size];
-        for (int r = 0; r < size; r++)
+        for (r = 0; r < size; r++)
         {
-            for (int c = 0; c < size; c++)
+            for (c = 0; c < size; c++)
             {
-                squares[r][c] = new JButton("");
+                squares[r][c] = new JButton(""){
+                    @Override
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        if(board.board[(r*8)+c].getPic()!=null)g.drawImage(board.board[(r*8)+c].getPic(),0,0,null);
+                    }
+                };
                 squares[r][c].setOpaque(true);
                 squares[r][c].setBorderPainted(false);
                 pan.add(squares[r][c]);
@@ -69,9 +86,9 @@ public class ChessGame implements Runnable, ActionListener
                 setcolor(r,c);
             }
         }
+
         framePanel.add(pan,BorderLayout.CENTER);
         framePanel.add(info,BorderLayout.SOUTH);
-        setboard();
         frame.pack();
         frame.setVisible(true);
     }
@@ -94,9 +111,9 @@ public class ChessGame implements Runnable, ActionListener
         {
             return;
         }
-        for (int r = 0; r < size; r++)
+        for (r = 0; r < size; r++)
         {
-            for (int c = 0; c < size; c++)
+            for (c = 0; c < size; c++)
             {
                 if(e.getSource().equals(squares[r][c])){
 
@@ -125,8 +142,8 @@ public class ChessGame implements Runnable, ActionListener
      * also resets the moves array and the number of clicks
      */
     private void setboard(){
-        board.board[0] = new Queen(true,0);
-        board.board[9]=new Queen(false,0);
+        board.placePiece("Q", 0);
+        board.placePiece("q", 1);
         if (won)
         {
             win.dispose();

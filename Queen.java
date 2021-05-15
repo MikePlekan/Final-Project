@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.*;
 /**
  * Class used to represent a Queen piece in a game of chess
  *
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 public class Queen extends Piece
 {
     public Integer[] direction = {-1,1,-8,8,-7,7,-9,9};
-
     /**
      * Standard constructor for the Queen object.
      * 
@@ -18,6 +18,10 @@ public class Queen extends Piece
     public Queen(boolean color, int initialSquare){
         this.currentSquare = initialSquare;
         this.color = color;
+        if(color)file="BlackQueen.png";
+        else file="WhiteQueen.png";
+        Toolkit toolkit=Toolkit.getDefaultToolkit();
+        pic=toolkit.getImage(file);
     }
 
     /**
@@ -28,12 +32,14 @@ public class Queen extends Piece
         this.color = color;
         if(color){
             this.currentSquare = 3;
+            file="BlackQueen.png";
         } else {
             this.currentSquare = 59;
+            file="WhiteQueen.png";
         }
-
+        Toolkit toolkit=Toolkit.getDefaultToolkit();
+        pic=toolkit.getImage(file);
     }
-
     public String getPieceStr(){
         return "Q";
     }

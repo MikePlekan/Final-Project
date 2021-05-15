@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.*;
 /**
  * Abstract class used to represent a chess man
  *
@@ -12,9 +13,12 @@ public abstract class Piece
 
     //Used to track what square a piece in on
     protected int currentSquare;
-
+    public String file;
+    public Image pic;
     abstract public ArrayList<Integer> validMoves(Board b);
-
+    public Image getPic(){
+        return pic;
+    }
     public ArrayList<Integer> legalMoves(Board b){
         ArrayList<Integer> validMoves = b.board[currentSquare].validMoves(b);
         ArrayList<Move> illegalMoves = new ArrayList<Move>();
