@@ -25,10 +25,12 @@ public class ChessGame implements Runnable, ActionListener
     ArrayList<Integer> valid=new ArrayList();
     ArrayList<Integer> lastvalid=new ArrayList();
     Point lastClick=new Point();
-    /**
-     * This contructs a lights out method
-     * @param SIZE this is the SIZE of the board
-     */
+    JComboBox color;
+    public static final String[] colorOptions = {"Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random"};
+            /**
+             * This contructs a lights out method
+             * @param SIZE this is the SIZE of the board
+             */
     public ChessGame(){}
 
     /**
@@ -48,6 +50,9 @@ public class ChessGame implements Runnable, ActionListener
         reset.setBorderPainted(false);
         reset.addActionListener(this);
         info.add(reset,BorderLayout.EAST);
+
+        color = new JComboBox(colorOptions);
+        info.add(color, BorderLayout.CENTER);
 
         GridLayout grid = new GridLayout(SIZE, SIZE);
         JPanel framePanel = new JPanel(new BorderLayout());
@@ -147,7 +152,7 @@ public class ChessGame implements Runnable, ActionListener
                     }
                     lastClick.x=r;
                     lastClick.y=c;
-                    
+
                 }
             }
         }
@@ -176,5 +181,9 @@ public class ChessGame implements Runnable, ActionListener
      * This is the main method, it calls on a lightsout object inorder to start the window
      * @param no input needed
      */
-    public static void main(String[] args){javax.swing.SwingUtilities.invokeLater(new ChessGame());}
+    public static void main(String[] args)
+    {
+        javax.swing.SwingUtilities.invokeLater(new ChessGame());
+
+    }
 }
