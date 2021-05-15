@@ -268,7 +268,7 @@ public class Test
         j.movePiece("e7","e5");
         j.movePiece("d1","h5");
         j.movePiece("b8","c6");
-        j.movePiece("f1","c4");
+        j.movePiece("f1","b5");
         System.out.println("Compare validMoves to legal Moves for black in this position");
         System.out.println(j);
         allValidMoves = j.generateMoves(true);
