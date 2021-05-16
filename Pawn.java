@@ -86,7 +86,7 @@ public class Pawn extends MovedPiece
             if(b.board[checkingSquare] == null){
                 //empty square
                 validMoves.add(checkingSquare);
-                
+
             }
             j++;
         }
@@ -101,10 +101,13 @@ public class Pawn extends MovedPiece
                     //if square is occupied by a piece of an opposing color
                     validMoves.add(checkingSquare);
                 }
+            } else {
+                if(color && b.enPassantSquare == currentSquare - 1){
+                    validMoves.add(checkingSquare);
+                } else if (!color && b.enPassantSquare == currentSquare + 1){
+                    validMoves.add(checkingSquare);
+                }
             }
-            // if(color && b.enPassantSquare + 8 == checkingSquare){
-                //attempted to add in enpassant implementation
-            // }
         }
 
         checkingSquare = currentSquare;
@@ -115,28 +118,15 @@ public class Pawn extends MovedPiece
                     //if square is occupied by a piece of an opposing color
                     validMoves.add(checkingSquare);
                 }
-            }
+            } else {
+                if(color && b.enPassantSquare == currentSquare + 1){
+                    validMoves.add(checkingSquare);
+                } else if (!color && b.enPassantSquare == currentSquare - 1){
+                    validMoves.add(checkingSquare);
+                }
 
+            }
         }
-        
-        // //this ungodly codeblock checks for en passant moves
-        // checkingSquare = currentSquare;
-        // if(!color){
-            // if(n[4 + x] > 0){
-                // checkingSquare += direction[2+x];
-                // if(b.board[currentSquare + 1] != null && b.board[currentSquare] instanceof Pawn){
-                    // Pawn p = (Pawn) b.board[currentSquare];
-                    // if(p.enPassantable){
-                        // validMoves.add(checkingSquare);
-                    // }
-                    
-                // }
-            // }
-            // checkingSquare = currentSquare;
-            // if(n[6 + x] > 0){
-                
-            // }
-        // }
 
         // later we need to create a method that removes methods that result in putting yourself in check
         //removeIllegalMoves();
@@ -151,14 +141,12 @@ public class Pawn extends MovedPiece
      */
     @Override
     public void move(Board b, int targetSquare){
-        if(Math.abs(currentSquare - targetSquare) == 16){
-            b.enPassantSquare = targetSquare;
-        }
+
         b.board[targetSquare] = this;
         b.board[currentSquare] = null;
         currentSquare = targetSquare;
         moved = true;
-
+        int x = b.board[targetSquare].color ? 1 : -1;
     }
 
     /**

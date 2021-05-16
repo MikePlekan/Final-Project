@@ -288,6 +288,10 @@ public class Test
         for(Move m : allLegalMoves){
             System.out.println(m);
         }
+        
+        System.out.println("testing en passant");
+        Board k = new Board();
+        k.movePiece("e2","e4");
 
     }
 }

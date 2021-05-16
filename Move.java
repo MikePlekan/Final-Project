@@ -14,6 +14,7 @@ public class Move
     protected Piece pieceCaptured;
     protected boolean previouslyMoved = false;
     protected String promotion = "";
+    protected int previousEnPassant;
 
     public Move(Board b,String s, int initialSquare,int targetSquare, Piece pieceCaptured){
         if(!s.equals("P")){
@@ -30,6 +31,7 @@ public class Move
         this.initialSquare = initialSquare;
         this.targetSquare = targetSquare;
         this.pieceCaptured = pieceCaptured;
+        previousEnPassant = b.enPassantSquare;
 
     }
 

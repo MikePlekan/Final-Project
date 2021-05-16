@@ -186,7 +186,13 @@ public class Board
                     //first we generate all our possible legal moves, then we check if the move we want to make is allowed.
 
                     ArrayList<Move> legalMoves = generateLegalMoves(board[selectedSquare].color);
-                    Move desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
+                    Move desiredMove;
+                    int x = board[selectedSquare].color ? -1 : 1;
+                    // this is to figure out if a move is en passant and if it is legal
+                    if(board[selectedSquare] instanceof Pawn && board[targetSquare] == null && enPassantSquare == targetSquare + (x * 8)){
+                        desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[enPassantSquare]);
+                    }
+                    desiredMove = new Move(this,board[selectedSquare].getPieceStr(),selectedSquare,targetSquare, board[targetSquare]);
 
                     if(legalMoves.contains(desiredMove)){
                         moves.push(desiredMove);
@@ -215,7 +221,20 @@ public class Board
                         //code for promotion here, only checks if the piece is a pawn and if it has reached the end of the board
                         // check the promote method for more info
                         if(board[targetSquare] instanceof Pawn){
+                            if(enPassantSquare == targetSquare + (x * 8)){
+                                desiredMove.pieceCaptured = board[enPassantSquare];
+                                board[enPassantSquare] = null;
+                               
+                            } else {
+                                if(Math.abs(selectedSquare - targetSquare) == 16){
+                                    enPassantSquare = targetSquare;
+                                } else {
+                                    enPassantSquare = -2;
+                                }
+                            }
                             if(promote(targetSquare)) desiredMove.promotion = "=" + promoteTo;
+                        } else {
+
                         }
                         //code for checking if a king is in check, this impacts whether a player is in checkmate or stalemate
                         ArrayList<Integer> checkForCheck = allAttackedSquares(board[targetSquare].color);
@@ -301,6 +320,7 @@ public class Board
         //gets the last move made by the moves deque
         Move undoneMove = moves.pop();
         //moves the moved piece back to its original square
+        enPassantSquare = undoneMove.previousEnPassant;
         placePiece(board[undoneMove.targetSquare],undoneMove.initialSquare);
         board[undoneMove.targetSquare] = null;
         board[undoneMove.initialSquare].currentSquare = undoneMove.initialSquare;
@@ -486,7 +506,12 @@ public class Board
             if(board[i] != null && board[i].color == color){
                 validMoves = board[i].validMoves(this);
                 for(Integer j: validMoves){
-                    allValidMoves.add(new Move(this,board[i].getPieceStr(),i,j,board[j]));
+                    int x = board[i].color ? 1 : -1;
+                    if((board[i] instanceof Pawn && board[j] == null && enPassantSquare > 0 && enPassantSquare == j + (x * 8))){
+                        allValidMoves.add(new Move(this,board[i].getPieceStr(),i,j, board[enPassantSquare]));
+                    } else {
+                        allValidMoves.add(new Move(this,board[i].getPieceStr(),i,j,board[j]));
+                    }
                 }
             }
         }
@@ -580,4 +605,12 @@ public class Board
         return sb.toString();
     }
 
+    private Piece getKing(boolean color){
+        if(color){
+            return blackKing;
+        } else {
+            return whiteKing;
+        }
+
+    }
 }
