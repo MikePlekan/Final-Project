@@ -146,6 +146,7 @@ public class ChessGame implements Runnable, ActionListener
     {
         if (e.getSource().equals(reset)){
             board=new Board();
+            notes.setLength(0);
             return;
         }
         if (e.getSource().equals(color))

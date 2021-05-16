@@ -12,6 +12,9 @@ public class Theme
     public Color validMove1;
     public Color validMove2;
 
-    
+    public Color getRandomMono()
+    {
+        return null;
+    }
 }
 
