@@ -82,11 +82,49 @@ public class King extends MovedPiece
         }
         // later we need to create a method that removes methods that result in putting yourself in check
         //removeIllegalMoves();
+        if(!moved && !checked){
+            if(b.board[currentSquare + 1] == null && 
+            b.board[currentSquare + 2] == null && 
+            b.board[currentSquare + 3] instanceof Rook){
+                Rook r = (Rook) b.board[currentSquare + 3];
+                if(!r.moved){      
+                    validMoves.add(currentSquare + 2);
+                }
+
+            }
+            if(b.board[currentSquare - 1] == null && 
+            b.board[currentSquare - 2] == null && 
+            b.board[currentSquare - 3] == null &&
+            b.board[currentSquare - 4] instanceof Rook){
+                Rook r = (Rook) b.board[currentSquare - 4];
+                if(!r.moved){      
+                    validMoves.add(currentSquare - 2);
+                }
+            }
+        }
         return validMoves;
     }
 
     public void check(){
         checked = true;
+    }
+
+    /**
+     * Moves a piece from its currentSquare to targetSquare
+     * 
+     * @param Board object that the piece is currently on
+     * @param targetSquare integer representation of the square where the piece is moving
+     */
+    @Override
+    public void move(Board b, int targetSquare){
+        
+            b.board[targetSquare] = this;
+            b.board[currentSquare] = null;
+            currentSquare = targetSquare;
+            moved = true;
+    
+            
+
     }
 
 }

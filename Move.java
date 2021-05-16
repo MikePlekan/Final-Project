@@ -22,10 +22,10 @@ public class Move
             s = "";
         }
         if(b.board[initialSquare] instanceof MovedPiece){
-            
+
             MovedPiece p = (MovedPiece) b.board[initialSquare];
             previouslyMoved = p.moved;
-        
+
         }
         this.initialSquare = initialSquare;
         this.targetSquare = targetSquare;
@@ -35,13 +35,24 @@ public class Move
 
     @Override
     public String toString(){
+        if(!s.equals("K") && !(Math.abs(initialSquare - targetSquare) > 1)){
+
+        } else {
+            if(targetSquare - initialSquare == 2){
+                return "O-O";
+            } else if(targetSquare - initialSquare == -2){
+                return "O-O-O";
+            }
+        }
+
         if(pieceCaptured != null){
+
             return s + Board.notation[initialSquare] + "x" + Board.notation[targetSquare] + promotion;
         } else {
             return s + Board.notation[initialSquare] + "-" + Board.notation[targetSquare] + promotion;
         }
     }
-    
+
     @Override
     public boolean equals(Object o){
         if(o instanceof Move){
@@ -52,11 +63,8 @@ public class Move
                 return false;
             }
         } else {
-           throw new ClassCastException("not a object of type Move");
+            throw new ClassCastException("not a object of type Move");
         }
-        
-    
-        
-    }
 
+    }
 }

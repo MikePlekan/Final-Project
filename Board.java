@@ -167,7 +167,7 @@ public class Board
         int select = Arrays.asList(notation).indexOf(selectedSquare);
         int target = Arrays.asList(notation).indexOf(targetSquare);
         return movePiece(select,target);
-        
+
     }
 
     /**
@@ -203,6 +203,7 @@ public class Board
                         if(board[targetSquare].color) { // if the piece is black
                             if(whiteKing != null && checkForCheck.contains(whiteKing.currentSquare)){
                                 whiteKing.checked = true;
+                                desiredMove.promotion = "+";
                             } else if (whiteKing != null){
                                 whiteKing.checked = false;
                             }
@@ -210,6 +211,7 @@ public class Board
                         } else { // if the piece that was moved was white
                             if(blackKing != null && checkForCheck.contains(blackKing.currentSquare)){
                                 blackKing.checked = true;
+                                desiredMove.promotion = "+";
                             } else if (blackKing != null) {
                                 whiteKing.checked = false;
                             }
@@ -218,7 +220,10 @@ public class Board
                         //this is to check for any possible checkmate or stalemate after a move is played. Yes I know this is inefficient,
                         ArrayList<Move> opponentMoves = generateLegalMoves(!board[targetSquare].color);
                         if(opponentMoves != null && opponentMoves.size() == 0){
-                        endGame();
+                            endGame();
+                            if(winner != null){
+                                desiredMove.promotion = "#";
+                            }
                         }
 
                     }
