@@ -100,6 +100,7 @@ public class ChessGame implements Runnable, ActionListener
             }
         }.start();
 
+        
         //Creatation of the squares 2d array and setting each square up
         squares = new Square[SIZE][SIZE];
         for (int r = 0; r < SIZE; r++)
@@ -117,10 +118,12 @@ public class ChessGame implements Runnable, ActionListener
                 squares[r][c].setBorderPainted(false);
                 pan.add(squares[r][c]);
                 squares[r][c].addActionListener(this);
-                setcolor(r,c);
+               
             }
         }
 
+        setTheme();
+        
         //FramePanel
         JPanel framePanel = new JPanel(new BorderLayout());
         framePanel.add(pan,BorderLayout.CENTER);
@@ -262,12 +265,25 @@ public class ChessGame implements Runnable, ActionListener
         }
         else if (color.getSelectedIndex() == 6)
         {
-            
+            color1 = Theme.getRandomMono();
+            color2 = new Color(color1.getRed()/2, color1.getGreen()/2, color1.getBlue()/2);
         }
         else
         {
-            
+            Color colors[] = Theme.getRandomBi();
+            color1 = colors[0];
+            color2 = colors[1];
         }
+        
+        for (int r = 0; r < SIZE; r++)
+        {
+            for (int c = 0; c < SIZE; c++)
+            {
+                setcolor(r, c);
+            }
+        }
+        
+        
 
         /*if (color.getSelectedIndex() == 0)
         {
