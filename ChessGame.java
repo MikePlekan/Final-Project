@@ -5,37 +5,35 @@ import java.util.*;
 import java.awt.event.*;
 import java.util.Random;
 /**
- * This class is a game where u try to get the entire board to be black. it has a 
- * cheat button which tells the user the moves they need to do inorder to win. It also 
- * counts the number of clicks
+ * This class is a Chess game with rest, color switching, highlighted squared for legal moves, a sidebar with
+ * a list of the moves made throughout the game
  *
- * @author Spencer Moon and Michael Plekan
+ * @author Spencer Moon, Michael Plekan
  * @version Spring 2021
  */
 public class ChessGame implements Runnable, ActionListener
 {
-    int r,c;
-    final static int SIZE=8;
-    boolean won=false;
-    Square[][] squares;
-    JPanel info,sidebar;
-    JTextArea notation;
-    StringBuilder notes;
-    JButton reset;
-    Board board = new Board();
-    JFrame win;
-    ArrayList<Integer> valid=new ArrayList();
-    ArrayList<Integer> lastvalid=new ArrayList();
-    Point lastClick=new Point();
-    JComboBox color;
+    private final static int SIZE=8;
+    private boolean won=false;
+    private Square[][] squares;
+    private JPanel info,sidebar;
+    private JTextArea notation;
+    private StringBuilder notes;
+    private JButton reset;
+    private Board board = new Board();
+    private JFrame win;
+    private ArrayList<Integer> valid=new ArrayList();
+    private ArrayList<Integer> lastvalid=new ArrayList();
+    private Point lastClick=new Point();
+    private JComboBox color;
     private Random rand = new Random();
     public int red, green, blue, red2, green2, blue2;
     public boolean newColNeeded;
     public boolean mono;
     public static final String[] colorOptions = {"Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random Mono", "Random Bicolor"};
+
     /**
-     * This contructs a lights out method
-     * @param SIZE this is the SIZE of the board
+     * This contructs a Chess window and game
      */
     public ChessGame(){}
 
@@ -57,7 +55,7 @@ public class ChessGame implements Runnable, ActionListener
         reset.setBorderPainted(false);
         reset.addActionListener(this);
         info.add(reset,BorderLayout.EAST);
-        
+
         //Sidebar
         sidebar=new JPanel();
         sidebar.setPreferredSize(new Dimension(100,800));
@@ -65,7 +63,7 @@ public class ChessGame implements Runnable, ActionListener
         notation=new JTextArea(notes.toString());
         sidebar.add(notation);
         sidebar.setBackground(Color.WHITE);
-        
+
         //Color
         color = new JComboBox(colorOptions);
         color.addActionListener(this);
@@ -73,7 +71,7 @@ public class ChessGame implements Runnable, ActionListener
         colorLabel.setForeground(Color.WHITE);
         JPanel colorPan = new JPanel(new BorderLayout());
         colorPan.setBackground(Color.BLACK);
-        
+
         colorPan.add(colorLabel, BorderLayout.WEST);
         colorPan.add(color, BorderLayout.EAST);
 
@@ -81,31 +79,28 @@ public class ChessGame implements Runnable, ActionListener
 
         //Grid
         GridLayout grid = new GridLayout(SIZE, SIZE);
-        
+
         //Pan
         JPanel pan = new JPanel(grid);
         pan.setPreferredSize(new Dimension(800,800));
-        
+
         //repainter Tread
         new Thread() {
             @Override
             public void run() {
                 while (true) {
-                    try {
-                        sleep(20);
-                    }
-                    catch (InterruptedException e) {
-                    }
+                    try {sleep(20);}
+                    catch (InterruptedException e) {}
                     pan.repaint();
                 }
             }
         }.start();
-        
+
         //Creatation of the squares 2d array and setting each square up
         squares = new Square[SIZE][SIZE];
-        for (r = 0; r < SIZE; r++)
+        for (int r = 0; r < SIZE; r++)
         {
-            for (c = 0; c < SIZE; c++)
+            for (int c = 0; c < SIZE; c++)
             {
                 squares[r][c] = new Square(r,c){
                     @Override
@@ -114,21 +109,21 @@ public class ChessGame implements Runnable, ActionListener
                         if(board.board[row*8+col]!=null)g.drawImage(board.board[row*8+col].getPic(),10,10,null);
                     }
                 };
-                squares[r][c].setOpaque(true);
+                squares[r][c].setOpaque(false);
                 squares[r][c].setBorderPainted(false);
                 pan.add(squares[r][c]);
                 squares[r][c].addActionListener(this);
                 setcolor(r,c);
             }
         }
-        
+
         //FramePanel
         JPanel framePanel = new JPanel(new BorderLayout());
         framePanel.add(pan,BorderLayout.CENTER);
         framePanel.add(info,BorderLayout.SOUTH);
         framePanel.add(sidebar,BorderLayout.EAST);
         frame.add(framePanel);
-        
+
         //Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -151,23 +146,23 @@ public class ChessGame implements Runnable, ActionListener
         }
         if (e.getSource().equals(color))
         {
-            for (int i = 0; i < SIZE; i++)
+            for (int r = 0; r < SIZE; r++)
             {
-                for (int j = 0; j < SIZE; j++)
+                for (int c = 0; c < SIZE; c++)
                 {
-                    setcolor(i, j);
+                    setcolor(r, c);
                 }
             }
             return;
         }
-        for (r = 0; r < SIZE; r++)
+        for (int r = 0; r < SIZE; r++)
         {
-            for (c = 0; c < SIZE; c++)
+            for (int c = 0; c < SIZE; c++)
             {
                 if(e.getSource().equals(squares[r][c])){
                     if(valid!=null&&valid.contains((r*8)+c)){
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
-                        notes.append("moved \n");
+                        notes.append(board.moves.peek()+"\n");
                         notation.setText(notes.toString());
                         lastvalid=(ArrayList<Integer>)valid.clone();
                         valid.clear();
@@ -216,7 +211,6 @@ public class ChessGame implements Runnable, ActionListener
      * @param c this is the colum of the button
      */
     private void setcolor(int r,int c){
-
         Color color1;
         Color color2;
         Color validColor = Color.RED;
@@ -314,16 +308,37 @@ public class ChessGame implements Runnable, ActionListener
             color2 = new Color(red2, green2, blue2);
             mono = true;
         }
-
+        /*
         if(valid.contains((r*8)+c))squares[r][c].setBackground(validColor);
         else{
-            if (r%2!=0)
-                if(c%2==0)squares[r][c].setBackground(color2);
-                else squares[r][c].setBackground(color1);
-            else
-            if(c%2!=0)squares[r][c].setBackground(color2);
-            else squares[r][c].setBackground(color1);
+        if (r%2!=0)
+        if(c%2==0)squares[r][c].setBackground(color2);
+        else squares[r][c].setBackground(color1);
+        else
+        if(c%2!=0)squares[r][c].setBackground(color2);
+        else squares[r][c].setBackground(color1);
+        }*/
+        if (r%2!=0)
+            if(c%2==0){
+                if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
+                else squares[r][c].setIcon(new ImageIcon("transparent.png"));
+            }
+            else{
+                if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
+                else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
+            }
+        else{
+            if(c%2!=0)
+            {
+                if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
+                else squares[r][c].setIcon(new ImageIcon("wood.png"));  
+            }
+            else {
+                if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
+                else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
+            }
         }
+
     }
 
     /**

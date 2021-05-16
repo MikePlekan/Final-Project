@@ -16,7 +16,7 @@ public class Square extends JButton
     
     public Square(int row, int col)
     {
-        super("");
+        super();
         this.col = col;
         this.row = row;
     }

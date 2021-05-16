@@ -196,15 +196,13 @@ public class Board
                         //code for promotion here, only checks if the piece is a pawn and if it has reached the end of the board
                         // check the promote method for more info
                         if(board[targetSquare] instanceof Pawn){
-                            promote(targetSquare);
-                            desiredMove.promotion = "=" + promoteTo;
+                            if(promote(targetSquare)) desiredMove.promotion = "=" + promoteTo;
                         }
                         //code for checking if a king is in check, this impacts whether a player is in checkmate or stalemate
                         ArrayList<Integer> checkForCheck = allAttackedSquares(board[targetSquare].color);
                         if(board[targetSquare].color) { // if the piece is black
                             if(whiteKing != null && checkForCheck.contains(whiteKing.currentSquare)){
                                 whiteKing.checked = true;
-
                             } else if (whiteKing != null){
                                 whiteKing.checked = false;
                             }
@@ -238,21 +236,23 @@ public class Board
     /**
      * Helper method that promotes a pawn that has reached the end of the board.
      */
-    private void promote(int targetSquare){
+    private boolean promote(int targetSquare){
         if(targetSquare / 8 == 0){
             if(!promoteTo.equals("R")){
                 placePiece(promoteTo.toUpperCase(),targetSquare);
             } else if (promoteTo.equals("R")){
                 board[targetSquare] = new Rook(false,targetSquare,true);
             }
-
+            return true;
         } else if (targetSquare / 8 == 7){
             if(!promoteTo.equals("R")){
                 placePiece(promoteTo.toLowerCase(),targetSquare);
             } else if (promoteTo.equals("R")){
                 board[targetSquare] = new Rook(true,targetSquare,true);
             }
+            return true;
         }
+        return false;
     }
 
     protected void checkMovePiece(int selectedSquare, int targetSquare){
