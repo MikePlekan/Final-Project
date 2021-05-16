@@ -109,7 +109,7 @@ public class ChessGame implements Runnable, ActionListener
                         if(board.board[row*8+col]!=null)g.drawImage(board.board[row*8+col].getPic(),10,10,null);
                     }
                 };
-                squares[r][c].setOpaque(false);
+                squares[r][c].setOpaque(true);
                 squares[r][c].setBorderPainted(false);
                 pan.add(squares[r][c]);
                 squares[r][c].addActionListener(this);
@@ -308,20 +308,28 @@ public class ChessGame implements Runnable, ActionListener
             color2 = new Color(red2, green2, blue2);
             mono = true;
         }
-        /*
+
         if(valid.contains((r*8)+c))squares[r][c].setBackground(validColor);
         else{
-        if (r%2!=0)
-        if(c%2==0)squares[r][c].setBackground(color2);
-        else squares[r][c].setBackground(color1);
-        else
-        if(c%2!=0)squares[r][c].setBackground(color2);
-        else squares[r][c].setBackground(color1);
-        }*/
+            if (r%2!=0)
+                if(c%2==0)squares[r][c].setBackground(color2);
+                else squares[r][c].setBackground(color1);
+            else
+            if(c%2!=0)squares[r][c].setBackground(color2);
+            else squares[r][c].setBackground(color1);
+        }
+
+        /*
         if (r%2!=0)
             if(c%2==0){
                 if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
-                else squares[r][c].setIcon(new ImageIcon("transparent.png"));
+                else 
+                {
+                    //squares[r][c] = new Square(r, c);
+                    squares[r][c].setIcon(null);
+                    squares[r][c].setBackground(color2);
+                    //squares[r][c].repaint();
+                }
             }
             else{
                 if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
@@ -337,8 +345,8 @@ public class ChessGame implements Runnable, ActionListener
                 if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
                 else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
             }
-        }
 
+        }*/
     }
 
     /**
