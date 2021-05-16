@@ -30,9 +30,9 @@ public class ChessGame implements Runnable, ActionListener
     public int red, green, blue, red2, green2, blue2;
     public boolean newColNeeded;
     public boolean mono;
-    
+
     //Colors and theme options
-    public static final String[] colorOptions = {"Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random Mono", "Random Bicolor"};
+    public static final String[] colorOptions = {"More Wood","Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random Mono", "Random Bicolor"};
     Color color1, color2;
     Color validColor = Color.RED;
 
@@ -100,7 +100,6 @@ public class ChessGame implements Runnable, ActionListener
             }
         }.start();
 
-        
         //Creatation of the squares 2d array and setting each square up
         squares = new Square[SIZE][SIZE];
         for (int r = 0; r < SIZE; r++)
@@ -118,12 +117,12 @@ public class ChessGame implements Runnable, ActionListener
                 squares[r][c].setBorderPainted(false);
                 pan.add(squares[r][c]);
                 squares[r][c].addActionListener(this);
-               
+
             }
         }
 
         setTheme();
-        
+
         //FramePanel
         JPanel framePanel = new JPanel(new BorderLayout());
         framePanel.add(pan,BorderLayout.CENTER);
@@ -214,67 +213,63 @@ public class ChessGame implements Runnable, ActionListener
      * @param c this is the colum of the button
      */
     private void setcolor(int r,int c){
-
-        if(valid.contains((r*8)+c))squares[r][c].setBackground(validColor);
+        if(color.getSelectedIndex()>0){
+            squares[r][c].setIcon(null);
+            if(valid.contains((r*8)+c))squares[r][c].setBackground(validColor);
+            else{
+                if (r%2!=0)
+                    if(c%2==0)squares[r][c].setBackground(color2);
+                    else squares[r][c].setBackground(color1);
+                else
+                if(c%2!=0)squares[r][c].setBackground(color2);
+                else squares[r][c].setBackground(color1);
+            }
+        }
         else{
             if (r%2!=0)
-                if(c%2==0)squares[r][c].setBackground(color2);
-                else squares[r][c].setBackground(color1);
-            else
-            if(c%2!=0)squares[r][c].setBackground(color2);
-            else squares[r][c].setBackground(color1);
+                if(c%2==0){
+                    if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
+                    else squares[r][c].setIcon(new ImageIcon("wood.png"));
+                }
+                else{
+                    if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
+                    else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
+                }
+            else{
+                if(c%2!=0)
+                {
+                    if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
+                    else squares[r][c].setIcon(new ImageIcon("wood.png"));  
+                }
+                else {
+                    if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
+                    else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
+                }
+            }
         }
-
-        /*
-        if (r%2!=0)
-        if(c%2==0){
-        if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
-        else 
-        {
-        //squares[r][c] = new Square(r, c);
-        squares[r][c].setIcon(null);
-        squares[r][c].setBackground(color2);
-        //squares[r][c].repaint();
-        }
-        }
-        else{
-        if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
-        else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
-        }
-        else{
-        if(c%2!=0)
-        {
-        if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
-        else squares[r][c].setIcon(new ImageIcon("wood.png"));  
-        }
-        else {
-        if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
-        else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
-        }
-
-        }*/
     }
 
     public void setTheme()
     {
-
-        if (color.getSelectedIndex() < 6)
+        if(color.getSelectedIndex()==0){}
+        
+        else if (color.getSelectedIndex() < 7)
         {
-            color1 = Theme.FIRST_COLORS[color.getSelectedIndex()];
-            color2 = Theme.SECOND_COLORS[color.getSelectedIndex()];
+            color1 = Theme.FIRST_COLORS[color.getSelectedIndex()-1];
+            color2 = Theme.SECOND_COLORS[color.getSelectedIndex()-1];
         }
-        else if (color.getSelectedIndex() == 6)
+        else if (color.getSelectedIndex() == 7)
         {
             color1 = Theme.getRandomMono();
             color2 = new Color(color1.getRed()/2, color1.getGreen()/2, color1.getBlue()/2);
         }
-        else
+        else if (color.getSelectedIndex() == 8)
         {
             Color colors[] = Theme.getRandomBi();
             color1 = colors[0];
             color2 = colors[1];
         }
-        
+
         for (int r = 0; r < SIZE; r++)
         {
             for (int c = 0; c < SIZE; c++)
@@ -282,103 +277,7 @@ public class ChessGame implements Runnable, ActionListener
                 setcolor(r, c);
             }
         }
-        
-        
 
-        /*if (color.getSelectedIndex() == 0)
-        {
-        color1 = new Color(255, 228, 179);
-        color2 = new Color(158, 107, 71);
-        newColNeeded = true;
-        mono = true;
-        }
-        else if (color.getSelectedIndex() == 1)
-        {
-        color1 = Color.WHITE;
-        color2 = new Color(100, 100, 100);
-        newColNeeded = true;
-        mono = true;
-        }
-        else if (color.getSelectedIndex() == 2)
-        {
-        color1 = new Color(255, 249, 209);
-        color2 = new Color(255, 142, 51);
-        newColNeeded = true;
-        mono = true;
-        }
-        else if (color.getSelectedIndex() == 3)
-        {
-        color1 = new Color(255, 249, 209);
-        color2 = new Color(52, 173, 82);
-        newColNeeded = true;
-        mono = true;
-        //validColor = new Color(52, 86, 41);
-        }
-        else if (color.getSelectedIndex() == 4)
-        {
-        color1 = new Color(247, 204, 255);
-        color2 = new Color(141, 56, 201);
-        newColNeeded = true;
-        mono = true;
-        }
-        else if (color.getSelectedIndex() == 5)
-        {
-        color1 = Color.WHITE;
-        color2 = new Color(255, 184, 230);
-        newColNeeded = true;
-        mono = true;
-        }*/
-        /*else if (color.getSelectedIndex() == 6)
-        {
-            if (mono)
-            {
-                red = rand.nextInt(176) + 80;
-                green = rand.nextInt(176) + 80;
-                blue = rand.nextInt(176) + 80;
-                while (red + green + blue < 410 || (red < 235 && green < 235 && blue < 235))
-                {
-                    red = rand.nextInt(176) + 80;
-                    green = rand.nextInt(176) + 80;
-                    blue = rand.nextInt(176) + 80;
-                }
-                red2 = red/2;
-                green2 = green/2;
-                blue2 = blue/2;
-
-                mono = false;
-            }
-            color1 = new Color(red, green, blue);
-            color2 = new Color(red2, green2, blue2);
-            newColNeeded = true;
-        }
-        else
-        {
-            if (newColNeeded)
-            {
-                red = rand.nextInt(176) + 80;
-                green = rand.nextInt(176) + 80;
-                blue = rand.nextInt(176) + 80;
-                while (red + green + blue < 410 || (red < 235 && green < 235 && blue < 235))
-                {
-                    red = rand.nextInt(176) + 80;
-                    green = rand.nextInt(176) + 80;
-                    blue = rand.nextInt(176) + 80;
-                }
-                red2 = rand.nextInt(176) + 80;
-                green2 = rand.nextInt(176) + 80;
-                blue2 = rand.nextInt(176) + 80;
-                while (red2 + green2 + blue2 < 410 || (red2 < 235 && green2 < 235 && blue2 < 235) || (Math.abs(red - red2) < 40 && Math.abs(green - green2) < 40 && Math.abs(blue - blue2) < 40))
-                {
-                    red2 = rand.nextInt(176) + 80;
-                    green2 = rand.nextInt(176) + 80;
-                    blue2 = rand.nextInt(176) + 80;
-                }
-                newColNeeded = false;
-            }
-            color1 = new Color(red, green, blue);
-            color2 = new Color(red2, green2, blue2);
-            mono = true;
-        }*/
     }
 
     /**
