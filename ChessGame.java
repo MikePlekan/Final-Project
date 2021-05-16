@@ -18,7 +18,9 @@ public class ChessGame implements Runnable, ActionListener
     final static int SIZE=8;
     boolean won=false;
     Square[][] squares;
-    JPanel info;
+    JPanel info,sidebar;
+    JTextArea notation;
+    StringBuilder notes;
     JButton reset;
     Board board = new Board();
     JFrame win;
@@ -42,19 +44,29 @@ public class ChessGame implements Runnable, ActionListener
      */
     public void run()
     {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame = new JFrame("CHESS");
 
+        //info
         info=new JPanel(new BorderLayout());
         info.setBackground(Color.BLACK);
 
+        //reset
         reset=new JButton("reset");
         reset.setBackground(Color.WHITE);
         reset.setOpaque(true);
         reset.setBorderPainted(false);
         reset.addActionListener(this);
         info.add(reset,BorderLayout.EAST);
-
+        
+        //Sidebar
+        sidebar=new JPanel();
+        sidebar.setPreferredSize(new Dimension(100,800));
+        notes=new StringBuilder("");
+        notation=new JTextArea(notes.toString());
+        sidebar.add(notation);
+        sidebar.setBackground(Color.WHITE);
+        
+        //Color
         color = new JComboBox(colorOptions);
         color.addActionListener(this);
         JLabel colorLabel = new JLabel(" Board:");
@@ -64,13 +76,17 @@ public class ChessGame implements Runnable, ActionListener
         
         colorPan.add(colorLabel, BorderLayout.WEST);
         colorPan.add(color, BorderLayout.EAST);
-        
+
         info.add(colorPan, BorderLayout.WEST);
 
+        //Grid
         GridLayout grid = new GridLayout(SIZE, SIZE);
-        JPanel framePanel = new JPanel(new BorderLayout());
-        frame.add(framePanel);
+        
+        //Pan
         JPanel pan = new JPanel(grid);
+        pan.setPreferredSize(new Dimension(800,800));
+        
+        //repainter Tread
         new Thread() {
             @Override
             public void run() {
@@ -84,8 +100,8 @@ public class ChessGame implements Runnable, ActionListener
                 }
             }
         }.start();
-        pan.setPreferredSize(new Dimension(800,800));
-        frame.setResizable(false);
+        
+        //Creatation of the squares 2d array and setting each square up
         squares = new Square[SIZE][SIZE];
         for (r = 0; r < SIZE; r++)
         {
@@ -103,11 +119,19 @@ public class ChessGame implements Runnable, ActionListener
                 pan.add(squares[r][c]);
                 squares[r][c].addActionListener(this);
                 setcolor(r,c);
-
             }
         }
+        
+        //FramePanel
+        JPanel framePanel = new JPanel(new BorderLayout());
         framePanel.add(pan,BorderLayout.CENTER);
         framePanel.add(info,BorderLayout.SOUTH);
+        framePanel.add(sidebar,BorderLayout.EAST);
+        frame.add(framePanel);
+        
+        //Frame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
     }
@@ -143,6 +167,8 @@ public class ChessGame implements Runnable, ActionListener
                 if(e.getSource().equals(squares[r][c])){
                     if(valid!=null&&valid.contains((r*8)+c)){
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
+                        notes.append("moved \n");
+                        notation.setText(notes.toString());
                         lastvalid=(ArrayList<Integer>)valid.clone();
                         valid.clear();
                         for (int i:lastvalid)
@@ -301,12 +327,8 @@ public class ChessGame implements Runnable, ActionListener
     }
 
     /**
-     * This is the main method, it calls on a lightsout object inorder to start the window
+     * This is the main method, it starts the window
      * @param no input needed
      */
-    public static void main(String[] args)
-    {
-        javax.swing.SwingUtilities.invokeLater(new ChessGame());
-
-    }
+    public static void main(String[] args){javax.swing.SwingUtilities.invokeLater(new ChessGame());}
 }
