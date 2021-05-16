@@ -30,7 +30,7 @@ public class ChessGame implements Runnable, ActionListener
     public int red, green, blue, red2, green2, blue2;
     public boolean newColNeeded;
     public boolean mono;
-    public static final String[] colorOptions = {"Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random Mono", "Random"};
+    public static final String[] colorOptions = {"Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random Mono", "Random Bicolor"};
     /**
      * This contructs a lights out method
      * @param SIZE this is the SIZE of the board
@@ -205,7 +205,7 @@ public class ChessGame implements Runnable, ActionListener
         else if (color.getSelectedIndex() == 2)
         {
             color1 = new Color(255, 249, 209);
-            color2 = Color.ORANGE;
+            color2 = new Color(255, 142, 51);
             newColNeeded = true;
             mono = true;
         }
