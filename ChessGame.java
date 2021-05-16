@@ -191,8 +191,8 @@ public class ChessGame implements Runnable, ActionListener
         }
         else if (color.getSelectedIndex() == 1)
         {
-            color1 = new Color(255, 228, 179);
-            color2 = new Color(158, 107, 71);
+            color1 = Color.WHITE;
+            color2 = new Color(100, 100, 100);
         }
         else if (color.getSelectedIndex() == 2)
         {
@@ -212,8 +212,8 @@ public class ChessGame implements Runnable, ActionListener
         }
         else if (color.getSelectedIndex() == 5)
         {
-            color1 = Color.YELLOW;
-            color2 = Color.ORANGE;
+            color1 = Color.WHITE;
+            color2 = new Color(255, 184, 230);
         }
         else if (color.getSelectedIndex() == 6)
         {
