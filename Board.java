@@ -193,6 +193,25 @@ public class Board
                         board[selectedSquare].move(this,targetSquare);
                         legal = true;
 
+                        //code to check for castling
+                        if(board[targetSquare] instanceof King){
+                            if(Math.abs(selectedSquare - targetSquare) == 2){
+                                if(selectedSquare < targetSquare){
+                                    Rook r = (Rook) board[selectedSquare + 3];
+                                    board[selectedSquare + 1] = r;
+                                    r.moved = true;
+                                    r.currentSquare = selectedSquare + 1;
+                                    board[selectedSquare + 3] = null;
+                                } else {
+                                    Rook r = (Rook) board[selectedSquare - 4];
+                                    board[selectedSquare - 1] = r;
+                                    r.moved = true;
+                                    r.currentSquare = selectedSquare - 1;
+                                    board[selectedSquare - 4] = null;
+                                }
+                            }
+                        }
+
                         //code for promotion here, only checks if the piece is a pawn and if it has reached the end of the board
                         // check the promote method for more info
                         if(board[targetSquare] instanceof Pawn){

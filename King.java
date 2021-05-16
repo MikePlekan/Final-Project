@@ -118,12 +118,13 @@ public class King extends MovedPiece
     @Override
     public void move(Board b, int targetSquare){
         
-            b.board[targetSquare] = this;
-            b.board[currentSquare] = null;
-            currentSquare = targetSquare;
-            moved = true;
-    
-            
+
+        b.board[targetSquare] = this;
+        b.board[currentSquare] = null;
+        currentSquare = targetSquare;
+        moved = true;
+         
+
 
     }
 
