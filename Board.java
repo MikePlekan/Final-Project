@@ -557,6 +557,7 @@ public class Board
         if(psuedoLegalMoves.size() == 0){
             endGame();
         }
+        
         return psuedoLegalMoves;
     }
 

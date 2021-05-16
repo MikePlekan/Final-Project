@@ -117,15 +117,66 @@ public class King extends MovedPiece
      */
     @Override
     public void move(Board b, int targetSquare){
-        
 
         b.board[targetSquare] = this;
         b.board[currentSquare] = null;
         currentSquare = targetSquare;
         moved = true;
-         
 
 
     }
 
+    @Override
+    public ArrayList<Integer> legalMoves(Board b){
+        ArrayList<Integer> validMoves = b.board[currentSquare].validMoves(b);
+        ArrayList<Move> psuedoLegalMoves = new ArrayList<Move>();
+        ArrayList<Move> illegalMoves = new ArrayList<Move>();
+        ArrayList<Move> opponentsResponses;
+        for(Integer j: validMoves){
+            psuedoLegalMoves.add(new Move(b,b.board[currentSquare].getPieceStr(),currentSquare,j,b.board[j]));
+        }
+        for(Move m: psuedoLegalMoves){
+            // generate all possible moves our opponent can play against us
+            b.checkMovePiece(m.initialSquare,m.targetSquare);
+            opponentsResponses = b.generateMoves(!color);
+
+            if(!color){ // if the input color is white
+                for(Move om : opponentsResponses){
+
+                    //If our opponent has a move that targets our king after we make a move, that means we moved into check which is not allowed
+                    //As such we much remove it from our list of moves
+                    if(b.whiteKing != null && om.targetSquare == b.whiteKing.currentSquare){
+                        illegalMoves.add(m);
+                    }
+                }
+            } else { // if the input color is black
+                for(Move om : opponentsResponses){
+
+                    //If our opponent has a move that targets our king after we make a move, that means we moved into check which is not allowed
+                    //As such we much remove it from our list of moves
+                    if(b.blackKing != null && om.targetSquare == b.blackKing.currentSquare){
+                        illegalMoves.add(m);
+                    }
+                }
+            }
+            b.undoMove();
+        }
+        Integer i;
+        for(Move m: illegalMoves){
+            if(!validMoves.isEmpty() && validMoves.contains(m.targetSquare)){
+                i = new Integer(m.targetSquare);
+                validMoves.remove(i);
+            }
+
+        }
+        if(validMoves.contains(currentSquare + 2) && !validMoves.contains(currentSquare + 1)){
+            validMoves.remove(currentSquare + 2);
+        }
+        if(validMoves.contains(currentSquare - 2) && !validMoves.contains(currentSquare - 1)){
+             validMoves.remove(currentSquare + 2);
+        }
+
+        return validMoves;
+
+    }
 }
