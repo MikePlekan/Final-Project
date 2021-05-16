@@ -57,9 +57,15 @@ public class ChessGame implements Runnable, ActionListener
 
         color = new JComboBox(colorOptions);
         color.addActionListener(this);
-        JLabel colorLabel = new JLabel("Board: ");
-        info.add(colorLabel, BorderLayout.WEST);
-        info.add(color, BorderLayout.WEST);
+        JLabel colorLabel = new JLabel(" Board:");
+        colorLabel.setForeground(Color.WHITE);
+        JPanel colorPan = new JPanel(new BorderLayout());
+        colorPan.setBackground(Color.BLACK);
+        
+        colorPan.add(colorLabel, BorderLayout.WEST);
+        colorPan.add(color, BorderLayout.EAST);
+        
+        info.add(colorPan, BorderLayout.WEST);
 
         GridLayout grid = new GridLayout(SIZE, SIZE);
         JPanel framePanel = new JPanel(new BorderLayout());
