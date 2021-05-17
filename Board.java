@@ -182,7 +182,7 @@ public class Board
         if(!gameEnded){
 
             if(targetSquare < 64 && targetSquare > -1){
-                if(board[selectedSquare] != null){
+                if(board[selectedSquare] != null && board[selectedSquare].color == playerToMove){
                     //first we generate all our possible legal moves, then we check if the move we want to make is allowed.
 
                     ArrayList<Move> legalMoves = generateLegalMoves(board[selectedSquare].color);
@@ -251,7 +251,7 @@ public class Board
                                 blackKing.checked = true;
                                 desiredMove.promotion = "+";
                             } else if (blackKing != null) {
-                                whiteKing.checked = false;
+                                blackKing.checked = false;
                             }
 
                         }
@@ -263,6 +263,7 @@ public class Board
                                 desiredMove.promotion = "#";
                             }
                         }
+                        playerToMove = !playerToMove;
 
                     }
 

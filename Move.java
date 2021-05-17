@@ -41,9 +41,9 @@ public class Move
 
         } else {
             if(targetSquare - initialSquare == 2){
-                return "O-O";
+                return "0-0";
             } else if(targetSquare - initialSquare == -2){
-                return "O-O-O";
+                return "0-0-0";
             }
         }
 
@@ -51,7 +51,7 @@ public class Move
 
             return s + Board.notation[initialSquare] + "x" + Board.notation[targetSquare] + promotion;
         } else {
-            return s + Board.notation[initialSquare] + "-" + Board.notation[targetSquare] + promotion;
+            return s + Board.notation[initialSquare] + Board.notation[targetSquare] + promotion;
         }
     }
 

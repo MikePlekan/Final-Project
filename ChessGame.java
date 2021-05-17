@@ -35,6 +35,7 @@ public class ChessGame implements Runnable, ActionListener
     public static final String[] colorOptions = {"More Wood","Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random Mono", "Random Bicolor"};
     Color color1, color2;
     Color validColor = Color.RED;
+    
 
     /**
      * This contructs a Chess window and game
@@ -62,7 +63,7 @@ public class ChessGame implements Runnable, ActionListener
 
         //Sidebar
         sidebar=new JPanel();
-        sidebar.setPreferredSize(new Dimension(100,800));
+        sidebar.setPreferredSize(new Dimension(150,800));
         notes=new StringBuilder("");
         notation=new JTextArea(notes.toString());
         sidebar.add(notation);
@@ -164,7 +165,16 @@ public class ChessGame implements Runnable, ActionListener
                 if(e.getSource().equals(squares[r][c])){
                     if(valid!=null&&valid.contains((r*8)+c)){
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
-                        notes.append(board.moves.peek()+"\n");
+                        if(board.playerToMove){
+                            notes.append(board.moves.size() / 2 + 1 + ". ");
+                        }
+                        
+                        notes.append(board.moves.peek());
+                        if(!board.playerToMove){
+                        notes.append("\n");
+                    } else {
+                        notes.append("   ");
+                    }
                         notation.setText(notes.toString());
                         lastvalid=(ArrayList<Integer>)valid.clone();
                         valid.clear();
@@ -175,7 +185,7 @@ public class ChessGame implements Runnable, ActionListener
                     }
                     else{
                         lastvalid=(ArrayList<Integer>)valid.clone();
-                        if(board.board[(r*8)+c]!=null){
+                        if(board.board[(r*8)+c]!=null && board.board[(r*8) + c].color == board.playerToMove){
                             valid=board.board[(r*8)+c].legalMoves(board);
                             for (int i:lastvalid)
                             {
