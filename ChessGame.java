@@ -186,9 +186,13 @@ public class ChessGame implements Runnable, ActionListener
                         piece=new PieceThread(board,squares,(lastClick.x*8)+lastClick.y,(r*8)+c);
 
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
-
+                        
                         piece.start();
+                        
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
+                        if(board.gameEnded){
+                            this.showWinner();
+                        }
 
                         if(board.playerToMove){
                             notes.append(board.moves.size() / 2 + 1 + ". ");
@@ -317,6 +321,57 @@ public class ChessGame implements Runnable, ActionListener
             }
         }
 
+    }
+    
+    private void showWinner(){
+        if(board.winner==true){
+            if(win!=null)win.dispose();
+            win=new JFrame("WINNER");
+            JPanel panel = new JPanel() {
+                    @Override
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawString("WHITE IS WINNER",10,10);
+                    }
+                };
+            win.add(panel);
+            win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            win.setPreferredSize(new Dimension(400,400));
+            win.pack();
+            win.setVisible(true);
+        }
+        else if(board.winner==false){
+            if(win!=null)win.dispose();
+            win=new JFrame("WINNER");
+            JPanel panel = new JPanel() {
+                    @Override
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawString("BLACK IS WINNER",10,10);
+                    }
+                };
+            win.add(panel);
+            win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            win.setPreferredSize(new Dimension(400,400));
+            win.pack();
+            win.setVisible(true);
+        }
+        else{
+            if(win!=null)win.dispose();
+            win=new JFrame("DRAW");
+            JPanel panel = new JPanel() {
+                    @Override
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawString("NO ONE WINS",10,10);
+                    }
+                };
+            win.add(panel);
+            win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            win.setPreferredSize(new Dimension(400,400));
+            win.pack();
+            win.setVisible(true);
+        }
     }
 
     /**
