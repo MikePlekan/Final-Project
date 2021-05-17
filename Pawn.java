@@ -79,8 +79,9 @@ public class Pawn extends MovedPiece
         // basically x represents whether or not a pawn goes up the board or down the board, i is simply the offset in the direction of x
         // and j is just a loop variable
 
-        // this loop checks whether or not a pawn can move 1 or 2 squares
-        while(j < n[x + 2] + 1 && j < 2){
+        // this loop checks whether or not a pawn can move 1 or 2 squares, until it collides
+        // with a piece
+        while(j < 2 && j < n[x + 2] + 1){
             checkingSquare += direction[x]; 
 
             if(b.board[checkingSquare] == null){

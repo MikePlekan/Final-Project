@@ -123,7 +123,6 @@ public class King extends MovedPiece
         currentSquare = targetSquare;
         moved = true;
 
-
     }
 
     @Override
@@ -165,15 +164,17 @@ public class King extends MovedPiece
         for(Move m: illegalMoves){
             if(!validMoves.isEmpty() && validMoves.contains(m.targetSquare)){
                 i = new Integer(m.targetSquare);
-                validMoves.remove(i);
+                validMoves.remove(new Integer(i));
             }
 
         }
         if(validMoves.contains(currentSquare + 2) && !validMoves.contains(currentSquare + 1)){
-            validMoves.remove(currentSquare + 2);
+
+            validMoves.remove(new Integer(currentSquare + 2));
+
         }
         if(validMoves.contains(currentSquare - 2) && !validMoves.contains(currentSquare - 1)){
-             validMoves.remove(currentSquare + 2);
+            validMoves.remove(new Integer(currentSquare + 2));
         }
 
         return validMoves;
