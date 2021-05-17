@@ -175,8 +175,9 @@ public class ChessGame implements Runnable, ActionListener
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
 
                         piece.start();
+                        board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
 
-                       //board.playerToMove=!board.playerToMove;
+                   
                         if(board.playerToMove){
                             notes.append(board.moves.size() / 2 + 1 + ". ");
                         }
@@ -187,7 +188,7 @@ public class ChessGame implements Runnable, ActionListener
                         } else {
                             notes.append("   ");
                         }
-                        
+                        board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
 
                         notation.setText(notes.toString());
                         lastvalid=(ArrayList<Integer>)valid.clone();

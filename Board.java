@@ -221,10 +221,13 @@ public class Board
                         //code for promotion here, only checks if the piece is a pawn and if it has reached the end of the board
                         // check the promote method for more info
                         if(board[targetSquare] instanceof Pawn){
+                            if(promote(targetSquare)){ 
+                                desiredMove.promotion = "=" + promoteTo;
+                            }
                             if(enPassantSquare == targetSquare + (x * 8)){
                                 desiredMove.pieceCaptured = board[enPassantSquare];
                                 board[enPassantSquare] = null;
-                               
+
                             } else {
                                 if(Math.abs(selectedSquare - targetSquare) == 16){
                                     enPassantSquare = targetSquare;
@@ -232,10 +235,8 @@ public class Board
                                     enPassantSquare = -2;
                                 }
                             }
-                            if(promote(targetSquare)) desiredMove.promotion = "=" + promoteTo;
-                        } else {
 
-                        }
+                        } 
                         //code for checking if a king is in check, this impacts whether a player is in checkmate or stalemate
                         ArrayList<Integer> checkForCheck = allAttackedSquares(board[targetSquare].color);
                         if(board[targetSquare].color) { // if the piece is black
@@ -558,7 +559,7 @@ public class Board
         if(psuedoLegalMoves.size() == 0){
             endGame();
         }
-        
+
         return psuedoLegalMoves;
     }
 

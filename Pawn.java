@@ -80,7 +80,7 @@ public class Pawn extends MovedPiece
         // and j is just a loop variable
 
         // this loop checks whether or not a pawn can move 1 or 2 squares
-        while(j < n[x + 2] && j < 2){
+        while(j < n[x + 2] + 1 && j < 2){
             checkingSquare += direction[x]; 
 
             if(b.board[checkingSquare] == null){
