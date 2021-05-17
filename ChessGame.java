@@ -331,7 +331,7 @@ public class ChessGame implements Runnable, ActionListener
                     @Override
                     public void paintComponent(Graphics g) {
                         super.paintComponent(g);
-                        g.drawString("WHITE IS WINNER",10,10);
+                        g.drawString("WHITE WINS",10,10);
                     }
                 };
             win.add(panel);
@@ -347,7 +347,7 @@ public class ChessGame implements Runnable, ActionListener
                     @Override
                     public void paintComponent(Graphics g) {
                         super.paintComponent(g);
-                        g.drawString("BLACK IS WINNER",10,10);
+                        g.drawString("BLACK WINS",10,10);
                     }
                 };
             win.add(panel);
@@ -363,7 +363,7 @@ public class ChessGame implements Runnable, ActionListener
                     @Override
                     public void paintComponent(Graphics g) {
                         super.paintComponent(g);
-                        g.drawString("NO ONE WINS",10,10);
+                        g.drawString("STALEMATE",10,10);
                     }
                 };
             win.add(panel);
