@@ -14,7 +14,6 @@ import java.util.Random;
 public class ChessGame implements Runnable, ActionListener
 {
     private final static int SIZE=8;
-    private boolean won=false;
     private Square[][] squares;
     private JPanel info,sidebar,pan;
     private JTextArea notation;
@@ -25,14 +24,11 @@ public class ChessGame implements Runnable, ActionListener
     private ArrayList<Integer> valid=new ArrayList();
     private ArrayList<Integer> lastvalid=new ArrayList();
     private Point lastClick=new Point();
-    private JComboBox color;
-    private Random rand = new Random();
-    public int red, green, blue, red2, green2, blue2;
-    public boolean newColNeeded;
-    public boolean mono;
+    
 
     //Colors and theme options
-    public static final String[] colorOptions = {"More Wood","Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random Mono", "Random Bicolor"};
+    private JComboBox color;
+    public static final String[] colorOptions = {"Wood","Flat Wood", "Marble", "Orange", "Green", "Purple", "Pink", "Random Mono", "Random Bicolor"};
     Color color1, color2;
     Color validColor = Color.RED;
 
@@ -178,8 +174,9 @@ public class ChessGame implements Runnable, ActionListener
                         piece=new PieceThread(board,squares,(lastClick.x*8)+lastClick.y,(r*8)+c);
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
 
-                        
                         piece.start();
+
+                       //board.playerToMove=!board.playerToMove;
                         if(board.playerToMove){
                             notes.append(board.moves.size() / 2 + 1 + ". ");
                         }
@@ -190,7 +187,6 @@ public class ChessGame implements Runnable, ActionListener
                         } else {
                             notes.append("   ");
                         }
-
                         
 
                         notation.setText(notes.toString());
@@ -203,35 +199,40 @@ public class ChessGame implements Runnable, ActionListener
                     }
                     else{
                         lastvalid=(ArrayList<Integer>)valid.clone();
+
                         if(board.board[(r*8)+c]!=null && board.board[(r*8) + c].color == board.playerToMove){
-                            valid=board.board[(r*8)+c].legalMoves(board);
-                            for (int i:lastvalid)
-                            {
-                                setcolor(i/8,i%8);
-                            }
-                            for (int i:valid)
-                            {
-                                setcolor(i/8,i%8);
-                            }
 
+                      
+
+                                valid=board.board[(r*8)+c].legalMoves(board);
+                                for (int i:lastvalid)
+                                {
+                                    setcolor(i/8,i%8);
+                                }
+                                for (int i:valid)
+                                {
+                                    setcolor(i/8,i%8);
+                                }
+
+                            }
+                            else{
+
+                                valid.clear();
+                                for (int i:lastvalid)
+                                {
+                                    setcolor(i/8,i%8);
+                                }
+
+                            
                         }
-                        else{
+                        lastClick.x=r;
+                        lastClick.y=c;
 
-                            valid.clear();
-                            for (int i:lastvalid)
-                            {
-                                setcolor(i/8,i%8);
-                            }
-
-                        }
                     }
-                    lastClick.x=r;
-                    lastClick.y=c;
-
                 }
             }
-        }
 
+        }
     }
 
     /**
