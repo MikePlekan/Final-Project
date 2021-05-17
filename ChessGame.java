@@ -23,8 +23,8 @@ public class ChessGame implements Runnable, ActionListener
     private JFrame win;
     private ArrayList<Integer> valid=new ArrayList();
     private ArrayList<Integer> lastvalid=new ArrayList();
+    private ArrayList<PieceThread> pieceThreads = new ArrayList<PieceThread>();
     private Point lastClick=new Point();
-    
 
     //Colors and theme options
     private JComboBox color;
@@ -154,9 +154,12 @@ public class ChessGame implements Runnable, ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource().equals(reset)){
+            pieceThreads.clear();
             board=new Board();
+
             notes.setLength(0);
             notation.setText(notes.toString());
+            pan.repaint();
             return;
         }
         if (e.getSource().equals(color))
@@ -172,12 +175,12 @@ public class ChessGame implements Runnable, ActionListener
                     if(valid!=null&&valid.contains((r*8)+c)){
                         PieceThread piece;
                         piece=new PieceThread(board,squares,(lastClick.x*8)+lastClick.y,(r*8)+c);
+                        pieceThreads.add(piece);
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
 
                         piece.start();
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
 
-                   
                         if(board.playerToMove){
                             notes.append(board.moves.size() / 2 + 1 + ". ");
                         }
@@ -203,28 +206,26 @@ public class ChessGame implements Runnable, ActionListener
 
                         if(board.board[(r*8)+c]!=null && board.board[(r*8) + c].color == board.playerToMove){
 
-                      
 
-                                valid=board.board[(r*8)+c].legalMoves(board);
-                                for (int i:lastvalid)
-                                {
-                                    setcolor(i/8,i%8);
-                                }
-                                for (int i:valid)
-                                {
-                                    setcolor(i/8,i%8);
-                                }
-
+                            valid=board.board[(r*8)+c].legalMoves(board);
+                            for (int i:lastvalid)
+                            {
+                                setcolor(i/8,i%8);
                             }
-                            else{
+                            for (int i:valid)
+                            {
+                                setcolor(i/8,i%8);
+                            }
 
-                                valid.clear();
-                                for (int i:lastvalid)
+                        }
+                        else{
+
+                            valid.clear();
+                            for (int i:lastvalid)
                                 {
                                     setcolor(i/8,i%8);
                                 }
 
-                            
                         }
                         lastClick.x=r;
                         lastClick.y=c;
