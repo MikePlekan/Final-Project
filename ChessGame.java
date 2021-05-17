@@ -23,7 +23,6 @@ public class ChessGame implements Runnable, ActionListener
     private JFrame win;
     private ArrayList<Integer> valid=new ArrayList();
     private ArrayList<Integer> lastvalid=new ArrayList();
-    private ArrayList<PieceThread> pieceThreads = new ArrayList<PieceThread>();
     private Point lastClick=new Point();
 
     //Colors and theme options
@@ -154,8 +153,18 @@ public class ChessGame implements Runnable, ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource().equals(reset)){
-            pieceThreads.clear();
+
             board=new Board();
+            for (int R = 0; R < 8; R++)
+            {
+                for (int C = 0; C < 8; C++)
+                {
+                    if(board.board[(R*8)+C]!=null)squares[R][C].pic=board.board[(R*8)+C].pic;
+                    else{
+                        squares[R][C].pic=null;
+                    }
+                }
+            }
 
             notes.setLength(0);
             notation.setText(notes.toString());
@@ -175,7 +184,7 @@ public class ChessGame implements Runnable, ActionListener
                     if(valid!=null&&valid.contains((r*8)+c)){
                         PieceThread piece;
                         piece=new PieceThread(board,squares,(lastClick.x*8)+lastClick.y,(r*8)+c);
-                        pieceThreads.add(piece);
+
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
 
                         piece.start();
@@ -206,7 +215,6 @@ public class ChessGame implements Runnable, ActionListener
 
                         if(board.board[(r*8)+c]!=null && board.board[(r*8) + c].color == board.playerToMove){
 
-
                             valid=board.board[(r*8)+c].legalMoves(board);
                             for (int i:lastvalid)
                             {
@@ -222,9 +230,9 @@ public class ChessGame implements Runnable, ActionListener
 
                             valid.clear();
                             for (int i:lastvalid)
-                                {
-                                    setcolor(i/8,i%8);
-                                }
+                            {
+                                setcolor(i/8,i%8);
+                            }
 
                         }
                         lastClick.x=r;
