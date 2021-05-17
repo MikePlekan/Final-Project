@@ -13,7 +13,14 @@ public class Square extends JButton
 {
     public int row;
     public int col;
-    
+    public Image pic;
+    public Square(int row, int col,Image pic)
+    {
+        super();
+        this.col = col;
+        this.row = row;
+        this.pic=pic;
+    }
     public Square(int row, int col)
     {
         super();
