@@ -16,7 +16,7 @@ public class ChessGame implements Runnable, ActionListener
     private final static int SIZE=8;
     private boolean won=false;
     private Square[][] squares;
-    private JPanel info,sidebar;
+    private JPanel info,sidebar,pan;
     private JTextArea notation;
     private StringBuilder notes;
     private JButton reset;
@@ -85,7 +85,7 @@ public class ChessGame implements Runnable, ActionListener
         GridLayout grid = new GridLayout(SIZE, SIZE);
 
         //Pan
-        JPanel pan = new JPanel(grid);
+        pan = new JPanel(grid);
         pan.setPreferredSize(new Dimension(800,800));
 
         //repainter Tread
@@ -106,13 +106,24 @@ public class ChessGame implements Runnable, ActionListener
         {
             for (int c = 0; c < SIZE; c++)
             {
-                squares[r][c] = new Square(r,c){
-                    @Override
-                    public void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        if(board.board[row*8+col]!=null)g.drawImage(board.board[row*8+col].getPic(),10,10,null);
-                    }
-                };
+                if(board.board[r*8+c]!=null){
+                    squares[r][c] = new Square(r,c,board.board[r*8+c].getPic()){
+                        @Override
+                        public void paintComponent(Graphics g) {
+                            super.paintComponent(g);
+                            if(this.pic!=null)g.drawImage(this.pic,10,10,null);
+                        }
+                    };
+                }
+                else{
+                    squares[r][c] = new Square(r,c){
+                        @Override
+                        public void paintComponent(Graphics g) {
+                            super.paintComponent(g);
+                            if(this.pic!=null)g.drawImage(this.pic,10,10,null);
+                        }
+                    };
+                }
                 squares[r][c].setOpaque(true);
                 squares[r][c].setBorderPainted(false);
                 pan.add(squares[r][c]);
@@ -163,7 +174,11 @@ public class ChessGame implements Runnable, ActionListener
             {
                 if(e.getSource().equals(squares[r][c])){
                     if(valid!=null&&valid.contains((r*8)+c)){
+                        PieceThread piece;
+                        piece=new PieceThread(board,squares,(lastClick.x*8)+lastClick.y,(r*8)+c);
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
+                        piece.start();
+
                         notes.append(board.moves.peek()+"\n");
                         notation.setText(notes.toString());
                         lastvalid=(ArrayList<Integer>)valid.clone();
@@ -239,7 +254,7 @@ public class ChessGame implements Runnable, ActionListener
                 if(c%2!=0)
                 {
                     if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
-                    else squares[r][c].setIcon(new ImageIcon("wood.png"));  
+                    else squares[r][c].setIcon(new ImageIcon("Wood.png"));  
                 }
                 else {
                     if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
@@ -252,7 +267,7 @@ public class ChessGame implements Runnable, ActionListener
     public void setTheme()
     {
         if(color.getSelectedIndex()==0){}
-        
+
         else if (color.getSelectedIndex() < 7)
         {
             color1 = Theme.FIRST_COLORS[color.getSelectedIndex()-1];
