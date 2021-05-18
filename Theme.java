@@ -47,7 +47,7 @@ public class Theme
         int red2 = rand.nextInt(176) + 80;
         int green2 = rand.nextInt(176) + 80;
         int blue2 = rand.nextInt(176) + 80;
-        while (red2 + green2 + blue2 < 410 || (red2 < 235 && green2 < 235 && blue2 < 235) || (Math.abs(red - red2) < 40 && Math.abs(green - green2) < 40 && Math.abs(blue - blue2) < 40))
+        while (red2 + green2 + blue2 < 410 || (red2 < 235 && green2 < 235 && blue2 < 235) || (Math.abs(red - red2) < 40 || Math.abs(green - green2) < 40 || Math.abs(blue - blue2) < 40))
         {
             red2 = rand.nextInt(176) + 80;
             green2 = rand.nextInt(176) + 80;
