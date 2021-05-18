@@ -42,6 +42,8 @@ public class Theme
             green = rand.nextInt(176) + 80;
             blue = rand.nextInt(176) + 80;
         }
+        int sum = red + green + blue;
+
         int red2 = rand.nextInt(176) + 80;
         int green2 = rand.nextInt(176) + 80;
         int blue2 = rand.nextInt(176) + 80;
@@ -51,9 +53,16 @@ public class Theme
             green2 = rand.nextInt(176) + 80;
             blue2 = rand.nextInt(176) + 80;
         }
+        int sum2 = red2 + green2 + blue2;
 
-        Color[] colors = {new Color(red, green, blue), new Color(red2, green2, blue2)};
-        return colors;
+        // this makes it so that the dark squares always get the darker color
+        if(sum >= sum2){
+            Color[] colors = {new Color(red, green, blue), new Color(red2, green2, blue2)};
+            return colors;
+        } else {
+            Color[] colors = {new Color(red2, green2, blue2), new Color(red, green, blue)};
+            return colors;
+        }
 
     }
 
