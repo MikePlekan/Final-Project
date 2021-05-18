@@ -24,6 +24,7 @@ public class ChessGame implements Runnable, ActionListener
     private ArrayList<Integer> valid=new ArrayList();
     private ArrayList<Integer> lastvalid=new ArrayList();
     private Point lastClick=new Point();
+    private boolean wKingNormal = true,bKingNormal = true;
 
     //Colors and theme options
     private JComboBox color;
@@ -186,9 +187,9 @@ public class ChessGame implements Runnable, ActionListener
                         piece=new PieceThread(board,squares,(lastClick.x*8)+lastClick.y,(r*8)+c);
 
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
-                        
+
                         piece.start();
-                        
+
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
                         if(board.gameEnded){
                             this.showWinner();
@@ -212,6 +213,23 @@ public class ChessGame implements Runnable, ActionListener
                         for (int i:lastvalid)
                         {
                             setcolor(i/8,i%8);
+                        }
+                        ////trying to change image during check
+                        if(board.blackKing.checked == true){
+                            board.blackKing.setImg(true,true);
+                            bKingNormal = false;
+                        }
+                        else if(!bKingNormal){
+                            board.blackKing.setImg(false,true);
+                            bKingNormal = true;
+                        }
+                        if(board.whiteKing.checked == true){
+                            board.whiteKing.setImg(true,false);
+                            wKingNormal = false;
+                        }
+                        else if(!wKingNormal){
+                            board.whiteKing.setImg(false,false);
+                            wKingNormal = true;
                         }
                     }
                     else{
@@ -247,6 +265,7 @@ public class ChessGame implements Runnable, ActionListener
             }
 
         }
+
     }
 
     /**
@@ -322,7 +341,7 @@ public class ChessGame implements Runnable, ActionListener
         }
 
     }
-    
+
     private void showWinner(){
         if(board.winner==true){
             if(win!=null)win.dispose();

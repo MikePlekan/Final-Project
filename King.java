@@ -109,6 +109,21 @@ public class King extends MovedPiece
         checked = true;
     }
 
+    public void setImg(boolean change,boolean colored){
+        if(change){
+            if(colored)file="BlackKingInCheck.png";
+            else file="WhiteKingInCheck.png";
+            Toolkit toolkit=Toolkit.getDefaultToolkit();
+            pic=toolkit.getImage(file);
+        }
+        else{
+            if(colored)file="BlackKing.png";
+            else file="WhiteKing.png";
+            Toolkit toolkit=Toolkit.getDefaultToolkit();
+            pic=toolkit.getImage(file);
+        }
+    }
+
     /**
      * Moves a piece from its currentSquare to targetSquare
      * 
