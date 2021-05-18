@@ -239,7 +239,7 @@ public class Board
                         } else { 
                             enPassantSquare = -2;
                         }
-                            
+
                         //code for checking if a king is in check, this impacts whether a player is in checkmate or stalemate
                         ArrayList<Integer> checkForCheck = allAttackedSquares(board[targetSquare].color);
                         if(board[targetSquare].color) { // if the piece is black
@@ -249,6 +249,9 @@ public class Board
                             } else if (whiteKing != null){
                                 whiteKing.checked = false;
                             }
+                            if(blackKing != null){
+                                blackKing.checked = false;
+                            }
 
                         } else { // if the piece that was moved was white
                             if(blackKing != null && checkForCheck.contains(blackKing.currentSquare)){
@@ -256,6 +259,9 @@ public class Board
                                 desiredMove.promotion = "+";
                             } else if (blackKing != null) {
                                 blackKing.checked = false;
+                            }
+                            if(whiteKing != null){
+                                whiteKing.checked = false;
                             }
 
                         }
