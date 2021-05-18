@@ -150,8 +150,8 @@ public class ChessGame implements Runnable, ActionListener
     }
 
     /**
-     * This method override the actionPerformed method. This calcutes which lights should turn 
-     * on or off
+     * This method override the actionPerformed method. This calcutes where the player wants to move
+     * and if they can do that move
      * 
      * @param e This is an action event from an actionlistener
      */
@@ -159,7 +159,6 @@ public class ChessGame implements Runnable, ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource().equals(reset)){
-
             board=new Board();
             for (int R = 0; R < 8; R++)
             {
@@ -171,10 +170,8 @@ public class ChessGame implements Runnable, ActionListener
                     }
                 }
             }
-
             notes.setLength(0);
             notation.setText(notes.toString());
-            pan.repaint();
             return;
         }
         if (e.getSource().equals(color))
@@ -188,36 +185,32 @@ public class ChessGame implements Runnable, ActionListener
             {
                 if(e.getSource().equals(squares[r][c])){
                     if(valid!=null&&valid.contains((r*8)+c)){
-                        PieceThread piece;
-                        piece=new PieceThread(board,squares,(lastClick.x*8)+lastClick.y,(r*8)+c);
-
+                        PieceThread piece=new PieceThread(board,squares,(lastClick.x*8)+lastClick.y,(r*8)+c);
                         board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
-
                         piece.start();
-
+                        //check to see if won
                         if(board.gameEnded){
                             this.showWinner();
                         }
-
+                        //notation
                         if(board.playerToMove){
                             notes.append(board.moves.size() / 2 + 1 + ". ");
                         }
-
                         notes.append(board.moves.peek());
                         if(!board.playerToMove){
                             notes.append("\n");
                         } else {
                             notes.append("   ");
                         }
-
                         notation.setText(notes.toString());
+
                         lastvalid=(ArrayList<Integer>)valid.clone();
                         valid.clear();
                         for (int i:lastvalid)
                         {
                             setcolor(i/8,i%8);
                         }
-                        ////trying to change image during check
+                        //trying to change image during check
                         if(board.blackKing.checked == true){
                             board.blackKing.setImg(true,true);
                             bKingNormal = false;
@@ -272,7 +265,7 @@ public class ChessGame implements Runnable, ActionListener
     }
 
     /**
-     * this sets the color of each light to the opposite of what it is now
+     * this sets the color of each square depending on the theme
      * 
      * @param r this is the row of the button
      * @param c this is the colum of the button
@@ -282,12 +275,12 @@ public class ChessGame implements Runnable, ActionListener
             squares[r][c].setIcon(null);
             if(valid.contains((r*8)+c))squares[r][c].setBackground(validColor);
             else{
-                if (r%2!=0)
+                if (r%2!=0){
                     if(c%2==0)squares[r][c].setBackground(color2);
-                    else squares[r][c].setBackground(color1);
-                else
-                if(c%2!=0)squares[r][c].setBackground(color2);
-                else squares[r][c].setBackground(color1);
+                    else squares[r][c].setBackground(color1);}
+                else{
+                    if(c%2!=0)squares[r][c].setBackground(color2);
+                    else squares[r][c].setBackground(color1);}
             }
         }
         else{
@@ -301,12 +294,11 @@ public class ChessGame implements Runnable, ActionListener
                     else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
                 }
             else{
-                if(c%2!=0)
-                {
+                if(c%2!=0){
                     if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodR.png"));
                     else squares[r][c].setIcon(new ImageIcon("Wood.png"));  
                 }
-                else {
+                else{
                     if(valid.contains((r*8)+c))squares[r][c].setIcon(new ImageIcon("woodlightR.png"));
                     else squares[r][c].setIcon(new ImageIcon("woodlight.png"));
                 }
