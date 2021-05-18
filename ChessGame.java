@@ -17,6 +17,7 @@ public class ChessGame implements Runnable, ActionListener
     private Square[][] squares;
     private JPanel info,sidebar,pan;
     private JTextArea notation;
+    private JScrollPane scroll;
     private StringBuilder notes;
     private JButton reset;
     private Board board = new Board();
@@ -58,10 +59,14 @@ public class ChessGame implements Runnable, ActionListener
 
         //Sidebar
         sidebar=new JPanel();
-        sidebar.setPreferredSize(new Dimension(150,800));
+        sidebar.setPreferredSize(new Dimension(180,800));
         notes=new StringBuilder("");
-        notation=new JTextArea(notes.toString());
-        sidebar.add(notation);
+        notation=new JTextArea(3,13);
+        notation.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+        scroll = new JScrollPane (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.add(notation);
+        scroll.setViewportView(notation);
+        sidebar.add(scroll);
         sidebar.setBackground(Color.WHITE);
 
         //Color
@@ -204,7 +209,6 @@ public class ChessGame implements Runnable, ActionListener
                         } else {
                             notes.append("   ");
                         }
-
 
                         notation.setText(notes.toString());
                         lastvalid=(ArrayList<Integer>)valid.clone();
