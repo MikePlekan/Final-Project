@@ -236,7 +236,10 @@ public class Board
                                 }
                             }
 
-                        } 
+                        } else { 
+                            enPassantSquare = -2;
+                        }
+                            
                         //code for checking if a king is in check, this impacts whether a player is in checkmate or stalemate
                         ArrayList<Integer> checkForCheck = allAttackedSquares(board[targetSquare].color);
                         if(board[targetSquare].color) { // if the piece is black
