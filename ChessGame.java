@@ -190,7 +190,6 @@ public class ChessGame implements Runnable, ActionListener
 
                         piece.start();
 
-                        board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
                         if(board.gameEnded){
                             this.showWinner();
                         }
@@ -205,7 +204,7 @@ public class ChessGame implements Runnable, ActionListener
                         } else {
                             notes.append("   ");
                         }
-                        board.movePiece((lastClick.x*8)+lastClick.y,(r*8)+c);
+
 
                         notation.setText(notes.toString());
                         lastvalid=(ArrayList<Integer>)valid.clone();
