@@ -339,14 +339,23 @@ public class ChessGame implements Runnable, ActionListener
     }
 
     private void showWinner(){
-        if(board.winner==true){
+        if(board.winner==false){
             if(win!=null)win.dispose();
             win=new JFrame("WINNER");
             JPanel panel = new JPanel() {
                     @Override
                     public void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        g.drawString("WHITE WINS",10,10);
+                         super.paintComponent(g);
+                        
+                        Font f = new Font("Comic Sans MS",2,16);
+                        g.setFont(f);
+                        g.setColor(Color.white);
+                        g.fillRect(this.getWidth()/4,this.getHeight()/4, 
+                            this.getWidth()/2, this.getHeight()/2);
+                        g.setColor(Color.black);
+                        String s = "WHITE WINS";
+                        g.drawString(s,this.getWidth()/2 - g.getFontMetrics().stringWidth(s)/2,
+                            this.getHeight()/2 - g.getFontMetrics().getAscent()/2);
                     }
                 };
             win.add(panel);
@@ -355,16 +364,26 @@ public class ChessGame implements Runnable, ActionListener
             win.pack();
             win.setVisible(true);
         }
-        else if(board.winner==false){
+        else if(board.winner==true){
             if(win!=null)win.dispose();
             win=new JFrame("WINNER");
             JPanel panel = new JPanel() {
                     @Override
                     public void paintComponent(Graphics g) {
                         super.paintComponent(g);
-                        g.drawString("BLACK WINS",10,10);
+                        
+                        Font f = new Font("Comic Sans MS",2,16);
+                        g.setFont(f);
+                        g.setColor(Color.black);
+                        g.fillRect(this.getWidth()/4,this.getHeight()/4, 
+                            this.getWidth()/2, this.getHeight()/2);
+                        g.setColor(Color.white);
+                        String s = "BLACK WINS";
+                        g.drawString(s,this.getWidth()/2 - g.getFontMetrics().stringWidth(s)/2,
+                            this.getHeight()/2 - g.getFontMetrics().getAscent()/2);
                     }
                 };
+            panel.setPreferredSize(new Dimension(400,400));
             win.add(panel);
             win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             win.setPreferredSize(new Dimension(400,400));
@@ -377,8 +396,17 @@ public class ChessGame implements Runnable, ActionListener
             JPanel panel = new JPanel() {
                     @Override
                     public void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        g.drawString("STALEMATE",10,10);
+                         super.paintComponent(g);
+                        
+                        Font f = new Font("Comic Sans MS",2,16);
+                        g.setFont(f);
+                        g.setColor(Color.gray);
+                        g.fillRect(this.getWidth()/4,this.getHeight()/4, 
+                            this.getWidth()/2, this.getHeight()/2);
+                        g.setColor(Color.black);
+                        String s = "STALEMATE";
+                        g.drawString(s,this.getWidth()/2 - g.getFontMetrics().stringWidth(s)/2,
+                            this.getHeight()/2 - g.getFontMetrics().getAscent()/2);
                     }
                 };
             win.add(panel);

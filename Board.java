@@ -578,9 +578,9 @@ public class Board
 
     public void endGame(){
         if(whiteKing != null && whiteKing.checked){
-            winner = false;
-        } else if (blackKing != null && blackKing.checked){
             winner = true;
+        } else if (blackKing != null && blackKing.checked){
+            winner = false;
         } else {
             winner = null;
         }
