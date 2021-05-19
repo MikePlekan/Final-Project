@@ -197,7 +197,9 @@ public class ChessGame implements Runnable, ActionListener
                         if(board.playerToMove){
                             notes.append(board.moves.size() / 2 + 1 + ". ");
                         }
-                        notes.append(board.moves.peek());
+                        if(board.moves.peek() != null){
+                            notes.append(board.moves.peek());
+                        }
                         if(!board.playerToMove){
                             notes.append("\n");
                         } else {
@@ -345,8 +347,8 @@ public class ChessGame implements Runnable, ActionListener
             JPanel panel = new JPanel() {
                     @Override
                     public void paintComponent(Graphics g) {
-                         super.paintComponent(g);
-                        
+                        super.paintComponent(g);
+
                         Font f = new Font("Comic Sans MS",2,16);
                         g.setFont(f);
                         g.setColor(Color.white);
@@ -371,7 +373,7 @@ public class ChessGame implements Runnable, ActionListener
                     @Override
                     public void paintComponent(Graphics g) {
                         super.paintComponent(g);
-                        
+
                         Font f = new Font("Comic Sans MS",2,16);
                         g.setFont(f);
                         g.setColor(Color.black);
@@ -396,8 +398,8 @@ public class ChessGame implements Runnable, ActionListener
             JPanel panel = new JPanel() {
                     @Override
                     public void paintComponent(Graphics g) {
-                         super.paintComponent(g);
-                        
+                        super.paintComponent(g);
+
                         Font f = new Font("Comic Sans MS",2,16);
                         g.setFont(f);
                         g.setColor(Color.gray);
