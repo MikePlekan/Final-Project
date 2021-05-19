@@ -14,6 +14,7 @@ public class Move
     protected Piece pieceCaptured;
     protected boolean previouslyMoved = false;
     protected String promotion = "";
+    protected String checking = "";
     protected int previousEnPassant;
 
     public Move(Board b,String s, int initialSquare,int targetSquare, Piece pieceCaptured){
@@ -49,9 +50,9 @@ public class Move
 
         if(pieceCaptured != null){
 
-            return s + Board.notation[initialSquare] + "x" + Board.notation[targetSquare] + promotion;
+            return s + Board.notation[initialSquare] + "x" + Board.notation[targetSquare] + promotion + checking;
         } else {
-            return s + Board.notation[initialSquare] + Board.notation[targetSquare] + promotion;
+            return s + Board.notation[initialSquare] + Board.notation[targetSquare] + promotion + checking;
         }
     }
 

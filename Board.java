@@ -245,7 +245,7 @@ public class Board
                         if(board[targetSquare].color) { // if the piece is black
                             if(whiteKing != null && checkForCheck.contains(whiteKing.currentSquare)){
                                 whiteKing.checked = true;
-                                desiredMove.promotion += "+";
+                                desiredMove.checking = "+";
                             } else if (whiteKing != null){
                                 whiteKing.checked = false;
                             }
@@ -256,7 +256,7 @@ public class Board
                         } else { // if the piece that was moved was white
                             if(blackKing != null && checkForCheck.contains(blackKing.currentSquare)){
                                 blackKing.checked = true;
-                                desiredMove.promotion = "+";
+                                desiredMove.checking = "+";
                             } else if (blackKing != null) {
                                 blackKing.checked = false;
                             }
@@ -270,7 +270,7 @@ public class Board
                         if(opponentMoves != null && opponentMoves.size() == 0){
                             endGame();
                             if(winner != null){
-                                desiredMove.promotion = "#";
+                                desiredMove.checking = "#";
                             }
                         }
                         playerToMove = !playerToMove;
