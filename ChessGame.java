@@ -61,11 +61,12 @@ public class ChessGame implements Runnable, ActionListener
         sidebar=new JPanel();
         sidebar.setPreferredSize(new Dimension(180,800));
         notes=new StringBuilder("");
-        notation=new JTextArea(3,13);
-        notation.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+        notation=new JTextArea(28,16);
+        notation.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         scroll = new JScrollPane (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.add(notation);
         scroll.setViewportView(notation);
+        scroll.setPreferredSize(new Dimension(175,650));
         sidebar.add(scroll);
         sidebar.setBackground(Color.WHITE);
 

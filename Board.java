@@ -245,7 +245,7 @@ public class Board
                         if(board[targetSquare].color) { // if the piece is black
                             if(whiteKing != null && checkForCheck.contains(whiteKing.currentSquare)){
                                 whiteKing.checked = true;
-                                desiredMove.promotion = "+";
+                                desiredMove.promotion += "+";
                             } else if (whiteKing != null){
                                 whiteKing.checked = false;
                             }
