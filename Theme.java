@@ -14,7 +14,7 @@ public class Theme
     public Color validMove2;
     private static Random rand = new Random();
 
-    public static Color getRandomMono()
+    public synchronized static Color getRandomMono()
     {
 
         int red = rand.nextInt(176) + 80;
@@ -30,7 +30,7 @@ public class Theme
         return new Color(red, green, blue);
     }
 
-    public static Color[] getRandomBi()
+    public synchronized static Color[] getRandomBi()
     {
 
         int red = rand.nextInt(176) + 80;
