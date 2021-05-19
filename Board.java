@@ -69,7 +69,7 @@ public class Board
 
     // if Q, queen, if N, then knight, if R, then rook, if B, then bishop
     protected String promoteTo = "Q";
-    
+
     private ChessGame game;
     /**
      * Default constructor for the board class, results in the chess starting position
@@ -102,6 +102,7 @@ public class Board
         placePiece('R',63);
 
     }
+
     /**
      * Default constructor for the board class, results in the chess starting position
      */
@@ -131,8 +132,9 @@ public class Board
         placePiece('B',61);
         placePiece('N',62);
         placePiece('R',63);
-
+        placePiece('P',22);
     }
+
     /**
      * Constructor that takes a string FEN input
      */
@@ -323,7 +325,14 @@ public class Board
      */
     private boolean promote(int targetSquare){
         if(targetSquare / 8 == 0){
-            game.promotePopUp();
+            PawnPromotion pawn=new PawnPromotion(game.current,game.board);
+            pawn.start();
+            while(!pawn.done){
+                try{
+                    pawn.join();
+                }
+                catch(Exception e){}
+            }
             if(!promoteTo.equals("R")){
                 placePiece(promoteTo.toUpperCase(),targetSquare);
             } else if (promoteTo.equals("R")){
@@ -331,7 +340,13 @@ public class Board
             }
             return true;
         } else if (targetSquare / 8 == 7){
-            game.promotePopUp();
+            PawnPromotion pawn=new PawnPromotion(game.current,game.board);
+            pawn.start();
+            while(!pawn.done){
+                try{pawn.join();}
+                catch(Exception e){
+                }
+            }
             if(!promoteTo.equals("R")){
                 placePiece(promoteTo.toLowerCase(),targetSquare);
             } else if (promoteTo.equals("R")){
