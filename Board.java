@@ -69,7 +69,8 @@ public class Board
 
     // if Q, queen, if N, then knight, if R, then rook, if B, then bishop
     protected String promoteTo = "Q";
-
+    
+    private ChessGame game;
     /**
      * Default constructor for the board class, results in the chess starting position
      */
@@ -101,7 +102,37 @@ public class Board
         placePiece('R',63);
 
     }
+    /**
+     * Default constructor for the board class, results in the chess starting position
+     */
+    public Board(ChessGame game){
+        this.game=game;
+        generateNumSquaresToEdge();
 
+        placePiece('r',0);
+        placePiece('n',1);
+        placePiece('b',2);
+        placePiece('q',3);
+        placePiece('k',4);
+        placePiece('b',5);
+        placePiece('n',6);
+        placePiece('r',7);
+        for(int i = 8; i < 16; i++){
+            placePiece('p',i);
+        }
+        for(int i = 48; i < 56; i++){
+            placePiece('P',i);
+        }
+        placePiece('R',56);
+        placePiece('N',57);
+        placePiece('B',58);
+        placePiece('Q',59);
+        placePiece('K',60);
+        placePiece('B',61);
+        placePiece('N',62);
+        placePiece('R',63);
+
+    }
     /**
      * Constructor that takes a string FEN input
      */
@@ -292,6 +323,7 @@ public class Board
      */
     private boolean promote(int targetSquare){
         if(targetSquare / 8 == 0){
+            game.promotePopUp();
             if(!promoteTo.equals("R")){
                 placePiece(promoteTo.toUpperCase(),targetSquare);
             } else if (promoteTo.equals("R")){
@@ -299,6 +331,7 @@ public class Board
             }
             return true;
         } else if (targetSquare / 8 == 7){
+            game.promotePopUp();
             if(!promoteTo.equals("R")){
                 placePiece(promoteTo.toLowerCase(),targetSquare);
             } else if (promoteTo.equals("R")){
