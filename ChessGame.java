@@ -20,17 +20,15 @@ public class ChessGame implements Runnable, ActionListener
     private JScrollPane scroll;
     private StringBuilder notes;
     private JButton reset;
-    private Board board = new Board(this);
+    protected Board board = new Board(this);
     private JFrame win;
     private ArrayList<Integer> valid=new ArrayList();
     private ArrayList<Integer> lastvalid=new ArrayList();
     private Point lastClick=new Point();
-    private int current=0;
     private boolean wKingNormal = true,bKingNormal = true;
 
     //pawn promotion
-    JFrame promoteWin;
-    JButton buttons[] = new JButton[4];
+    int current=0;
 
     //Colors and theme options
     private JComboBox color;
@@ -164,24 +162,6 @@ public class ChessGame implements Runnable, ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        for (int c = 0; c < 4; c++)
-        {
-            if(e.getSource().equals(buttons[c])){
-                if(c==0){
-                    board.promoteTo="Q";
-                }
-                else if(c==1){
-                    board.promoteTo="R";
-                }
-                else if(c==2){
-                    board.promoteTo="K";
-                }
-                else if(c==3){
-                    board.promoteTo="B";
-                }
-                if(promoteWin!=null)promoteWin.dispose();
-            }
-        }
 
         if (e.getSource().equals(reset)){
             board=new Board();
@@ -442,41 +422,6 @@ public class ChessGame implements Runnable, ActionListener
             win.pack();
             win.setVisible(true);
         }
-    }
-
-    public void promotePopUp(){
-        promoteWin=new JFrame("Pawn Promotion");
-        GridLayout Pawngrid = new GridLayout(1, 4);
-        JPanel panel = new JPanel(Pawngrid);
-        boolean color=board.board[current].color;
-        String pics[]=new String[4];
-        if(color){
-            pics[0]="BlackQueen.png";
-            pics[1]="BlackRook.png";
-            pics[2]="BlackKnight.png";
-            pics[3]="BlackBishop.png";
-        }
-        else {
-            pics[0]="WhiteQueen.png";
-            pics[1]="WhiteRook.png";
-            pics[2]="WhiteKnight.png";
-            pics[3]="WhiteBishop.png";
-        }
-
-        for (int c = 0; c < 4; c++)
-        {
-            buttons[c]=new JButton();
-            buttons[c].setOpaque(true);
-            buttons[c].setBorderPainted(false);
-            panel.add(buttons[c]);
-            buttons[c].addActionListener(this);
-            buttons[c].setIcon(new ImageIcon(pics[c]));
-        }
-        promoteWin.add(panel);
-        promoteWin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        promoteWin.setPreferredSize(new Dimension(450,150));
-        promoteWin.pack();
-        promoteWin.setVisible(true);
     }
 
     /**
