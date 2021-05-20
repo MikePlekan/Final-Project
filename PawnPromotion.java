@@ -34,13 +34,12 @@ public class PawnPromotion extends Thread implements ActionListener
                     board.promoteTo="R";
                 }
                 else if(c==2){
-                    board.promoteTo="K";
+                    board.promoteTo="N";
                 }
                 else if(c==3){
                     board.promoteTo="B";
                 }
                 if(promoteWin!=null)promoteWin.dispose();
-                done=true;
                 this.stop();
             }
         }
@@ -48,12 +47,13 @@ public class PawnPromotion extends Thread implements ActionListener
 
     @Override
     public void run() {
+        if(promoteWin!=null)promoteWin.dispose();
         promoteWin=new JFrame("Pawn Promotion");
         GridLayout Pawngrid = new GridLayout(1, 4);
         JPanel panel = new JPanel(Pawngrid);
         boolean color=board.board[current].color;
         String pics[]=new String[4];
-        if(color){
+        if(!color){
             pics[0]="BlackQueen.png";
             pics[1]="BlackRook.png";
             pics[2]="BlackKnight.png";

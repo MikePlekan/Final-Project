@@ -325,28 +325,14 @@ public class Board
      */
     private boolean promote(int targetSquare){
         if(targetSquare / 8 == 0){
-            PawnPromotion pawn=new PawnPromotion(game.current,game.board);
-            pawn.start();
-            while(!pawn.done){
-                try{
-                    pawn.join();
-                }
-                catch(Exception e){}
-            }
             if(!promoteTo.equals("R")){
                 placePiece(promoteTo.toUpperCase(),targetSquare);
             } else if (promoteTo.equals("R")){
                 board[targetSquare] = new Rook(false,targetSquare,true);
             }
             return true;
-        } else if (targetSquare / 8 == 7){
-            PawnPromotion pawn=new PawnPromotion(game.current,game.board);
-            pawn.start();
-            while(!pawn.done){
-                try{pawn.join();}
-                catch(Exception e){
-                }
-            }
+        } 
+        else if (targetSquare / 8 == 7){
             if(!promoteTo.equals("R")){
                 placePiece(promoteTo.toLowerCase(),targetSquare);
             } else if (promoteTo.equals("R")){

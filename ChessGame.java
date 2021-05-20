@@ -15,12 +15,12 @@ public class ChessGame implements Runnable, ActionListener
 {
     private final static int SIZE=8;
     private Square[][] squares;
-    private JPanel info,sidebar,pan;
+    private JPanel info,sidebar,pan,buttonPanel;
     private JTextArea notation;
     private JScrollPane scroll;
     private StringBuilder notes;
-    private JButton reset;
-    protected Board board = new Board(this);
+    private JButton reset,pawnPro;
+    protected Board board = new Board();
     private JFrame win;
     private ArrayList<Integer> valid=new ArrayList();
     private ArrayList<Integer> lastvalid=new ArrayList();
@@ -52,13 +52,23 @@ public class ChessGame implements Runnable, ActionListener
         info=new JPanel(new BorderLayout());
         info.setBackground(Color.BLACK);
 
+        buttonPanel=new JPanel(new BorderLayout());
         //reset
         reset=new JButton("reset");
         reset.setBackground(Color.WHITE);
         reset.setOpaque(true);
         reset.setBorderPainted(false);
         reset.addActionListener(this);
-        info.add(reset,BorderLayout.EAST);
+        buttonPanel.add(reset,BorderLayout.EAST);
+        info.add(buttonPanel,BorderLayout.EAST);
+        
+        //reset
+        pawnPro=new JButton("Promotion");
+        pawnPro.setBackground(Color.WHITE);
+        pawnPro.setOpaque(true);
+        pawnPro.setBorderPainted(false);
+        pawnPro.addActionListener(this);
+        buttonPanel.add(pawnPro,BorderLayout.WEST);
 
         //Sidebar
         sidebar=new JPanel();
@@ -162,7 +172,10 @@ public class ChessGame implements Runnable, ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-
+        if (e.getSource().equals(pawnPro)){
+            PawnPromotion pawn=new PawnPromotion(current,board);
+            pawn.start();
+        }
         if (e.getSource().equals(reset)){
             board=new Board();
             for (int R = 0; R < 8; R++)
