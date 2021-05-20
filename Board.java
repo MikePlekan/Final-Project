@@ -325,19 +325,11 @@ public class Board
      */
     private boolean promote(int targetSquare){
         if(targetSquare / 8 == 0){
-            if(!promoteTo.equals("R")){
-                placePiece(promoteTo.toUpperCase(),targetSquare);
-            } else if (promoteTo.equals("R")){
-                board[targetSquare] = new Rook(false,targetSquare,true);
-            }
+
+            placePiece(promoteTo.toUpperCase(),targetSquare);
             return true;
-        } 
-        else if (targetSquare / 8 == 7){
-            if(!promoteTo.equals("R")){
-                placePiece(promoteTo.toLowerCase(),targetSquare);
-            } else if (promoteTo.equals("R")){
-                board[targetSquare] = new Rook(true,targetSquare,true);
-            }
+        } else if  (targetSquare / 8 == 7){
+            placePiece(promoteTo.toLowerCase(),targetSquare);
             return true;
         }
         return false;
