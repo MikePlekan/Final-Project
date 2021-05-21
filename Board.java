@@ -291,11 +291,12 @@ public class Board
      */
     private boolean promote(int targetSquare){
         if(targetSquare / 8 == 0){
-
             placePiece(promoteTo.toUpperCase(),targetSquare);
+            promoteTo="Q";
             return true;
         } else if  (targetSquare / 8 == 7){
             placePiece(promoteTo.toLowerCase(),targetSquare);
+            promoteTo="Q";
             return true;
         }
         return false;
