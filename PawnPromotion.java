@@ -74,6 +74,7 @@ public class PawnPromotion extends Thread implements ActionListener
             panel.add(buttons[c]);
             buttons[c].addActionListener(this);
             buttons[c].setIcon(new ImageIcon(pics[c]));
+
         }
         if(board.promoteTo=="Q"){
             buttons[0].setBackground(Color.RED);      
