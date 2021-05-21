@@ -88,7 +88,7 @@ public class Pawn extends MovedPiece
                 //empty square
                 validMoves.add(checkingSquare);
 
-            } else if (b.board[checkingSquare].color != null){
+            } else if (b.board[checkingSquare] != null){
                 j = 9;
             }
             j++;
