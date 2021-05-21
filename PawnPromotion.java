@@ -75,6 +75,18 @@ public class PawnPromotion extends Thread implements ActionListener
             buttons[c].addActionListener(this);
             buttons[c].setIcon(new ImageIcon(pics[c]));
         }
+        if(board.promoteTo=="Q"){
+            buttons[0].setBackground(Color.RED);      
+        }
+        else if(board.promoteTo=="R"){
+            buttons[1].setBackground(Color.RED); 
+        }
+        else if(board.promoteTo=="N"){
+            buttons[2].setBackground(Color.RED); 
+        }
+        else if(board.promoteTo=="B"){
+            buttons[3].setBackground(Color.RED); 
+        }
         promoteWin.add(panel);
         promoteWin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         promoteWin.setPreferredSize(new Dimension(450,150));
