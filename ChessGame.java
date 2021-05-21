@@ -294,7 +294,16 @@ public class ChessGame implements Runnable, ActionListener
     private void setcolor(int r,int c){
         if(color.getSelectedIndex()>0){
             squares[r][c].setIcon(null);
-            if(valid.contains((r*8)+c))squares[r][c].setBackground(validColor);
+            if(valid.contains((r*8)+c))
+            {
+                //squares[r][c].setBackground(validColor);
+                if (r%2!=0){
+                    if(c%2==0)squares[r][c].setBackground(Theme.VALID_DARK);
+                    else squares[r][c].setBackground(Theme.VALID_LIGHT);}
+                else{
+                    if(c%2!=0)squares[r][c].setBackground(Theme.VALID_DARK);
+                    else squares[r][c].setBackground(Theme.VALID_LIGHT);}
+            }
             else{
                 if (r%2!=0){
                     if(c%2==0)squares[r][c].setBackground(color2);
