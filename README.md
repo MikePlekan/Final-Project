@@ -1,13 +1,22 @@
-# Final-Project
+## PLEKANCHESS
+This project was completed for a final project for the Siena College Spring 2021 section of CSIS225.
+PLEKANCHESS is a Java Swing, object oriented implementation of chess.
 
-Names: Luke Jennings, Michael Plekan, Spencer Moon, Nate Piorier
+# Contributors
+* Luke Jennings
+* Michael Plekan
+* Spencer Moon
+* Nate Piorier
 
-Work Log
-4/28 -> All 2:30 - 3:00
-  All w/o Nate 3:00-4:00 //figuring out proposal
+# Features
+* Functional chess board in Java Swing (excludes threefold repitiion and 50 move rule, otherwise legal)
+* Importable Long Algebraic Notation (LAN) which can be loaded into any PGN reader
+* 9 different board themes from wood textures to randomly generated colors
+* Full board reset
+* Pop-up windows on win and pawn promotion piece selection
+* Animated piece movement
 
-5/1 -> Luke 11:30pm-12:30pm //started piece hierarchy
+# Inspirations and Citations
+* Board Logic structure inspired by Stephen Lague- https://www.youtube.com/watch?v=U4ogK0MIzqk&t=386s
+* Piece images are open source from the Wikimedia Commons - https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces
 
-https://www.youtube.com/watch?v=U4ogK0MIzqk
-
-5/9 -> lost track of work log, proof of work can be checked by commits of work so far
