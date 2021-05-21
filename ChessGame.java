@@ -46,7 +46,7 @@ public class ChessGame implements Runnable, ActionListener
      */
     public void run()
     {
-        JFrame frame = new JFrame("CHESS");
+        JFrame frame = new JFrame("PLEKANCHESS");
         frame.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
         //info
         info=new JPanel(new BorderLayout());
