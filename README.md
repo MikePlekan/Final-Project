@@ -1,7 +1,7 @@
 ## PLEKANCHESS
 This project was completed for a final project for the Siena College Spring 2021 section of CSIS225.
 PLEKANCHESS is a Java Swing, object oriented implementation of chess.
-
+video overview - https://www.youtube.com/watch?v=JNu8WMYDct4
 # Contributors
 * Luke Jennings
 * Michael Plekan
