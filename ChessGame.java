@@ -8,7 +8,7 @@ import java.util.Random;
  * This class is a Chess game with rest, color switching, highlighted squared for legal moves, a sidebar with
  * a list of the moves made throughout the game
  *
- * @author Spencer Moon, Michael Plekan
+ * @author Spencer Moon, Michael Plekan, Luke Jennings, and Nathan Poirier
  * @version Spring 2021
  */
 public class ChessGame implements Runnable, ActionListener

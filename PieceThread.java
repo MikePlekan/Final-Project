@@ -4,10 +4,10 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 /**
- * Write a description of class BubbleThread here.
+ * Threads objects used for piece animations in the ChessGame class
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Michael Plekan, Nathan Poirier
+ * @version Spring 2021
  */
 public class PieceThread extends Thread 
 {

@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.Random;
 /**
- * Write a description of class Theme here.
+ * Used to generate colors for our ChessGame class
  *
  * @author Spencer Moon and Micheal Plekan
  * @version Spring 2021

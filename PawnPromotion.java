@@ -4,10 +4,11 @@ import javax.swing.event.*;
 import java.util.*;
 import java.awt.event.*;
 /**
- * Write a description of class PawnPromotion here.
+ * Thread used to determine the piece type that a pawn will promote
+ * to in our ChessGame class.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Michael Plekan
+ * @version Spring 2021
  */
 public class PawnPromotion extends Thread implements ActionListener
 {

@@ -100,13 +100,6 @@ public class Board
         placePiece('R',63);
 
     }
-    
-    /**
-     * Constructor that takes a string FEN input
-     */
-    public Board(String fen){
-
-    }
 
     /**
      * Overloaded constructor for the board class. If boolean is true, then it returns a completely empty board.
