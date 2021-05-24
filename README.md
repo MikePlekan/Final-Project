@@ -6,7 +6,7 @@ video overview - https://www.youtube.com/watch?v=JNu8WMYDct4
 * Luke Jennings
 * Michael Plekan
 * Spencer Moon
-* Nate Piorier
+* Nate Poirier
 
 # Features
 * Functional chess board in Java Swing (excludes threefold repitiion and 50 move rule, otherwise legal)
