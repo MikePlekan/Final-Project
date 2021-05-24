@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.Random;
 /**
- * Used to generate colors for our ChessGame class
+ * Used to store and generate colors for our ChessGame class
  *
  * @author Spencer Moon and Micheal Plekan
  * @version Spring 2021
@@ -14,6 +14,11 @@ public class Theme
     public static final Color VALID_DARK = new Color(207, 66, 66);
     private static Random rand = new Random();
 
+    /**
+     * Generates a random Color.
+     * 
+     * @return A random Color
+     */
     public synchronized static Color getRandomMono()
     {
 
@@ -30,6 +35,11 @@ public class Theme
         return new Color(red, green, blue);
     }
 
+    /**
+     * Generates 2 random Colors.
+     * 
+     * @return 2 random Colors
+     */
     public synchronized static Color[] getRandomBi()
     {
 

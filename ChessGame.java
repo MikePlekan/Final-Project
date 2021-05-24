@@ -105,6 +105,10 @@ public class ChessGame implements Runnable, ActionListener
 
         //repainter Tread
         new Thread() {
+            
+            /**
+             * Repaints the panel once every 20 ms.
+             */
             @Override
             public void run() {
                 while (true) {
@@ -123,6 +127,12 @@ public class ChessGame implements Runnable, ActionListener
             {
                 if(board.board[r*8+c]!=null){
                     squares[r][c] = new Square(r,c,board.board[r*8+c].getPic()){
+                        
+                        /**
+                         * Paints an image.
+                         * 
+                         * @param g A Graphics object
+                         */
                         @Override
                         public void paintComponent(Graphics g) {
                             super.paintComponent(g);
@@ -132,6 +142,11 @@ public class ChessGame implements Runnable, ActionListener
                 }
                 else{
                     squares[r][c] = new Square(r,c){
+                        /**
+                         * Paints an image.
+                         * 
+                         * @param g A Graphics object
+                         */
                         @Override
                         public void paintComponent(Graphics g) {
                             super.paintComponent(g);
@@ -336,6 +351,10 @@ public class ChessGame implements Runnable, ActionListener
         }
     }
 
+    /**
+     * Sets the color of the board based on what option is currently
+     * selected in the drop down menu.
+     */
     public void setTheme()
     {
         if(color.getSelectedIndex()==0){}
