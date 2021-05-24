@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class Move here.
+ * Class used to represent chess moves in Long Algebraic Notation and for calculating
+ * move legality.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Luke Jennings
+ * @version Spring 2021
  */
 public class Move
 {
