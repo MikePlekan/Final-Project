@@ -5,7 +5,7 @@ import java.util.*;
 import java.awt.event.*;
 import java.util.Random;
 /**
- * This class is a Chess game with rest, color switching, highlighted squared for legal moves, a sidebar with
+ * This class is a Chess game with reset, color switching, highlighted squared for legal moves, a sidebar with
  * a list of the moves made throughout the game
  *
  * @author Spencer Moon, Michael Plekan, Luke Jennings, and Nathan Poirier
@@ -42,7 +42,7 @@ public class ChessGame implements Runnable, ActionListener
     public ChessGame(){}
 
     /**
-     * This runs the window, it is where the panels, buttons, etc. are setup
+     * This runs the window, it is where the panels, buttons, etc. are setup and customized
      */
     public void run()
     {
@@ -179,8 +179,9 @@ public class ChessGame implements Runnable, ActionListener
     }
 
     /**
-     * This method override the actionPerformed method. This calcutes where the player wants to move
-     * and if they can do that move
+     * This method override the actionPerformed method. This gets which peice the player
+     * wants to move and where they want to move it to, then uses the board object to check
+     * validity. It also checks for reset, promotion and theme change.
      * 
      * @param e This is an action event from an actionlistener
      */
@@ -385,7 +386,9 @@ public class ChessGame implements Runnable, ActionListener
         }
 
     }
-
+    /**
+     * This creates a pop up for the winner of the game
+     */
     private void showWinner(){
         if(board.winner==false){
             if(win!=null)win.dispose();

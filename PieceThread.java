@@ -6,7 +6,7 @@ import javax.swing.event.*;
 /**
  * Threads objects used for piece animations in the ChessGame class
  *
- * @author Michael Plekan, Nathan Poirier
+ * @author Spencer Moon, Michael Plekan, Luke Jennings, and Nathan Poirier
  * @version Spring 2021
  */
 public class PieceThread extends Thread 
@@ -18,7 +18,11 @@ public class PieceThread extends Thread
     Square[][] squares;
     int Crow,Ccol,Prow,Pcol,Erow,Ecol;
     /**
-     * Constructor for objects of class BubbleThread
+     * Constructor for objects of class PieceThread. This thread is 
+     * used for piece movement animation
+     * @param board this is the board object
+     * @param squares this is the 2d array that makes the visual board
+     * @param start,end the postions where the moves starts and ends
      */
     public PieceThread(Board board,Square[][] squares, int start,int end)
     {
@@ -31,7 +35,10 @@ public class PieceThread extends Thread
         this.squares=squares;
         this.board=board;
     }
-
+    /**
+     * This makes the animation run, then re-syncs the visual board with the logical board,
+     * then stops the tread
+     */
     @Override
     public void run() {
         Prow=Crow;

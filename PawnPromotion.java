@@ -7,7 +7,7 @@ import java.awt.event.*;
  * Thread used to determine the piece type that a pawn will promote
  * to in our ChessGame class.
  *
- * @author Michael Plekan
+ * @author Spencer Moon, Michael Plekan, Luke Jennings, and Nathan Poirier
  * @version Spring 2021
  */
 public class PawnPromotion extends Thread implements ActionListener
@@ -17,11 +17,20 @@ public class PawnPromotion extends Thread implements ActionListener
     Board board;
     JButton buttons[] = new JButton[4];
     boolean done=false;
+    /**
+     * This is the constructor of the thread.
+     * 
+     * @param current this is the current square inorder to figure out which color 
+     * peice to use as an icon
+     */
     public PawnPromotion(int current,Board board){
         this.current=current;
         this.board=board;
     }
-
+    /**
+     * This method figures out which button was pressed, sets the protemtion variable,
+     * then closes the window and stops the thread.
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -45,7 +54,9 @@ public class PawnPromotion extends Thread implements ActionListener
             }
         }
     }
-
+    /**
+     * This method creates the buttons and window.
+     */
     @Override
     public void run() {
         if(promoteWin!=null)promoteWin.dispose();

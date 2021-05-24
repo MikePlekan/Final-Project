@@ -4,16 +4,19 @@ import javax.swing.event.*;
 import java.util.*;
 import java.awt.event.*;
 /**
- * Write a description of class Square here.
+ * This class is used to store a bit of extra data for each square of the board
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Spencer Moon, Michael Plekan, Luke Jennings, and Nathan Poirier
+ * @version Spring 2021
  */
 public class Square extends JButton
 {
     public int row;
     public int col;
     public Image pic;
+    /**
+     * This constructor is used for squares with a piece on them
+     */
     public Square(int row, int col,Image pic)
     {
         super();
@@ -21,6 +24,9 @@ public class Square extends JButton
         this.row = row;
         this.pic=pic;
     }
+    /**
+     * This constructor is used for squares without a piece on them
+     */
     public Square(int row, int col)
     {
         super();
