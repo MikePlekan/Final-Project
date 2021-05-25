@@ -17,6 +17,6 @@ video overview - https://www.youtube.com/watch?v=JNu8WMYDct4
 * Animated piece movement
 
 # Inspirations and Citations
-* Board Logic structure inspired by Stephen Lague- https://www.youtube.com/watch?v=U4ogK0MIzqk&t=386s
+* Board Logic structure inspired by Sebastiat Lague- https://www.youtube.com/watch?v=U4ogK0MIzqk&t=386s
 * Piece images are open source from the Wikimedia Commons - https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces
 
