@@ -10,7 +10,7 @@ video overview - https://www.youtube.com/watch?v=JNu8WMYDct4
 
 # Features
 * Functional chess board in Java Swing (excludes threefold repitiion and 50 move rule, otherwise legal)
-* Importable Long Algebraic Notation (LAN) which can be loaded into any PGN reader
+* Exportable Long Algebraic Notation (LAN) which can be loaded into any PGN reader
 * 9 different board themes from wood textures to randomly generated colors
 * Full board reset
 * Pop-up windows on win and pawn promotion piece selection
